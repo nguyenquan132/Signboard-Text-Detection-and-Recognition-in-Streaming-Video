@@ -1,5 +1,5 @@
 import os
-from utils import extract_xml, convert_box_yolo_format
+from utils_custom import extract_xml, prepare_yolo_format
 from tqdm import tqdm
 import shutil
 
@@ -37,10 +37,10 @@ print('-------------Annotation Train Label------------------')
 for train_label in tqdm(list_train_label):
     train_label_path = os.path.join(FOLDER_TRAIN_LABEL, train_label)
     train_info_dict = extract_xml(train_label_path)
-    convert_box_yolo_format(train_info_dict, folder='labels/train')
+    prepare_yolo_format(train_info_dict, folder='labels/train')
 
 print('-------------Annotation Val Label-------------------')
 for val_label in tqdm(list_val_label):
     val_label_path = os.path.join(FOLDER_VAL_LABEL, val_label)
     val_info_dict = extract_xml(val_label_path)
-    convert_box_yolo_format(val_info_dict, folder='labels/val')
+    prepare_yolo_format(val_info_dict, folder='labels/val')
