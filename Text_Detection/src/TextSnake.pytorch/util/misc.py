@@ -43,7 +43,7 @@ def fill_hole(input_mask):
 
     cv2.floodFill(canvas, mask, (0, 0), 1)
     # I adjusted this code line by changing np.bool into bool (because latest numpy is deprecated np.bool)
-    canvas = canvas[1:h + 1, 1:w + 1].astype(np.bool)
+    canvas = canvas[1:h + 1, 1:w + 1].astype(bool)
 
     return (~canvas | input_mask.astype(np.uint8))
 
