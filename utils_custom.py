@@ -105,7 +105,7 @@ def draw_bounding_box(image, boxes, class_id=None, confidence=None, box_thicknes
                                                           output_format_box='xyxy')
         
     [x_min, y_min, x_max, y_max] = [int(box) for box in boxes]
-    x_text_center = x_min + (x_max - x_min) // 4
+    # x_text_center = x_min + (x_max - x_min) // 4
     
     cv2.rectangle(img=image, pt1=(x_min, y_min), pt2=(x_max, y_max), 
                   color=box_color, thickness=box_thickness)
@@ -113,7 +113,18 @@ def draw_bounding_box(image, boxes, class_id=None, confidence=None, box_thicknes
         class_name = class_id_to_name_mapping[int(class_id)]
         if confidence is not None: text = f'{class_name} {confidence:.2f}'
         else: text = f'{class_name}'
-        cv2.putText(img=image, text=text, org=(x_text_center, y_min), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+
+        (text_width, text_height), baseline = cv2.getTextSize(
+            text, cv2.FONT_HERSHEY_SIMPLEX, text_scale, text_thickness)
+
+        text_x, text_y = x_min + (x_max - x_min - text_width) // 2, y_min
+        
+        if y_min < text_height + 5:
+            text_y = y_max + text_height + 5
+        else:
+            text_y = y_min - 5 
+            
+        cv2.putText(img=image, text=text, org=(text_x, text_y), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                 fontScale=text_scale, color=text_color, thickness=text_thickness, lineType=cv2.LINE_AA)
     return image
 
