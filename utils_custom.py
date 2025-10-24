@@ -77,7 +77,9 @@ def convert_box_format(boxes, current_format_box: str='yolo', output_format_box:
 
             return [x_center, y_center, width, height]
 
-def draw_bounding_box(image, boxes, class_id, format_box: str='yolo', mode: str='none'):
+def draw_bounding_box(image, boxes, class_id=None, confidence=None, box_thickness=2, text_thickness=2, 
+                      text_scale=0.7, format_box: str='yolo', mode: str='none', box_color=(0, 255, 0),
+                      text_color=(255, 265, 0)):
     """
     Args: 
         format_box: 'yolo' or 'xywh'. If format_box is yolo, we need to convert to xyxy to plot annotated image.
@@ -104,12 +106,15 @@ def draw_bounding_box(image, boxes, class_id, format_box: str='yolo', mode: str=
         
     [x_min, y_min, x_max, y_max] = [int(box) for box in boxes]
     x_text_center = x_min + (x_max - x_min) // 4
-    class_name = class_id_to_name_mapping[int(class_id)]
     
     cv2.rectangle(img=image, pt1=(x_min, y_min), pt2=(x_max, y_max), 
-                  color=(0, 255, 0), thickness=2)
-    cv2.putText(img=image, text=class_name, org=(x_text_center, y_min), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
-                fontScale=0.7, color=(255, 265, 0), thickness=2, lineType=cv2.LINE_AA)
+                  color=box_color, thickness=box_thickness)
+    if class_id is not None: 
+        class_name = class_id_to_name_mapping[int(class_id)]
+        if confidence is not None: text = f'{class_name} {confidence:.2f}'
+        else: text = f'{class_name}'
+        cv2.putText(img=image, text=text, org=(x_text_center, y_min), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                fontScale=text_scale, color=text_color, thickness=text_thickness, lineType=cv2.LINE_AA)
     return image
 
 def write_txt_yolo(file_path, class_id, x_center, y_center, width, height):
