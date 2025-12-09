@@ -1,0 +1,125 @@
+\chapter{TỔNG QUAN}
+\ifpdf
+    \graphicspath{{Chapter1/Chapter1Figs/PNG/}{Chapter1/Chapter1Figs/PDF/}{Chapter1/Chapter1Figs/}}
+\else
+    \graphicspath{{Chapter1/Chapter1Figs/EPS/}{Chapter1/Chapter1Figs/}}
+\fi
+
+\markboth{\MakeUppercase{\thechapter. My Third Chapter }}{\thechapter. TỔNG QUAN}
+
+
+\section{Đặt vấn đề}
+
+
+
+\begin{itemize}
+    \item \textbf{aa:} Ví dụ: ;
+    \item \textbf{bb():} ;
+\end{itemize}
+
+Như vậy \textbf{đầu vào (Input)} của hệ thống bao gồm (xem thêm hình minh họa 
+% ~\ref{fig:chapter1_input_output}
+):
+
+\begin{itemize}
+    \item \textbf{Tập dữ liệu video đầu vào:} Bao gồm các 
+\end{itemize}
+
+Và \textbf{đầu ra (Output)} của hệ thống  là:
+
+\begin{itemize}
+    \item \textbf{Danh sách các ....:} Các đoạn video ngắn
+\end{itemize}
+
+
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=1\linewidth]{assets/other/input_output.pdf}
+%     \caption{Minh họa đầu vào và đầu ra của hệ thống truy vấn video. Hệ thống tiếp nhận truy vấn ở nhiều dạng (văn bản, hình ảnh, âm thanh) và trả về danh sách các đoạn video hoặc khung hình có mức độ liên quan cao, được sắp xếp theo độ phù hợp.}
+
+%     \label{fig:chapter1_input_output}
+% \end{figure}
+
+Mặc dù đã có nhiều tiến bộ trong lĩnh vực .............., bài toán ....................:
+
+\begin{enumerate}
+    \item \textbf{Vấn đề 1 (vd1):}
+    ............;
+    \item \textbf{Vấn đề 2 (vd2)::}
+    ............;
+    \item \textbf{Vấn đề 3 (vd3)::}
+    ............;
+\end{enumerate}
+
+Từ những thách thức đã nêu, khóa luận này đặt ra mục tiêu phát triển một XXXXXXXXXXXX, có khả năng:
+
+\begin{itemize}
+    \item XXX1;
+    \item XXX2;
+
+\end{itemize}
+
+\begin{itemize}
+
+    \item XXXXX
+
+    \item XXXXX
+\end{itemize}
+
+
+\section{Mục tiêu và phạm vi}
+
+\subsection{Mục tiêu}
+
+Trong bài khóa luận này, sinh viên đề ra các mục tiêu như sau:
+
+\begin{itemize}
+    \item Tìm hiểu tổng quan về bài toán ;
+    \item Thiết kế và triển khai một hệ thống ;
+    \item Tìm hiểu việc cách 
+\end{itemize}
+
+
+\subsection{Phạm vi}
+
+Trong bài khóa luận này, nhóm sinh viên tập trung hoàn thành các công việc sau:
+
+\begin{itemize}
+    \item Tìm hiểu các mô hình truy vấn ảnh hoặc video dựa trên mô tả ngôn ngữ tự nhiên, làm cơ sở cho việc xây dựng hệ thống baseline, trong đó có CLIP và các biến thể như BEiT-3;
+    \item Phát triển hệ thống truy vấn video dựa trên mô tả văn bản sử dụng các mô hình đã khảo sát, đồng thời đánh giá hiệu quả về tài nguyên tính toán (bộ nhớ GPU, kích thước đặc trưng lưu trữ), thời gian tính toán và độ chính xác truy vấn;
+    \item Tìm hiểu và đề xuất phương pháp kết hợp kết quả từ nhiều nguồn thông tin khác nhau (âm thanh, chữ trên video, đối tượng, ...) như Whisper cho bài toán trích xuất âm thanh (automatic speech recognition); DeepSolo và PARSeq cho bài toán nhận dạng chữ; và CO-DETR phát hiện đối tượng (object detection);
+    \item Thiết kế mô-đun tái xếp hạng kết quả truy vấn dựa trên ngữ cảnh toàn cục, sử dụng mô hình ngôn ngữ đa phương thức (Multimodal LLM) để đánh giá lại độ liên quan giữa truy vấn và nội dung video ở cấp độ ngữ nghĩa sâu hơn;
+    \item Xây dựng hệ thống truy vấn video tổng thể theo kiến trúc mô-đun, có khả năng tích hợp linh hoạt nhiều nguồn tín hiệu đầu vào và hỗ trợ các chiến lược truy vấn đa dạng.
+    \item Thực hiện các thí nghiệm đánh giá hệ thống trên tập dữ liệu truy vấn thực tế, sử dụng các tiêu chí chuẩn như Reciprocal Rank (RR@K), xinfAP,... nhằm đo lường hiệu quả truy vấn trên nhiều khía cạnh.
+\end{itemize}
+
+\section{Đóng góp của khóa luận}
+
+\begin{itemize}
+
+    \item  XXXX1
+    \item  XXXX2
+    \item  
+
+\end{itemize}
+
+\section{Cấu trúc khóa luận}
+
+% \begin{enumerate}
+\textbf{Chương 1:} Tổng quan bài toán.
+
+\textbf{Chương 2:} Cơ sở lý thuyết và các nghiên cứu liên quan.
+
+\textbf{Chương 3:} Một số phương pháp áp dụng để cải thiện hiệu quả cho bài toán truy vấn video.
+
+\textbf{Chương 4:} Thực nghiệm và đánh giá.
+
+\textbf{Chương 5:} Xây dựng ứng dụng minh hoạ.
+
+\textbf{Chương 6:} Kết luận và hướng phát triển.
+
+
+
+
+
+
