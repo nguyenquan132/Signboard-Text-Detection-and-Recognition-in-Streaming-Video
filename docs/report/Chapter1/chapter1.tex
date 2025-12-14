@@ -1,3 +1,6 @@
+% =========================
+% CHAPTER 1: TỔNG QUAN
+% =========================
 \chapter{TỔNG QUAN}
 \ifpdf
     \graphicspath{{Chapter1/Chapter1Figs/PNG/}{Chapter1/Chapter1Figs/PDF/}{Chapter1/Chapter1Figs/}}
@@ -5,121 +8,116 @@
     \graphicspath{{Chapter1/Chapter1Figs/EPS/}{Chapter1/Chapter1Figs/}}
 \fi
 
-\markboth{\MakeUppercase{\thechapter. My Third Chapter }}{\thechapter. TỔNG QUAN}
+\markboth{\MakeUppercase{\thechapter. TỔNG QUAN}}{\thechapter. TỔNG QUAN}
 
-
+% -------------------------------------------------
 \section{Đặt vấn đề}
 
+Phát hiện và nhận dạng văn bản trong ảnh đời thường (\textit{Scene Text Detection and Recognition} -- STDR) là một bài toán quan trọng trong thị giác máy tính, thu hút nhiều sự quan tâm nhờ các ứng dụng rộng rãi như dịch tự động, hỗ trợ dẫn đường, số hóa tài liệu ngoài trời, hay phân tích biển báo giao thông. Với đầu vào là ảnh tĩnh hoặc khung hình video, STDR hướng tới việc xác định vị trí xuất hiện của văn bản và trích xuất chính xác nội dung văn bản đó (Hình~1).
 
+Trong số các dạng văn bản đời thường, \textbf{văn bản trên biển hiệu} (\textit{Signboard Text}) có ý nghĩa đặc biệt vì thường chứa thông tin về \textit{tên địa điểm, cơ sở kinh doanh, dịch vụ} hoặc \textit{định danh không gian} trong môi trường đô thị. Do vậy, \textbf{phát hiện và nhận dạng văn bản biển hiệu} (\textit{Signboard Text Detection and Recognition}) trở thành một nhánh quan trọng của STDR, có nhiều tiềm năng ứng dụng trong hệ thống dẫn đường thông minh, phân tích thông tin đô thị và xây dựng bản đồ số.
 
+Tuy nhiên, STDR nói chung gặp nhiều thách thức do sự đa dạng của phông chữ, kích thước, hướng và bố cục; văn bản có thể bị nghiêng, cong, chồng chéo hoặc hòa lẫn trong nền phức tạp, cùng các phong cách thiết kế nghệ thuật và đa ngôn ngữ (Hình~2). Đối với tiếng Việt, khó khăn còn lớn hơn do hệ thống dấu (\', \`, \^{}, \~{}, dấu hỏi, dấu nặng) và các nguyên âm biến thể (ô, ê, â, ă, ơ, ư), làm tăng số lượng ký tự cần nhận dạng và dễ gây nhầm lẫn giữa các chữ có hình dạng gần giống (ví dụ \textit{a} với \textit{â}, \textit{ă}, \textit{á}).
+
+Bên cạnh đó, biển hiệu cũng đa dạng về hình dạng, kích thước, vật liệu và thường xuất hiện ở các vị trí phức tạp trong ảnh (Hình~3), như bị che khuất một phần, bị phản xạ ánh sáng, hoặc nằm trong các bối cảnh đông đúc. Theo hiểu biết của chúng tôi, đến nay mới chỉ có một nghiên cứu~[2] tập trung vào phát hiện biển hiệu trên đường phố Việt Nam, trong khi hướng kết hợp \textit{cả phát hiện đối tượng biển hiệu} và \textit{nhận dạng nội dung văn bản trên biển hiệu} vẫn còn ít được khai thác.
+
+Ngoài ra, khi mở rộng từ ảnh tĩnh sang \textbf{video hành trình} (dashcam), bài toán còn đối mặt với các thách thức đặc thù như mờ do chuyển động, độ phân giải hạn chế của camera hành trình, cùng sự thay đổi liên tục về ánh sáng và góc nhìn. Những yếu tố này khiến việc phát hiện và nhận dạng văn bản trong video trở nên khó khăn hơn so với ảnh đơn lẻ.
+
+Trong phạm vi khóa luận này, chúng tôi tiến hành khảo sát và tổng hợp các hướng tiếp cận liên quan đến STDR và các phương pháp hiện đại~[3,4,5,6]. Trên cơ sở đó, chúng tôi lựa chọn, cài đặt, thực nghiệm và đánh giá một số phương pháp tiên tiến~[7,8,9,10] trên tập dữ liệu SignboardText~[1]. Đồng thời, tập dữ liệu này được \textbf{mở rộng} bằng cách \textbf{bổ sung nhãn đối tượng biển hiệu} (thay vì chỉ nhãn văn bản). Tiếp theo, chúng tôi áp dụng các phương pháp vào dữ liệu video camera hành trình trên đường phố Việt Nam, với đầu vào là khung hình chứa biển hiệu và đầu ra là \textit{vị trí biển hiệu cùng nội dung văn bản} tương ứng (Hình~4). Từ văn bản trích xuất được, hệ thống hướng tới việc phát triển ứng dụng minh họa, chẳng hạn như xác định loại hình cơ sở (cửa hàng, nhà hàng, trường học, bệnh viện\ldots), hỗ trợ tìm kiếm và truy xuất thông tin.
+
+\subsection*{Bài toán và pipeline đề xuất}
+
+Khóa luận tập trung vào pipeline phát hiện và nhận dạng văn bản biển hiệu trong video, bao gồm các mô-đun chính:
 \begin{itemize}
-    \item \textbf{aa:} Ví dụ: ;
-    \item \textbf{bb():} ;
+    \item \textbf{Trích xuất khung hình và tiền xử lý:} lấy mẫu khung hình từ video, hiệu chỉnh cơ bản (nếu cần) nhằm giảm nhiễu, mờ chuyển động và sai lệch ánh sáng.
+    \item \textbf{Phát hiện biển hiệu (Signboard Detection):} xác định vùng chứa biển hiệu trong khung hình (dạng hộp bao hoặc đa giác), làm vùng quan tâm (ROI).
+    \item \textbf{Phát hiện văn bản (Text Detection):} trong ROI biển hiệu, phát hiện vùng văn bản (theo hộp thẳng hoặc hộp xoay) để tăng độ chính xác.
+    \item \textbf{Nhận dạng văn bản (Text Recognition):} nhận dạng chuỗi ký tự tiếng Việt/đa ngôn ngữ từ các vùng văn bản phát hiện được.
+    \item \textbf{Hậu xử lý và hợp nhất theo thời gian:} loại nhiễu, chuẩn hóa chuỗi, và hợp nhất kết quả giữa các khung hình liên tiếp (tracking/temporal voting) để ổn định đầu ra.
+    \item \textbf{Tầng ứng dụng:} khai thác văn bản nhận dạng để tìm kiếm/truy xuất theo từ khóa hoặc danh mục; cung cấp nền tảng cho các tác vụ downstream.
 \end{itemize}
 
-Như vậy \textbf{đầu vào (Input)} của hệ thống bao gồm (xem thêm hình minh họa 
-% ~\ref{fig:chapter1_input_output}
-):
-
+Như vậy, \textbf{đầu vào (Input)} của hệ thống bao gồm (xem thêm hình minh họa Hình~\ref{fig:chapter1_input_output}):
 \begin{itemize}
-    \item \textbf{Tập dữ liệu video đầu vào:} Bao gồm các 
+    \item \textbf{Video hành trình đầu vào:} video camera hành trình trên đường phố Việt Nam, chứa các cảnh có biển hiệu ở nhiều điều kiện (ban ngày/ban đêm, mưa/nắng, đông người/ít người, nhiều góc nhìn).
+    \item \textbf{Truy vấn người dùng (tùy chọn):} từ khóa hoặc danh mục (ví dụ: \textit{\"nhà thuốc\"}, \textit{\"trường học\"}) phục vụ chức năng tìm kiếm và lọc kết quả.
 \end{itemize}
 
-Và \textbf{đầu ra (Output)} của hệ thống  là:
-
+Và \textbf{đầu ra (Output)} của hệ thống là:
 \begin{itemize}
-    \item \textbf{Danh sách các ....:} Các đoạn video ngắn
+    \item \textbf{Danh sách các phát hiện biển hiệu:} mỗi mục gồm thời điểm (timestamp), vị trí biển hiệu (bounding box/polygon) và nội dung văn bản nhận dạng.
+    \item \textbf{Danh sách các đoạn video/khung hình liên quan:} các đoạn video ngắn hoặc khung hình đại diện chứa biển hiệu phù hợp với truy vấn, được sắp xếp theo mức độ liên quan.
 \end{itemize}
 
+\begin{figure}
+    \centering
+    % TODO: cập nhật đường dẫn theo project của bạn
+    \includegraphics[width=1\linewidth]{assets/other/input_output.pdf}
+    \caption{Minh họa đầu vào và đầu ra của hệ thống. Hệ thống tiếp nhận video (và/hoặc truy vấn) và trả về danh sách biển hiệu cùng nội dung văn bản nhận dạng, cũng như các đoạn video/khung hình liên quan.}
+    \label{fig:chapter1_input_output}
+\end{figure}
 
-% \begin{figure}
-%     \centering
-%     \includegraphics[width=1\linewidth]{assets/other/input_output.pdf}
-%     \caption{Minh họa đầu vào và đầu ra của hệ thống truy vấn video. Hệ thống tiếp nhận truy vấn ở nhiều dạng (văn bản, hình ảnh, âm thanh) và trả về danh sách các đoạn video hoặc khung hình có mức độ liên quan cao, được sắp xếp theo độ phù hợp.}
-
-%     \label{fig:chapter1_input_output}
-% \end{figure}
-
-Mặc dù đã có nhiều tiến bộ trong lĩnh vực .............., bài toán ....................:
-
+Mặc dù đã có nhiều tiến bộ trong lĩnh vực phát hiện và nhận dạng văn bản, bài toán phát hiện và nhận dạng văn bản biển hiệu trong video hành trình vẫn tồn tại nhiều thách thức đáng kể:
 \begin{enumerate}
-    \item \textbf{Vấn đề 1 (vd1):}
-    ............;
-    \item \textbf{Vấn đề 2 (vd2)::}
-    ............;
-    \item \textbf{Vấn đề 3 (vd3)::}
-    ............;
+    \item \textbf{Biến thiên điều kiện chụp và chất lượng ảnh:} mờ do chuyển động, độ phân giải thấp, nhiễu nén video và thay đổi ánh sáng làm giảm khả năng phát hiện và nhận dạng.
+    \item \textbf{Đa dạng hình dạng biển hiệu và bố cục văn bản:} biển hiệu có thể cong, nghiêng, bị che khuất, nhiều lớp thông tin (logo, biểu tượng, chữ nghệ thuật), gây khó khăn cho cả detection và recognition.
+    \item \textbf{Đặc thù tiếng Việt và đa ngôn ngữ:} dấu tiếng Việt làm tăng độ phức tạp của bộ ký tự và dễ gây nhầm lẫn; thực tế biển hiệu có thể pha trộn Việt--Anh hoặc ký tự đặc biệt.
 \end{enumerate}
 
-Từ những thách thức đã nêu, khóa luận này đặt ra mục tiêu phát triển một XXXXXXXXXXXX, có khả năng:
-
+Từ những thách thức đã nêu, khóa luận này đặt ra mục tiêu phát triển một \textbf{pipeline phát hiện và nhận dạng văn bản biển hiệu trong video hành trình}, có khả năng:
 \begin{itemize}
-    \item XXX1;
-    \item XXX2;
-
+    \item Xác định chính xác vùng biển hiệu trong khung hình video và phát hiện vùng văn bản tương ứng;
+    \item Nhận dạng văn bản trên biển hiệu ổn định theo thời gian và hỗ trợ khai thác thông tin cho tác vụ tìm kiếm/truy xuất.
 \end{itemize}
 
-\begin{itemize}
-
-    \item XXXXX
-
-    \item XXXXX
-\end{itemize}
-
-
+% -------------------------------------------------
 \section{Mục tiêu và phạm vi}
 
 \subsection{Mục tiêu}
 
-Trong bài khóa luận này, sinh viên đề ra các mục tiêu như sau:
-
+Trong khóa luận này, sinh viên đề ra các mục tiêu như sau:
 \begin{itemize}
-    \item Tìm hiểu tổng quan về bài toán ;
-    \item Thiết kế và triển khai một hệ thống ;
-    \item Tìm hiểu việc cách 
+    \item Khảo sát và tổng hợp các hướng tiếp cận tiên tiến để giải quyết bài toán STDR và bài toán văn bản biển hiệu.
+    \item Mở rộng tập dữ liệu SignboardText~[1] bằng cách bổ sung nhãn đối tượng biển hiệu (\textit{signboard}).
+    \item Cài đặt, thực nghiệm và đánh giá một số phương pháp hiện đại; phân tích ưu/nhược điểm của từng phương pháp.
+    \item Xây dựng pipeline phát hiện và nhận dạng văn bản trên biển hiệu trong video.
+    \item Phát triển ứng dụng minh họa khai thác thông tin văn bản từ biển hiệu, chẳng hạn như xác định loại hình cơ sở (cửa hàng, nhà hàng, trường học, bệnh viện\ldots), nhằm hỗ trợ tìm kiếm và truy xuất theo từ khóa hoặc danh mục; đồng thời cung cấp nền tảng cho các tác vụ downstream như gợi ý địa điểm hoặc phân loại dịch vụ.
 \end{itemize}
-
 
 \subsection{Phạm vi}
 
-Trong bài khóa luận này, nhóm sinh viên tập trung hoàn thành các công việc sau:
-
+Trong khóa luận này, nhóm sinh viên tập trung hoàn thành các công việc sau:
 \begin{itemize}
-    \item Tìm hiểu các mô hình truy vấn ảnh hoặc video dựa trên mô tả ngôn ngữ tự nhiên, làm cơ sở cho việc xây dựng hệ thống baseline, trong đó có CLIP và các biến thể như BEiT-3;
-    \item Phát triển hệ thống truy vấn video dựa trên mô tả văn bản sử dụng các mô hình đã khảo sát, đồng thời đánh giá hiệu quả về tài nguyên tính toán (bộ nhớ GPU, kích thước đặc trưng lưu trữ), thời gian tính toán và độ chính xác truy vấn;
-    \item Tìm hiểu và đề xuất phương pháp kết hợp kết quả từ nhiều nguồn thông tin khác nhau (âm thanh, chữ trên video, đối tượng, ...) như Whisper cho bài toán trích xuất âm thanh (automatic speech recognition); DeepSolo và PARSeq cho bài toán nhận dạng chữ; và CO-DETR phát hiện đối tượng (object detection);
-    \item Thiết kế mô-đun tái xếp hạng kết quả truy vấn dựa trên ngữ cảnh toàn cục, sử dụng mô hình ngôn ngữ đa phương thức (Multimodal LLM) để đánh giá lại độ liên quan giữa truy vấn và nội dung video ở cấp độ ngữ nghĩa sâu hơn;
-    \item Xây dựng hệ thống truy vấn video tổng thể theo kiến trúc mô-đun, có khả năng tích hợp linh hoạt nhiều nguồn tín hiệu đầu vào và hỗ trợ các chiến lược truy vấn đa dạng.
-    \item Thực hiện các thí nghiệm đánh giá hệ thống trên tập dữ liệu truy vấn thực tế, sử dụng các tiêu chí chuẩn như Reciprocal Rank (RR@K), xinfAP,... nhằm đo lường hiệu quả truy vấn trên nhiều khía cạnh.
+    \item Tìm hiểu tổng quan, thách thức và cơ sở lý thuyết của các phương pháp phát hiện biển hiệu, phát hiện và nhận dạng văn bản trong ảnh đời thường.
+    \item Mở rộng tập dữ liệu SignboardText~[1] bằng cách bổ sung nhãn biển hiệu; đồng thời thu thập thêm dữ liệu video hành trình từ camera hành trình trên đường phố Việt Nam.
+    \item Cài đặt, thực nghiệm và đánh giá một số phương pháp hiện đại trên tập dữ liệu đã mở rộng; phân tích ưu/nhược điểm của từng phương pháp.
+    \item Xây dựng pipeline phát hiện và nhận dạng văn bản trên biển hiệu trong video trên đường phố Việt Nam.
+    \item Phát triển ứng dụng minh họa trên nền tảng web, cho phép khai thác thông tin văn bản từ biển hiệu nhằm hỗ trợ tìm kiếm, truy xuất thông tin và cung cấp dữ liệu đầu vào cho các hệ thống thông minh khác.
 \end{itemize}
 
+% -------------------------------------------------
 \section{Đóng góp của khóa luận}
 
+Các đóng góp chính của khóa luận bao gồm:
 \begin{itemize}
-
-    \item  XXXX1
-    \item  XXXX2
-    \item  
-
+    \item \textbf{Mở rộng bộ dữ liệu:} bổ sung nhãn đối tượng biển hiệu cho SignboardText~[1] và xây dựng tập dữ liệu video hành trình phục vụ đánh giá pipeline.
+    \item \textbf{Thực nghiệm và phân tích:} cài đặt và đánh giá nhiều phương pháp hiện đại cho các mô-đun (phát hiện biển hiệu/văn bản, nhận dạng văn bản), kèm phân tích ưu/nhược điểm theo bối cảnh tiếng Việt.
+    \item \textbf{Pipeline và ứng dụng minh họa:} đề xuất pipeline STDR cho biển hiệu trong video và phát triển ứng dụng web hỗ trợ tìm kiếm/truy xuất theo từ khóa hoặc danh mục từ văn bản biển hiệu.
 \end{itemize}
 
+% -------------------------------------------------
 \section{Cấu trúc khóa luận}
 
-% \begin{enumerate}
-\textbf{Chương 1:} Tổng quan bài toán.
+Nội dung khóa luận được tổ chức như sau:
 
-\textbf{Chương 2:} Cơ sở lý thuyết và các nghiên cứu liên quan.
+\textbf{Chương 1:} Tổng quan bài toán, bối cảnh, động lực, mục tiêu, phạm vi và đóng góp.
 
-\textbf{Chương 3:} Một số phương pháp áp dụng để cải thiện hiệu quả cho bài toán truy vấn video.
+\textbf{Chương 2:} Cơ sở lý thuyết và các nghiên cứu liên quan đến phát hiện biển hiệu, phát hiện/nhận dạng văn bản và các kỹ thuật xử lý video.
 
-\textbf{Chương 4:} Thực nghiệm và đánh giá.
+\textbf{Chương 3:} Các phương pháp và pipeline đề xuất cho bài toán phát hiện và nhận dạng văn bản biển hiệu trong video, bao gồm mô tả kiến trúc hệ thống và mô-đun xử lý.
 
-\textbf{Chương 5:} Xây dựng ứng dụng minh hoạ.
+\textbf{Chương 4:} Thực nghiệm và đánh giá trên tập dữ liệu SignboardText mở rộng và dữ liệu video hành trình; phân tích kết quả và thảo luận.
 
-\textbf{Chương 6:} Kết luận và hướng phát triển.
+\textbf{Chương 5:} Xây dựng ứng dụng minh họa và mô tả các chức năng khai thác thông tin văn bản biển hiệu.
 
-
-
-
-
-
+\textbf{Chương 6:} Kết luận và hướng phát triển trong tương lai.
