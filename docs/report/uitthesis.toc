@@ -6,42 +6,37 @@
 \contentsline {chapter}{List of Tables}{vi}{chapter*.5}%
 \contentsline {chapter}{\numberline {1}TỔNG QUAN}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Đặt vấn đề}{1}{section.1.1}%
-\contentsline {section}{\numberline {1.2}Mục tiêu và phạm vi}{5}{section.1.2}%
-\contentsline {subsection}{\numberline {1.2.1}Mục tiêu}{5}{subsection.1.2.1}%
-\contentsline {subsection}{\numberline {1.2.2}Phạm vi}{6}{subsection.1.2.2}%
-\contentsline {section}{\numberline {1.3}Đóng góp của khóa luận}{6}{section.1.3}%
-\contentsline {section}{\numberline {1.4}Cấu trúc khóa luận}{7}{section.1.4}%
-\contentsline {chapter}{\numberline {2}CƠ SỞ LÝ THUYẾT VÀ CÁC NGHIÊN CỨU LIÊN QUAN}{8}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Giới thiệu}{8}{section.2.1}%
-\contentsline {subsection}{\numberline {2.1.1}Tổng quan và ý nghĩa thực tiễn của bài toán đọc văn bản trên biển hiệu trong ảnh/video đường phố}{8}{subsection.2.1.1}%
-\contentsline {subsection}{\numberline {2.1.2}Thách thức về tính đa dạng và phức tạp của văn bản trong môi trường tự nhiên}{9}{subsection.2.1.2}%
-\contentsline {subsubsection}{\numberline {2.1.2.1}Bài toán Scene Text Detection and Recognition}{9}{subsubsection.2.1.2.1}%
-\contentsline {subsubsection}{\numberline {2.1.2.2}Phân loại hướng tiếp cận cho bài toán Text Detection and Recognition}{10}{subsubsection.2.1.2.2}%
-\contentsline {paragraph}{Text Detection.}{10}{section*.9}%
-\contentsline {paragraph}{Text Recognition.}{10}{section*.10}%
-\contentsline {paragraph}{End-to-End Text Recognition.}{10}{section*.11}%
-\contentsline {section}{\numberline {2.2}Cơ sở lý thuyết}{10}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Biểu diễn dữ liệu video và trích xuất khung hình}{10}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Quy trình xử lý tổng thể (Integrated Pipeline)}{11}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.2.3}Cơ sở lý thuyết Text Detection}{12}{subsection.2.2.3}%
-\contentsline {subsection}{\numberline {2.2.4}Cơ sở lý thuyết Text Recognition}{12}{subsection.2.2.4}%
-\contentsline {subsection}{\numberline {2.2.5}Khai thác thông tin thời gian trong video}{12}{subsection.2.2.5}%
-\contentsline {section}{\numberline {2.3}Các nghiên cứu liên quan}{13}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Bộ dữ liệu văn bản trong video lái xe: RoadText-1K}{13}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Phương pháp phát hiện text theo cơ chế ``spotlight'': Spotlight Text Detector (STD)}{13}{subsection.2.3.2}%
-\contentsline {subsection}{\numberline {2.3.3}Liên hệ với đề tài khóa luận}{14}{subsection.2.3.3}%
-\contentsline {section}{\numberline {2.4}Tóm tắt chương}{14}{section.2.4}%
-\contentsline {chapter}{\numberline {3}PHƯƠNG PHÁP }{17}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Hệ thống phát hiện và nhận dạng chữ trên biển hiệu}{17}{section.3.1}%
-\contentsline {chapter}{\numberline {4}THỰC NGHIỆM VÀ ĐÁNH GIÁ}{18}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Dữ liệu}{18}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Tiền xử lý}{18}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Tập câu truy vấn đánh giá}{18}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Độ đo đánh giá}{18}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Kết quả thực nghiệm}{18}{section.4.5}%
-\contentsline {chapter}{\numberline {5}KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN}{19}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Kết luận}{19}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Hướng phát triển}{19}{section.5.2}%
-\contentsline {paragraph}{Tối ưu hóa khả năng mở rộng dữ liệu:}{19}{section*.12}%
-\contentsline {paragraph}{Tăng cường khả năng tương tác và thích ứng với người dùng:}{19}{section*.13}%
-\contentsline {paragraph}{Tích hợp truy vấn hình thức thoại (Spoken Query Integration):}{20}{section*.14}%
+\contentsline {section}{\numberline {1.2}Mục tiêu và phạm vi}{7}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Mục tiêu}{7}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}Phạm vi}{8}{subsection.1.2.2}%
+\contentsline {section}{\numberline {1.3}Đóng góp của khóa luận}{8}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Cấu trúc khóa luận}{9}{section.1.4}%
+\contentsline {chapter}{\numberline {2}CƠ SỞ LÝ THUYẾT VÀ PHƯƠNG PHÁP TIẾP CẬN}{10}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Phát hiện đối tượng}{10}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Cơ sở và hướng tiếp cận chung}{10}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Phương pháp tiếp cận}{11}{subsection.2.1.2}%
+\contentsline {section}{\numberline {2.2}Phát hiện và nhận dạng văn bản ngoại cảnh (Scene Text Detection and Recogntion)}{13}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Phát hiện văn bản ngoại cảnh (Scene Text Detection)}{13}{subsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.1.1}Cơ sở và hướng tiếp cận chung}{13}{subsubsection.2.2.1.1}%
+\contentsline {subsubsection}{\numberline {2.2.1.2}Phương pháp tiếp cận}{14}{subsubsection.2.2.1.2}%
+\contentsline {subsection}{\numberline {2.2.2}Nhận dạng văn bản (Text Recognition)}{15}{subsection.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.2.1}Cơ sở và hướng tiếp cận chung}{15}{subsubsection.2.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2.2}Phương pháp tiếp cận}{15}{subsubsection.2.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}End-to-End (End-to-End Text Recognition)}{15}{subsection.2.2.3}%
+\contentsline {subsubsection}{\numberline {2.2.3.1}Cơ sở và hướng tiếp cận chung}{15}{subsubsection.2.2.3.1}%
+\contentsline {subsubsection}{\numberline {2.2.3.2}Phương pháp tiếp cận}{15}{subsubsection.2.2.3.2}%
+\contentsline {chapter}{\numberline {3}PHƯƠNG PHÁP }{16}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Hệ thống phát hiện và nhận dạng chữ trên biển hiệu}{16}{section.3.1}%
+\contentsline {chapter}{\numberline {4}THỰC NGHIỆM VÀ ĐÁNH GIÁ}{17}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Dữ liệu}{17}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Tiền xử lý}{17}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Tập câu truy vấn đánh giá}{17}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Độ đo đánh giá}{17}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Kết quả thực nghiệm}{17}{section.4.5}%
+\contentsline {chapter}{\numberline {5}KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN}{18}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Kết luận}{18}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Hướng phát triển}{18}{section.5.2}%
+\contentsline {paragraph}{Tối ưu hóa khả năng mở rộng dữ liệu:}{18}{section*.11}%
+\contentsline {paragraph}{Tăng cường khả năng tương tác và thích ứng với người dùng:}{18}{section*.12}%
+\contentsline {paragraph}{Tích hợp truy vấn hình thức thoại (Spoken Query Integration):}{19}{section*.13}%
+\contentsline {chapter}{References}{20}{appendix*.14}%

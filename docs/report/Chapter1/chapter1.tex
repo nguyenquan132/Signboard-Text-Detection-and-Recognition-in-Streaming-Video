@@ -13,61 +13,85 @@
 % -------------------------------------------------
 \section{Đặt vấn đề}
 
-Phát hiện và nhận dạng văn bản trong ảnh đời thường (\textit{Scene Text Detection and Recognition} -- STDR) là một bài toán quan trọng trong thị giác máy tính, thu hút nhiều sự quan tâm nhờ các ứng dụng rộng rãi như dịch tự động, hỗ trợ dẫn đường, số hóa tài liệu ngoài trời, hay phân tích biển báo giao thông. Với đầu vào là ảnh tĩnh hoặc khung hình video, STDR hướng tới việc xác định vị trí xuất hiện của văn bản và trích xuất chính xác nội dung văn bản đó (Hình~1).
+Phát hiện và nhận dạng văn bản trong ảnh ngoại cảnh (\textit{Scene Text Detection and Recognition} -- STDR) là một bài toán quan trọng trong thị giác máy tính, thu hút nhiều sự quan tâm nhờ tính ứng dụng rộng rãi như dịch tự động, hỗ trợ dẫn đường, hay phân tích biển báo giao thông. Với đầu vào là ảnh tĩnh hoặc các khung hình video, bài toán STDR hướng tới việc xác định vị trí xuất hiện và nội dung của văn bản (Hình~\ref{fig:stdr_example}).
 
-Trong số các dạng văn bản đời thường, \textbf{văn bản trên biển hiệu} (\textit{Signboard Text}) có ý nghĩa đặc biệt vì thường chứa thông tin về \textit{tên địa điểm, cơ sở kinh doanh, dịch vụ} hoặc \textit{định danh không gian} trong môi trường đô thị. Do vậy, \textbf{phát hiện và nhận dạng văn bản biển hiệu} (\textit{Signboard Text Detection and Recognition}) trở thành một nhánh quan trọng của STDR, có nhiều tiềm năng ứng dụng trong hệ thống dẫn đường thông minh, phân tích thông tin đô thị và xây dựng bản đồ số.
+Trong số các loại văn bản ngoại cảnh, \textbf{văn bản trên biển hiệu} (Hình~\ref{fig:signboard_example}) có ý nghĩa đặc biệt do thường chứa các thông tin quan trọng như \textit{tên địa điểm, cơ sở kinh doanh} hoặc \textit{loại hình dịch vụ}. Chính vì vậy, bài toán \textbf{phát hiện và nhận dạng văn bản trên biển hiệu} (\textit{Text Detection and Recognition on Signboard}) trở thành một nhánh nghiên cứu quan trọng của STDR, với nhiều tiềm năng ứng dụng trong hệ thống dẫn đường thông minh, phân tích thông tin đô thị, và bổ sung thông tin ngữ nghĩa cho bản đồ số.
 
-Tuy nhiên, STDR nói chung gặp nhiều thách thức do sự đa dạng của phông chữ, kích thước, hướng và bố cục; văn bản có thể bị nghiêng, cong, chồng chéo hoặc hòa lẫn trong nền phức tạp, cùng các phong cách thiết kế nghệ thuật và đa ngôn ngữ (Hình~2). Đối với tiếng Việt, khó khăn còn lớn hơn do hệ thống dấu (\', \`, \^{}, \~{}, dấu hỏi, dấu nặng) và các nguyên âm biến thể (ô, ê, â, ă, ơ, ư), làm tăng số lượng ký tự cần nhận dạng và dễ gây nhầm lẫn giữa các chữ có hình dạng gần giống (ví dụ \textit{a} với \textit{â}, \textit{ă}, \textit{á}).
+\begin{figure}[t]
+    \centering
+    % TODO: cập nhật đường dẫn theo project của bạn
+    \includegraphics[width=1\linewidth]{assets/other/STDR_example.jpg}
+    \caption{Văn bản trong ảnh ngoại cảnh}
+    \label{fig:stdr_example}
+\end{figure}
 
-Bên cạnh đó, biển hiệu cũng đa dạng về hình dạng, kích thước, vật liệu và thường xuất hiện ở các vị trí phức tạp trong ảnh (Hình~3), như bị che khuất một phần, bị phản xạ ánh sáng, hoặc nằm trong các bối cảnh đông đúc. Theo hiểu biết của chúng tôi, đến nay mới chỉ có một nghiên cứu~[2] tập trung vào phát hiện biển hiệu trên đường phố Việt Nam, trong khi hướng kết hợp \textit{cả phát hiện đối tượng biển hiệu} và \textit{nhận dạng nội dung văn bản trên biển hiệu} vẫn còn ít được khai thác.
+\begin{figure}[t]
+    \centering
+    % TODO: cập nhật đường dẫn theo project của bạn
+    \includegraphics[width=1\linewidth]{assets/other/TextonSignboard_example.jpg}
+    \caption{Văn bản trên biển hiệu}
+    \label{fig:signboard_example}
+\end{figure}
 
-Ngoài ra, khi mở rộng từ ảnh tĩnh sang \textbf{video hành trình} (dashcam), bài toán còn đối mặt với các thách thức đặc thù như mờ do chuyển động, độ phân giải hạn chế của camera hành trình, cùng sự thay đổi liên tục về ánh sáng và góc nhìn. Những yếu tố này khiến việc phát hiện và nhận dạng văn bản trong video trở nên khó khăn hơn so với ảnh đơn lẻ.
+Tuy nhiên, bài toán phát hiện và nhận dạng văn bản trên biển hiệu đặt ra nhiều thách thức. Thách thức đầu tiên xuất phát từ đặc điểm của văn bản, như sự đa dạng về phông chữ, kích thước, hướng, bố cục; văn bản có thể bị nghiêng, cong, chồng chép hoặc hòa lẫn vào nền phức tạp, cùng với các phong cách thiết kế nghệ thuật và yếu tố đa ngôn ngữ (Hình~\ref{fig:text_various}). Đặc biệt đối với tiếng Việt, khó khăn còn gia tăng do hệ thống dấu thanh (sắc, huyền, hỏi, ngã, nặng) và các ký tự đặc biệt (ô, ê, ă, â, ơ, ư), làm tăng đáng kể tập ký tự cần nhận dạng và dễ gây nhầm lẫn giữa các chữ có hình dáng tương tự (ví dụ giữa \textit{a}, \textit{â}, \textit{ă}, \textit{á}).
 
-Trong phạm vi khóa luận này, chúng tôi tiến hành khảo sát và tổng hợp các hướng tiếp cận liên quan đến STDR và các phương pháp hiện đại~[3,4,5,6]. Trên cơ sở đó, chúng tôi lựa chọn, cài đặt, thực nghiệm và đánh giá một số phương pháp tiên tiến~[7,8,9,10] trên tập dữ liệu SignboardText~[1]. Đồng thời, tập dữ liệu này được \textbf{mở rộng} bằng cách \textbf{bổ sung nhãn đối tượng biển hiệu} (thay vì chỉ nhãn văn bản). Tiếp theo, chúng tôi áp dụng các phương pháp vào dữ liệu video camera hành trình trên đường phố Việt Nam, với đầu vào là khung hình chứa biển hiệu và đầu ra là \textit{vị trí biển hiệu cùng nội dung văn bản} tương ứng (Hình~4). Từ văn bản trích xuất được, hệ thống hướng tới việc phát triển ứng dụng minh họa, chẳng hạn như xác định loại hình cơ sở (cửa hàng, nhà hàng, trường học, bệnh viện\ldots), hỗ trợ tìm kiếm và truy xuất thông tin.
+Thách thức thứ hai bắt nguồn từ đặc điểm của biển hiệu và bối cảnh môi trường xung quanh, biển hiệu đa dạng về hình dạng, kích thước, vật liệu và thường xuất hiện ở các vị trí phức tạp trong ảnh (Hình~\ref{signboard_various}), chẳng hạn như bị che khuất một phần, chịu ảnh hưởng của phản xạ ánh sáng, hoặc nằm trong các bối cảnh đông đúc. Theo khảo sát các nghiên cứu hiện có, cho đến nay mới chỉ có một nghiên cứu ~\cite{quang2022signboards} tập trung vào phát hiện biển hiệu trên đường phố Việt Nam, trong khi hướng tiếp cận kết hợp cả phát hiện đối tượng biển hiệu lẫn nhận dạng nội dung văn bản trên đó vẫn còn rất ít được khai thác.
 
-\subsection*{Bài toán và pipeline đề xuất}
+Hơn nữa, khi mở rộng phạm vi từ ảnh tĩnh sang \textbf{video hành trình}, bài toán còn phải đối mặt với những thách thức đặc thù như hiện tượng mờ do chuyển động, chất lượng hình ảnh bị giới hạn bởi camera hành trình, cùng với sự biến đổi liên tục về điều kiện ánh sáng và góc quay. Những yếu tố này khiến nhiệm vụ phát hiện và nhận dạng văn bản trong video trở nên phức tạp hơn nhiều so với trên ảnh đơn lẻ.
 
-Khóa luận tập trung vào pipeline phát hiện và nhận dạng văn bản biển hiệu trong video, bao gồm các mô-đun chính:
+\begin{figure}[t]
+    \centering
+    % TODO: cập nhật đường dẫn theo project của bạn
+    \includegraphics[width=1\linewidth]{assets/other/example_text.png}
+    \caption{Hình ảnh minh họa sự đa dạng về phông chữ, kích thước, chữ nghệ thuật, và đa ngôn ngữ~\cite{do2024signboardtext}}
+    \label{fig:text_various}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    % TODO: cập nhật đường dẫn theo project của bạn
+    \includegraphics[width=1\linewidth]{assets/other/example_signboard.png}
+    \caption{Hình ảnh minh họa sự đa dạng về hình dạng, kích thước, vật liệu và vị trí của biển hiệu, dựa trên bộ dữ liệu SignboardText~\cite{do2024signboardtext}}
+    \label{fig:signboard_various}
+\end{figure}
+
+Từ những thách thức nêu trên, bài toán phát hiện và nhận dạng văn bản trên biển hiệu trong bối cảnh \textbf{video hành trình} có thể được định nghĩa một cách cụ thể như sau (hình ảnh minh họa trực quan tại Hình~\ref{fig:chapter1_input_output}):
+
 \begin{itemize}
-    \item \textbf{Trích xuất khung hình và tiền xử lý:} lấy mẫu khung hình từ video, hiệu chỉnh cơ bản (nếu cần) nhằm giảm nhiễu, mờ chuyển động và sai lệch ánh sáng.
-    \item \textbf{Phát hiện biển hiệu (Signboard Detection):} xác định vùng chứa biển hiệu trong khung hình (dạng hộp bao hoặc đa giác), làm vùng quan tâm (ROI).
-    \item \textbf{Phát hiện văn bản (Text Detection):} trong ROI biển hiệu, phát hiện vùng văn bản (theo hộp thẳng hoặc hộp xoay) để tăng độ chính xác.
-    \item \textbf{Nhận dạng văn bản (Text Recognition):} nhận dạng chuỗi ký tự tiếng Việt/đa ngôn ngữ từ các vùng văn bản phát hiện được.
-    \item \textbf{Hậu xử lý và hợp nhất theo thời gian:} loại nhiễu, chuẩn hóa chuỗi, và hợp nhất kết quả giữa các khung hình liên tiếp (tracking/temporal voting) để ổn định đầu ra.
-    \item \textbf{Tầng ứng dụng:} khai thác văn bản nhận dạng để tìm kiếm/truy xuất theo từ khóa hoặc danh mục; cung cấp nền tảng cho các tác vụ downstream.
-\end{itemize}
-
-Như vậy, \textbf{đầu vào (Input)} của hệ thống bao gồm (xem thêm hình minh họa Hình~\ref{fig:chapter1_input_output}):
-\begin{itemize}
-    \item \textbf{Video hành trình đầu vào:} video camera hành trình trên đường phố Việt Nam, chứa các cảnh có biển hiệu ở nhiều điều kiện (ban ngày/ban đêm, mưa/nắng, đông người/ít người, nhiều góc nhìn).
-\end{itemize}
-
-Và \textbf{đầu ra (Output)} của hệ thống là:
-\begin{itemize}
-    \item \textbf{Danh sách các phát hiện biển hiệu:} mỗi mục gồm thời điểm (timestamp), vị trí biển hiệu (bounding box/polygon) và nội dung văn bản nhận dạng.
-    \item \textbf{Danh sách các đoạn video/khung hình liên quan:} các đoạn video ngắn hoặc khung hình đại diện chứa biển hiệu phù hợp với truy vấn, được sắp xếp theo mức độ liên quan.
+    \item \textbf{Đầu vào (Input)}: Các hình ảnh hoặc khung hình thực tế được trích xuất từ video camera hành trình trên đường phố Việt Nam, chứa các cảnh có biển hiệu trong nhiều điều kiện khác nhau, bao gồm ban ngày/ban đêm, trời nắng/mưa và các góc nhìn đa dạng.
+    \item \textbf{Đầu ra (Ouput)}: Đối với mỗi hình ảnh (hoặc khung hình video) đầu vào, bài toán cần trả về hai thông tin chính:
+    \begin{itemize}
+        \item \textbf{Vị trí của biển hiệu}: Danh sách các vùng (bounding regions) xác định vùng chứa biển hiệu trong ảnh.
+        \item \textbf{Thông tin văn bản trên từng biển hiệu}: Ứng với mỗi biển hiệu, cung cấp vị trí và nội dung văn bản đã được nhận dạng trên biển hiệu đó.
+    \end{itemize}
+    \item[] \textit{(Kết quả đầu ra có thể được trực quan hóa trực tiếp trên ảnh đầu vào hoặc tích hợp để xử lý liên tục cho luồng video.)}
 \end{itemize}
 
 \begin{figure}
     \centering
     % TODO: cập nhật đường dẫn theo project của bạn
-    \includegraphics[width=1\linewidth]{assets/other/input_output.pdf}
-    \caption{Minh họa đầu vào và đầu ra của hệ thống. Hệ thống tiếp nhận video và trả về danh sách biển hiệu cùng nội dung văn bản nhận dạng, cũng như các đoạn video/khung hình liên quan.}
+    \includegraphics[width=1\linewidth]{assets/other/input_output.png}
+    \caption{Hình ảnh minh họa đầu vào và đầu ra của bài toán. Bài toán nhận đầu vào là ảnh hoặc khung hình video và trả về danh sách các biển hiệu, trong đó mỗi biển hiệu được xác định bằng vùng chứa (bounding region) và nội dung văn bản tương ứng đã được nhận dạng.}
     \label{fig:chapter1_input_output}
 \end{figure}
 
-Mặc dù đã có nhiều tiến bộ trong lĩnh vực phát hiện và nhận dạng văn bản, bài toán phát hiện và nhận dạng văn bản biển hiệu trong video hành trình vẫn tồn tại nhiều thách thức đáng kể:
-\begin{enumerate}
-    \item \textbf{Biến thiên điều kiện chụp và chất lượng ảnh:} mờ do chuyển động, độ phân giải thấp, nhiễu nén video và thay đổi ánh sáng làm giảm khả năng phát hiện và nhận dạng.
-    \item \textbf{Đa dạng hình dạng biển hiệu và bố cục văn bản:} biển hiệu có thể cong, nghiêng, bị che khuất, nhiều lớp thông tin (logo, biểu tượng, chữ nghệ thuật), gây khó khăn cho cả detection và recognition.
-    \item \textbf{Đặc thù tiếng Việt và đa ngôn ngữ:} dấu tiếng Việt làm tăng độ phức tạp của bộ ký tự và dễ gây nhầm lẫn; thực tế biển hiệu có thể pha trộn Việt--Anh hoặc ký tự đặc biệt.
-\end{enumerate}
+Trước những thách thức thực tế và dựa trên các kết quả nghiên cứu trước đây cho thấy rằng hướng nghiên cứu kết hợp (phát hiện biển hiệu và nhận dạng văn bản) vẫn còn ít được khai thác, khóa luận này đặt ra mục tiêu phát triển một \textbf{pipeline end-to-end} cho bài toán phát hiện và nhận dạng văn bản trên biển hiệu trong video được quay bởi camera hành trình trên đường phố. Pipeline hướng tới việc:
 
-Từ những thách thức đã nêu, khóa luận này đặt ra mục tiêu phát triển một \textbf{pipeline phát hiện và nhận dạng văn bản biển hiệu trong video hành trình}, có khả năng:
 \begin{itemize}
-    \item Xác định chính xác vùng biển hiệu trong khung hình video và phát hiện vùng văn bản tương ứng;
-    \item Nhận dạng văn bản trên biển hiệu ổn định theo thời gian và hỗ trợ khai thác thông tin cho tác vụ tìm kiếm/truy xuất.
+    \item Xác định vùng chứa biển hiệu (signboard detection) và vùng chứa văn bản bên trong mỗi biển hiệu (text detection) trong từng khung hình video.
+    \item Trích xuất và chuyển đổi nội dung văn bản từ các vùng văn bản đã phát hiện thành dạng văn bản có thể đọc được, hỗ trợ hai ngôn ngữ chính là tiếng Việt và tiếng Anh, hướng tới việc cung cấp thông tin đầu ra có ích cho các tác vụ truy xuất hoặc khai thác thông tin trong tương lai.
 \end{itemize}
+
+Để đạt được các mục tiêu trên, khóa luận sẽ tiến hành khảo sát, thực nghiệm so sánh và lựa chọn các phương pháp tiên tiến hiện nay cho từng tác vụ con, đồng thời so sánh hai hướng tiếp cận chính cho bài toán text spotting. Các phương pháp cụ thể được xem xét bao gồm:
+
+\begin{itemize}
+    \item \textbf{Phát hiện biển hiệu (Signboard Detection):} Các biến thể YOLO \cite{redmon2016you}, DETR \cite{carion2020end}, RTDETR v2 \cite{lv2024rt}, SegFormer \cite{xie2021segformer}, Mask2Former \cite{cheng2022masked}.
+    \item \textbf{Phát hiện văn bản (Text Detection):} PANet \cite{liu2018path}, DBNet++ \cite{liao2022real}, TextPMs \cite{zhang2022arbitrary}, FAST \cite{chen2021fast}, KPN \cite{zhang2022kernel}.
+    \item \textbf{Nhận dạng văn bản (Text Recognition):} ViTSTR \cite{atienza2021vision}, PARSeq \cite{bautista2022scene}, CDistNet \cite{zheng2024cdistnet}, SMTR \cite{du2025out}, SVTRv2 \cite{du2025svtrv2}
+    \item \textbf{Text Spotting (End-to-End):} TESTR \cite{zhang2022text}, DeepSolo \cite{ye2023deepsolo}, UNITS \cite{kil2023towards}, DNTextSpotter \cite{qiao2024dntextspotter}
+\end{itemize}
+
+Trên cơ sở kết quả đánh giá và so sánh từ thực nghiệm cho từng tác vụ con, một pipeline end-to-end sẽ được xây dựng bằng cách lựa chọn phương pháp tối ưu cho mỗi tác vụ và xác định kiến trúc hiệu quả nhất cho giai đoạn xử lý văn bản thông qua so sánh hướng tiếp cận two-stage (tích hợp các phương pháp phát hiện và nhận dạng văn bản đã chọn) với các mô hình end-to-end tiên tiến.
 
 % -------------------------------------------------
 \section{Mục tiêu và phạm vi}
@@ -76,22 +100,18 @@ Từ những thách thức đã nêu, khóa luận này đặt ra mục tiêu ph
 
 Trong khóa luận này, sinh viên đề ra các mục tiêu như sau:
 \begin{itemize}
-    \item Khảo sát và tổng hợp các hướng tiếp cận tiên tiến để giải quyết bài toán STDR và bài toán văn bản biển hiệu.
-    \item Mở rộng tập dữ liệu SignboardText~[1] bằng cách bổ sung nhãn đối tượng biển hiệu (\textit{signboard}).
-    \item Cài đặt, thực nghiệm và đánh giá một số phương pháp hiện đại; phân tích ưu/nhược điểm của từng phương pháp.
-    \item Xây dựng pipeline phát hiện và nhận dạng văn bản trên biển hiệu trong video.
-    \item Phát triển ứng dụng minh họa khai thác thông tin văn bản từ biển hiệu, chẳng hạn như xác định loại hình cơ sở (cửa hàng, nhà hàng, trường học, bệnh viện\ldots), nhằm hỗ trợ tìm kiếm và truy xuất theo từ khóa hoặc danh mục; đồng thời cung cấp nền tảng cho các tác vụ downstream như gợi ý địa điểm hoặc phân loại dịch vụ.
+    \item Mở rộng và chuẩn bị tập dữ liệu ảnh tĩnh SignboardText~\cite{do2024signboardtext} bằng cách bổ sung nhãn đối tượng biển hiệu (\textit{signboard}), nhằm hỗ trợ đánh giá bài toán phát hiện biển hiệu.
+    \item Thực nghiệm, so sánh và đánh giá một số phương pháp tiên tiến hiện nay cho từng tác vụ con (phát hiện biển hiệu, phát hiện văn bản, nhận dạng văn bản) trên tập dữ liệu được chuẩn bị, từ đó rút ra ưu điểm, nhược điểm của từng phương pháp.
+    \item Xây dựng một pipeline end-to-end cho bài toán phát hiện và nhận dạng văn bản trên biển hiệu trong video hành trình tại Việt Nam.
 \end{itemize}
 
 \subsection{Phạm vi}
 
-Trong khóa luận này, nhóm sinh viên tập trung hoàn thành các công việc sau:
+Phạm vi của khóa luận được giới hạn nhằm đảm bảo tính tập trung và khả thi, bao gồm các công việc sau:
 \begin{itemize}
-    \item Tìm hiểu tổng quan, thách thức và cơ sở lý thuyết của các phương pháp phát hiện biển hiệu, phát hiện và nhận dạng văn bản trong ảnh đời thường.
-    \item Mở rộng tập dữ liệu SignboardText~[1] bằng cách bổ sung nhãn biển hiệu; đồng thời thu thập thêm dữ liệu video hành trình từ camera hành trình trên đường phố Việt Nam.
-    \item Cài đặt, thực nghiệm và đánh giá một số phương pháp hiện đại trên tập dữ liệu đã mở rộng; phân tích ưu/nhược điểm của từng phương pháp.
-    \item Xây dựng pipeline phát hiện và nhận dạng văn bản trên biển hiệu trong video trên đường phố Việt Nam.
-    \item Phát triển ứng dụng minh họa trên nền tảng web, cho phép khai thác thông tin văn bản từ biển hiệu nhằm hỗ trợ tìm kiếm, truy xuất thông tin và cung cấp dữ liệu đầu vào cho các hệ thống thông minh khác.
+    \item Mở rộng tập dữ liệu tập trung vào việc bổ sung nhãn đối tượng biển hiệu (signboard annotation) cho tập dữ liệu ảnh tĩnh SignboardText hiện có. Dữ liệu video được thu thập chỉ nhằm mục đích minh họa và kiểm tra tính tổng quát của mô hình, với điều kiện chính là ban ngày. Các tình huống phức tạp (ban đêm, thời tiết xấu) không nằm trong phạm vi xem xét.
+    \item Khảo sát và thực nghiệm được giới hạn trong một tập hợp các phương pháp tiên tiến cho các hướng tiếp cận phổ biến và hiệu quả hiện nay. Việc so sánh không bao quát toàn bộ các phương pháp trong lĩnh vực, mà tập trung vào những phương pháp phù hợp và khả thi với dữ liệu và mục tiêu của khóa luận.
+    \item  Pipeline end-to-end tập trung vào bài toán phát hiện và nhận dạng văn bản trên biển hiệu và hướng tới việc cung cấp thông tin đầu ra vị trí và nội dung văn bản, làm cơ sở cho các tác vụ truy xuất thông tin trong tương lai.
 \end{itemize}
 
 % -------------------------------------------------
@@ -99,9 +119,9 @@ Trong khóa luận này, nhóm sinh viên tập trung hoàn thành các công vi
 
 Các đóng góp chính của khóa luận bao gồm:
 \begin{itemize}
-    \item \textbf{Mở rộng bộ dữ liệu:} bổ sung nhãn đối tượng biển hiệu cho SignboardText~[1] và xây dựng tập dữ liệu video hành trình phục vụ đánh giá pipeline.
-    \item \textbf{Thực nghiệm và phân tích:} cài đặt và đánh giá nhiều phương pháp hiện đại cho các mô-đun (phát hiện biển hiệu/văn bản, nhận dạng văn bản), kèm phân tích ưu/nhược điểm theo bối cảnh tiếng Việt.
-    \item \textbf{Pipeline và ứng dụng minh họa:} đề xuất pipeline STDR cho biển hiệu trong video và phát triển ứng dụng web hỗ trợ tìm kiếm/truy xuất theo từ khóa hoặc danh mục từ văn bản biển hiệu.
+    \item \textbf{Mở rộng bộ dữ liệu:} Bổ sung nhãn đối tượng biển hiệu (signboard bounding box) cho tập dữ liệu ảnh tĩnh SignboardText~\cite{do2024signboardtext}, hỗ trợ thực nghiệm và đánh giá cho bài toán phát hiện biển hiệu. Đồng thời, thu thập một tập dữ liệu video hành trình thực tế để phục vụ minh họa và kiểm tra tính tổng quát.
+    \item \textbf{Thực nghiệm và đánh giá:} Tiến hành cài đặt, thực nghiệm và so sánh một một số phương pháp tiên tiến cho ba tác vụ thành phần: phát hiện biển hiệu, phát hiện văn bản và nhận dạng văn bản. Kết quả đánh giá đi kèm phân tích ưu/nhược điểm cụ thể trong bối cảnh dữ liệu tiếng Việt và cảnh quan đường phố.
+    \item \textbf{Phát triển pipeline end-to-end:} Trên cơ sở kết quả thực nghiệm, phát triển một pipeline cho bài toán phát hiện và nhận dạng văn bản trên biển hiệu trong video hành trình trên đường phố Việt Nam. Pipeline hướng tới việc cung cấp đầu ra vị trí và nội dung văn bản, làm cơ sở cho các tác vụ truy xuất thông tin trong tương lai.
 \end{itemize}
 
 % -------------------------------------------------
