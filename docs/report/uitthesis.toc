@@ -2,8 +2,8 @@
 \contentsline {chapter}{LỜI CẢM ƠN}{i}{chapter*.1}%
 \contentsline {chapter}{Tóm tắt khóa luận}{ii}{chapter*.2}%
 \contentsline {chapter}{Contents}{iii}{chapter*.3}%
-\contentsline {chapter}{List of Figures}{v}{chapter*.4}%
-\contentsline {chapter}{List of Tables}{vi}{chapter*.5}%
+\contentsline {chapter}{List of Figures}{vii}{chapter*.4}%
+\contentsline {chapter}{List of Tables}{viii}{chapter*.5}%
 \contentsline {chapter}{\numberline {1}TỔNG QUAN}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Đặt vấn đề}{1}{section.1.1}%
 \contentsline {section}{\numberline {1.2}Mục tiêu và phạm vi}{7}{section.1.2}%
@@ -25,18 +25,73 @@
 \contentsline {subsection}{\numberline {2.2.3}End-to-End (End-to-End Text Recognition)}{15}{subsection.2.2.3}%
 \contentsline {subsubsection}{\numberline {2.2.3.1}Cơ sở và hướng tiếp cận chung}{15}{subsubsection.2.2.3.1}%
 \contentsline {subsubsection}{\numberline {2.2.3.2}Phương pháp tiếp cận}{15}{subsubsection.2.2.3.2}%
-\contentsline {chapter}{\numberline {3}PHƯƠNG PHÁP }{16}{chapter.3}%
+\contentsline {chapter}{\numberline {3}PHƯƠNG PHÁP}{16}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Hệ thống phát hiện và nhận dạng chữ trên biển hiệu}{16}{section.3.1}%
-\contentsline {chapter}{\numberline {4}THỰC NGHIỆM VÀ ĐÁNH GIÁ}{17}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Dữ liệu}{17}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Tiền xử lý}{17}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Tập câu truy vấn đánh giá}{17}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Độ đo đánh giá}{17}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Kết quả thực nghiệm}{17}{section.4.5}%
-\contentsline {chapter}{\numberline {5}KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN}{18}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Kết luận}{18}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Hướng phát triển}{18}{section.5.2}%
-\contentsline {paragraph}{Tối ưu hóa khả năng mở rộng dữ liệu:}{18}{section*.11}%
-\contentsline {paragraph}{Tăng cường khả năng tương tác và thích ứng với người dùng:}{18}{section*.12}%
-\contentsline {paragraph}{Tích hợp truy vấn hình thức thoại (Spoken Query Integration):}{19}{section*.13}%
-\contentsline {chapter}{References}{20}{appendix*.14}%
+\contentsline {subsection}{\numberline {3.1.1}Bài toán và mục tiêu}{16}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Kiến trúc tổng thể của pipeline}{17}{subsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.1.3}Quy ước biểu diễn hình học (BBox/OBB/Mask)}{17}{subsection.3.1.3}%
+\contentsline {subsection}{\numberline {3.1.4}Chiến lược ``phát hiện biển hiệu trước''}{18}{subsection.3.1.4}%
+\contentsline {section}{\numberline {3.2}Mô-đun phát hiện biển hiệu (Signboard Detection/Segmentation)}{18}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Phát hiện biển hiệu bằng object detection}{18}{subsection.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.1.1}Lý do ưu tiên OBB cho biển hiệu}{18}{subsubsection.3.2.1.1}%
+\contentsline {subsubsection}{\numberline {3.2.1.2}Thiết lập fine-tune}{19}{subsubsection.3.2.1.2}%
+\contentsline {subsection}{\numberline {3.2.2}Phân đoạn biển hiệu bằng segmentation}{19}{subsection.3.2.2}%
+\contentsline {subsubsection}{\numberline {3.2.2.1}Tạo patch biển hiệu từ mask}{20}{subsubsection.3.2.2.1}%
+\contentsline {section}{\numberline {3.3}Chuẩn hóa hình học (Align/Rectify)}{20}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Động cơ của bước Align}{20}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Align dựa trên OBB/4 điểm}{20}{subsection.3.3.2}%
+\contentsline {section}{\numberline {3.4}Mô-đun phát hiện văn bản (Text Detection)}{20}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Bài toán phát hiện văn bản trong patch biển hiệu}{20}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Lựa chọn hướng tiếp cận: segmentation-based vs OBB-based}{21}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Quy trình fine-tune text detector}{21}{subsection.3.4.3}%
+\contentsline {subsection}{\numberline {3.4.4}Chỉ số đánh giá cho text detection}{21}{subsection.3.4.4}%
+\contentsline {section}{\numberline {3.5}Mô-đun nhận dạng văn bản (Text Recognition)}{22}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Bài toán nhận dạng chuỗi ký tự}{22}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Tiền xử lý patch chữ}{22}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}Mô hình nhận dạng và lý do lựa chọn}{22}{subsection.3.5.3}%
+\contentsline {subsection}{\numberline {3.5.4}Chỉ số đánh giá cho text recognition}{22}{subsection.3.5.4}%
+\contentsline {section}{\numberline {3.6}Hậu xử lý và chuẩn hoá tiếng Việt}{23}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}Chuẩn hoá Unicode và lọc nhiễu ký tự}{23}{subsection.3.6.1}%
+\contentsline {subsection}{\numberline {3.6.2}Gộp kết quả theo dòng/khối (tuỳ chọn)}{23}{subsection.3.6.2}%
+\contentsline {section}{\numberline {3.7}Tổng hợp cấu hình thực nghiệm trong pipeline}{23}{section.3.7}%
+\contentsline {subsection}{\numberline {3.7.1}Nguyên tắc chọn mô hình cho pipeline cuối}{23}{subsection.3.7.1}%
+\contentsline {subsection}{\numberline {3.7.2}Các biến thể pipeline được so sánh}{24}{subsection.3.7.2}%
+\contentsline {section}{\numberline {3.8}Tóm tắt chương}{24}{section.3.8}%
+\contentsline {chapter}{\numberline {4}THỰC NGHIỆM VÀ ĐÁNH GIÁ}{27}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Dữ liệu}{27}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Nguồn dữ liệu}{27}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Thống kê dữ liệu}{27}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.3}Đặc trưng hình học và kích thước mẫu}{28}{subsection.4.1.3}%
+\contentsline {subsection}{\numberline {4.1.4}Tỷ lệ văn bản nằm trong vùng biển hiệu}{28}{subsection.4.1.4}%
+\contentsline {subsection}{\numberline {4.1.5}Chia tập Train/Validation/Test}{29}{subsection.4.1.5}%
+\contentsline {section}{\numberline {4.2}Tiền xử lý}{29}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Chuẩn hóa nhãn và định dạng dữ liệu}{29}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Tạo dữ liệu cho Text Recognition}{29}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Tăng cường dữ liệu (Augmentation)}{29}{subsection.4.2.3}%
+\contentsline {section}{\numberline {4.3}Mô hình thực nghiệm}{30}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Phát hiện biển hiệu (Signboard Detection)}{30}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Phát hiện văn bản (Text Detection)}{30}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Nhận dạng văn bản (Text Recognition)}{30}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Text spotting (End-to-end / Two-stage)}{30}{subsection.4.3.4}%
+\contentsline {section}{\numberline {4.4}Độ đo đánh giá}{31}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Signboard detection}{31}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Signboard segmentation}{31}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}Text detection}{31}{subsection.4.4.3}%
+\contentsline {subsection}{\numberline {4.4.4}Text recognition}{31}{subsection.4.4.4}%
+\contentsline {subsection}{\numberline {4.4.5}Text spotting}{32}{subsection.4.4.5}%
+\contentsline {section}{\numberline {4.5}Kết quả thực nghiệm}{32}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Kết quả phát hiện biển hiệu (BBox/OBB)}{32}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Kết quả phân đoạn biển hiệu (Segmentation)}{33}{subsection.4.5.2}%
+\contentsline {subsection}{\numberline {4.5.3}Kết quả text detection (mô hình tiền huấn luyện)}{33}{subsection.4.5.3}%
+\contentsline {subsection}{\numberline {4.5.4}Kết quả text detection sau fine-tune}{33}{subsection.4.5.4}%
+\contentsline {subsection}{\numberline {4.5.5}Kết quả text recognition (mô hình tiền huấn luyện)}{33}{subsection.4.5.5}%
+\contentsline {subsection}{\numberline {4.5.6}Kết quả text recognition sau fine-tune}{33}{subsection.4.5.6}%
+\contentsline {subsection}{\numberline {4.5.7}Kết quả text spotting}{33}{subsection.4.5.7}%
+\contentsline {subsection}{\numberline {4.5.8}Đánh giá pipeline trên vùng biển hiệu}{33}{subsection.4.5.8}%
+\contentsline {section}{\numberline {4.6}Tóm tắt chương}{34}{section.4.6}%
+\contentsline {chapter}{\numberline {5}KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN}{40}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Kết luận}{40}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Hướng phát triển}{40}{section.5.2}%
+\contentsline {paragraph}{Tối ưu hóa khả năng mở rộng dữ liệu:}{40}{section*.30}%
+\contentsline {paragraph}{Tăng cường khả năng tương tác và thích ứng với người dùng:}{40}{section*.31}%
+\contentsline {paragraph}{Tích hợp truy vấn hình thức thoại (Spoken Query Integration):}{41}{section*.32}%

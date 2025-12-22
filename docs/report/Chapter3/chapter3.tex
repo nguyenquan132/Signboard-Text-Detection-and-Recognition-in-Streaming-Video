@@ -1,9 +1,251 @@
-\chapter{PHƯƠNG PHÁP }
+\chapter{PHƯƠNG PHÁP}
 \ifpdf
     \graphicspath{{Chapter3/Chapter3Figs/PNG/}{Chapter3/Chapter3Figs/PDF/}{Chapter3/Chapter3Figs/}}
 \else
     \graphicspath{{Chapter3/Chapter3Figs/EPS/}{Chapter3/Chapter3Figs/}}
 \fi
 
-
 \section{Hệ thống phát hiện và nhận dạng chữ trên biển hiệu}
+
+\subsection{Bài toán và mục tiêu}
+Mục tiêu của khóa luận là xây dựng một hệ thống tự động ``đọc chữ trên biển hiệu'' trong ảnh/video đường phố.
+Dữ liệu đầu vào có thể là ảnh tĩnh hoặc chuỗi khung hình video; đầu ra là (i) vị trí biển hiệu, (ii) vị trí vùng chữ trên biển hiệu, và (iii) nội dung văn bản được nhận dạng.
+
+Do đặc trưng dữ liệu street-view chứa nhiều nhiễu nền và văn bản đa dạng về hình dạng, hướng, kích thước, nhóm đề xuất một pipeline dạng module hoá gồm ba thành phần chính:
+\begin{itemize}
+    \item \textbf{Phát hiện biển hiệu (Signboard Detection/Segmentation):} khoanh vùng biển hiệu để giảm không gian tìm kiếm và loại nhiễu nền.
+    \item \textbf{Phát hiện văn bản (Text Detection):} phát hiện vùng chữ bên trong biển hiệu (ưu tiên OBB/đa giác khi chữ nghiêng).
+    \item \textbf{Nhận dạng văn bản (Text Recognition):} nhận dạng chuỗi ký tự từ vùng chữ đã crop/rectify.
+\end{itemize}
+
+\subsection{Kiến trúc tổng thể của pipeline}
+Hình~\ref{fig:ch3_pipeline_overall} minh họa luồng xử lý tổng thể. Pipeline được thiết kế theo hướng ``tách nhiệm vụ'' để linh hoạt thay thế mô-đun (detector/recognizer) tùy điều kiện tài nguyên hoặc yêu cầu tốc độ.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.98\linewidth]{pipeline_overall.png}
+    \caption{Kiến trúc tổng thể hệ thống đọc chữ trên biển hiệu: Signboard Detection/Segmentation $\rightarrow$ (Align/Rectify) $\rightarrow$ Text Detection $\rightarrow$ Text Recognition $\rightarrow$ Post-processing.}
+    \label{fig:ch3_pipeline_overall}
+\end{figure}
+
+Với mỗi khung hình/ảnh đầu vào $I$, hệ thống thực hiện:
+\begin{enumerate}
+    \item Dự đoán vùng biển hiệu $\mathcal{S} = \{s^{(i)}\}$ bằng mô hình detection (bbox/OBB) hoặc segmentation (mask).
+    \item Chuẩn hoá hình học biển hiệu (tuỳ chọn) để giảm méo phối cảnh, thu được ảnh biển hiệu đã crop: $I_{sb}^{(i)}$.
+    \item Chạy Text Detector trên $I_{sb}^{(i)}$ để lấy tập vùng chữ $\mathcal{B}=\{b^{(j)}\}$.
+    \item Với mỗi $b^{(j)}$, thực hiện crop \& rectify để tạo patch chữ $\hat{I}^{(j)}$.
+    \item Chạy Text Recognizer để dự đoán chuỗi ký tự $\mathbf{s}^{(j)}$ và độ tin cậy $c^{(j)}$.
+    \item Hậu xử lý (chuẩn hoá Unicode, lọc theo confidence, gộp theo dòng/khối nếu cần).
+\end{enumerate}
+
+\subsection{Quy ước biểu diễn hình học (BBox/OBB/Mask)}
+Trong khóa luận, để mô tả vùng quan tâm (biển hiệu hoặc chữ), nhóm sử dụng một trong ba dạng:
+\begin{itemize}
+    \item \textbf{Rectangle bounding box (BBox):} $b=(x_{min}, y_{min}, x_{max}, y_{max})$.
+    \item \textbf{Oriented bounding box (OBB):} hộp quay, biểu diễn bởi (i) 4 đỉnh hoặc (ii) $(x_c, y_c, w, h, \theta)$.
+    \item \textbf{Segmentation mask:} mặt nạ nhị phân $m(x,y)\in\{0,1\}$.
+\end{itemize}
+OBB/mask đặc biệt hữu ích khi biển hiệu hoặc chữ bị nghiêng/biến dạng do phối cảnh.
+
+\subsection{Chiến lược ``phát hiện biển hiệu trước''}
+Thay vì phát hiện chữ trực tiếp trên toàn ảnh street-view (nhiều nhiễu), nhóm lựa chọn chiến lược:
+\[
+I \xrightarrow[]{\text{Signboard module}} \{I_{sb}^{(i)}\} \xrightarrow[]{\text{Text detection/recognition}} \text{outputs}
+\]
+Lợi ích chính:
+\begin{itemize}
+    \item \textbf{Giảm nhiễu nền:} hạn chế text detector bị đánh lạc hướng bởi biển số xe, poster nhỏ, vật thể nền.
+    \item \textbf{Giảm chi phí tính toán:} text detector/recognizer chạy trên patch nhỏ thay vì ảnh full-HD.
+    \item \textbf{Tăng độ ổn định:} vùng biển hiệu thường chứa text liên quan, giúp mô hình tập trung đúng ngữ cảnh.
+\end{itemize}
+
+% -------------------------------------------------
+\section{Mô-đun phát hiện biển hiệu (Signboard Detection/Segmentation)}
+
+\subsection{Phát hiện biển hiệu bằng object detection}
+Nhóm thực nghiệm fine-tune các mô hình object detection hiện đại trên SignboardText để dự đoán vị trí biển hiệu dưới dạng hộp chữ nhật (BBox) hoặc hộp quay (OBB).
+Về mặt phương pháp, object detector thực hiện ánh xạ:
+\[
+f_{\text{det}}(I) \rightarrow \{(b^{(i)}, p^{(i)})\}
+\]
+trong đó $b^{(i)}$ là bbox/obb, $p^{(i)}$ là confidence.
+
+\subsubsection{Lý do ưu tiên OBB cho biển hiệu}
+Biển hiệu trong street-view thường bị nghiêng theo phối cảnh (góc quay camera) hoặc đặt lệch.
+Do đó, OBB giúp:
+\begin{itemize}
+    \item bám sát hình dạng biển hiệu hơn BBox,
+    \item giảm vùng nền bị crop dư thừa,
+    \item cải thiện bước align/rectify và tăng chất lượng patch đưa vào text detector.
+\end{itemize}
+
+\subsubsection{Thiết lập fine-tune}
+Trong thực nghiệm, các mô hình detection được fine-tune theo cùng một giao thức để đảm bảo so sánh công bằng:
+\begin{itemize}
+    \item Huấn luyện trong $50$ epochs.
+    \item Áp dụng augmentation cơ bản cho bài toán street-view (phóng to/thu nhỏ, xoay nhẹ, thay đổi sáng/tương phản, motion blur mức nhẹ nếu cần).
+    \item Tiêu chí chọn checkpoint dựa trên mAP (đặc biệt là AP50 và AP50--95).
+\end{itemize}
+Lưu ý: các siêu tham số chi tiết (batch size, lr, scheduler) có thể thay đổi tùy GPU; khóa luận tập trung mô tả pipeline và so sánh theo cùng một chuẩn đánh giá.
+
+\subsection{Phân đoạn biển hiệu bằng segmentation}
+Đối với các biển hiệu có hình dạng không đều hoặc bị che khuất một phần, bounding box có thể bao quá nhiều nền, làm giảm chất lượng text detection.
+Vì vậy nhóm bổ sung hướng segmentation để dự đoán mask biển hiệu:
+\[
+f_{\text{seg}}(I) \rightarrow m(x,y)
+\]
+Sau đó, mask được dùng để:
+\begin{itemize}
+    \item crop theo vùng mask (tight crop),
+    \item hoặc giữ nguyên kích thước ảnh nhưng xóa nền ngoài mask (background suppression).
+\end{itemize}
+
+\subsubsection{Tạo patch biển hiệu từ mask}
+Từ mask $m$, nhóm lấy hộp bao nhỏ nhất (min bounding rectangle) hoặc OBB của vùng mask để crop ra patch biển hiệu $I_{sb}$.
+Trong một số trường hợp, việc giữ mask để ``triệt nền'' giúp text detector ổn định hơn khi nền phía sau biển hiệu quá phức tạp.
+
+% -------------------------------------------------
+\section{Chuẩn hóa hình học (Align/Rectify)}
+
+\subsection{Động cơ của bước Align}
+Bước Align nhằm giảm tác động của phối cảnh và nghiêng xoay, giúp:
+\begin{itemize}
+    \item text detector phát hiện ổn định hơn (đặc biệt với chữ thẳng hàng),
+    \item recognizer giảm lỗi do kí tự bị kéo dãn/biến dạng.
+\end{itemize}
+
+\subsection{Align dựa trên OBB/4 điểm}
+Với OBB biểu diễn bởi 4 đỉnh $\{(x_k,y_k)\}_{k=1}^{4}$, nhóm thực hiện phép biến đổi phối cảnh (homography) để đưa biển hiệu (hoặc vùng chữ) về mặt phẳng chuẩn.
+Khi đó:
+\[
+\hat{I} = \text{WarpPerspective}(I, \mathbf{H})
+\]
+với $\mathbf{H}$ là ma trận homography 3x3 ước lượng từ cặp điểm nguồn--đích.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.98\linewidth]{align_rectify.png}
+    \caption{Minh họa bước Align/Rectify dựa trên 4 điểm (OBB) để giảm nghiêng và phối cảnh trước khi phát hiện/nhận dạng chữ.}
+    \label{fig:ch3_align_rectify}
+\end{figure}
+
+% -------------------------------------------------
+\section{Mô-đun phát hiện văn bản (Text Detection)}
+
+\subsection{Bài toán phát hiện văn bản trong patch biển hiệu}
+Với patch biển hiệu $I_{sb}$, text detector dự đoán tập vùng chữ:
+\[
+f_{\text{textdet}}(I_{sb}) \rightarrow \mathcal{B}=\{(b^{(j)}, p^{(j)})\}_{j=1}^{N}
+\]
+Trong đó $b^{(j)}$ có thể là bbox/obb/polygon tùy mô hình; $p^{(j)}$ là độ tin cậy.
+
+\subsection{Lựa chọn hướng tiếp cận: segmentation-based vs OBB-based}
+Nhóm xét hai hướng chính phù hợp dữ liệu signboard:
+\begin{itemize}
+    \item \textbf{Segmentation-based (ví dụ: DBNet++, TextPMs):} linh hoạt với chữ cong, chữ dày/nhỏ, nhưng tách instance gần nhau có thể khó.
+    \item \textbf{OBB-based (ví dụ: YOLOv8-obb, YOLOv11-obb):} dự đoán hộp quay trực tiếp, phù hợp chữ nghiêng và cho tốc độ cao.
+\end{itemize}
+
+\subsection{Quy trình fine-tune text detector}
+Sau khi đánh giá các mô hình tiền huấn luyện, nhóm chọn các mô hình có kết quả tốt để fine-tune trên SignboardText.
+Quy trình huấn luyện gồm:
+\begin{itemize}
+    \item Chuẩn hoá dữ liệu nhãn về định dạng của mô hình (bbox/obb hoặc polygon).
+    \item Augmentation tập trung vào hiện tượng street-view: blur nhẹ, thay đổi ánh sáng, scale, rotate nhỏ.
+    \item Hậu xử lý:
+    \begin{itemize}
+        \item NMS (hoặc NMS xoay cho OBB) để loại bỏ dự đoán trùng.
+        \item Lọc theo confidence threshold để giảm false positives.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Chỉ số đánh giá cho text detection}
+Khóa luận sử dụng Precision/Recall/Hmean:
+\[
+P = \frac{TP}{TP+FP},\quad
+R = \frac{TP}{TP+FN},\quad
+H = \frac{2PR}{P+R}
+\]
+Tiêu chí khớp (matching) giữa dự đoán và ground-truth dựa trên IoU (hoặc IoU cho OBB/polygon tuỳ dạng nhãn).
+
+% -------------------------------------------------
+\section{Mô-đun nhận dạng văn bản (Text Recognition)}
+
+\subsection{Bài toán nhận dạng chuỗi ký tự}
+Với mỗi vùng chữ $b^{(j)}$, ta crop/rectify được patch chữ $\hat{I}^{(j)}$.
+Text recognizer dự đoán chuỗi:
+\[
+f_{\text{textrec}}(\hat{I}^{(j)}) \rightarrow (\mathbf{s}^{(j)}, c^{(j)})
+\]
+trong đó $\mathbf{s}^{(j)}$ là chuỗi ký tự, $c^{(j)}$ là độ tin cậy (hoặc xác suất trung bình theo token).
+
+\subsection{Tiền xử lý patch chữ}
+Để tăng độ ổn định cho recognizer, nhóm áp dụng các bước chuẩn hoá đầu vào:
+\begin{itemize}
+    \item Resize về kích thước chuẩn theo yêu cầu mô hình.
+    \item Giữ tỉ lệ (aspect ratio) khi có thể; dùng padding để tránh méo chữ.
+    \item (Tùy chọn) tăng tương phản cục bộ nhẹ cho chữ mờ/thiếu sáng.
+\end{itemize}
+
+\subsection{Mô hình nhận dạng và lý do lựa chọn}
+Các mô hình recognizer hiện đại (đặc biệt transformer-based) phù hợp văn bản tự nhiên do khả năng học phụ thuộc dài và chống biến dạng tốt.
+Trong khóa luận, nhóm đánh giá các mô hình tiền huấn luyện và chọn mô hình có hiệu quả tốt để fine-tune trên SignboardText (đặc biệt trên Vietsignboard và Vin).
+
+\subsection{Chỉ số đánh giá cho text recognition}
+Khóa luận sử dụng:
+\begin{itemize}
+    \item \textbf{Exact-match accuracy:} dự đoán đúng hoàn toàn chuỗi ký tự.
+    \item \textbf{Normalized-match accuracy:} so khớp sau khi chuẩn hoá (ví dụ: chuẩn hoá Unicode/NFC, bỏ khoảng trắng dư, chuẩn hoá dấu câu, hoặc chuẩn hoá chữ hoa-thường theo quy ước).
+\end{itemize}
+
+% -------------------------------------------------
+\section{Hậu xử lý và chuẩn hoá tiếng Việt}
+
+\subsection{Chuẩn hoá Unicode và lọc nhiễu ký tự}
+Văn bản tiếng Việt thường phát sinh lỗi về mã Unicode (tổ hợp dấu) hoặc ký tự nhiễu do nền phức tạp.
+Do đó, nhóm thực hiện:
+\begin{itemize}
+    \item Chuẩn hoá Unicode về một chuẩn thống nhất (ví dụ NFC).
+    \item Loại bỏ ký tự không hợp lệ theo tập ký tự mục tiêu (alphabet) của dữ liệu.
+    \item Lọc dự đoán theo confidence; ưu tiên kết quả có độ tin cậy cao hơn trong các trường hợp trùng lặp vùng chữ.
+\end{itemize}
+
+\subsection{Gộp kết quả theo dòng/khối (tuỳ chọn)}
+Trong trường hợp text detector trả về nhiều box theo từng từ/ký tự, có thể gộp theo dòng dựa trên:
+\begin{itemize}
+    \item độ gần theo trục ngang,
+    \item độ chênh lệch góc quay,
+    \item và khoảng cách giữa các hộp.
+\end{itemize}
+Bước này giúp tạo câu/nhãn biển hiệu hoàn chỉnh hơn (tùy yêu cầu đầu ra).
+
+% -------------------------------------------------
+\section{Tổng hợp cấu hình thực nghiệm trong pipeline}
+
+\subsection{Nguyên tắc chọn mô hình cho pipeline cuối}
+Từ đánh giá mô-đun (signboard det/seg, text det, text rec), nhóm chọn cấu hình kết hợp dựa trên:
+\begin{itemize}
+    \item \textbf{Độ chính xác:} ưu tiên Hmean cao cho text detection và accuracy cao cho recognition.
+    \item \textbf{Tốc độ:} cân bằng FPS để phù hợp xử lý video.
+    \item \textbf{Tính ổn định:} ưu tiên cấu hình ít nhạy với nền phức tạp và góc nhìn.
+\end{itemize}
+
+\subsection{Các biến thể pipeline được so sánh}
+Khóa luận so sánh một số biến thể theo cấu trúc:
+\[
+(\text{Signboard module}) + (\text{Text detector}) + (\text{Text recognizer}) + (\text{Align})
+\]
+Trong đó:
+\begin{itemize}
+    \item Signboard module gồm: object detection (BBox/OBB) hoặc segmentation.
+    \item Text detector gồm: segmentation-based hoặc OBB-based.
+    \item Text recognizer: mô hình transformer-based fine-tune.
+    \item Align: bật/tắt theo cấu hình để đánh giá tác động của chuẩn hoá hình học.
+\end{itemize}
+
+% -------------------------------------------------
+\section{Tóm tắt chương}
+Chương này đã trình bày phương pháp xây dựng hệ thống đọc chữ trên biển hiệu theo hướng pipeline module hoá.
+Hệ thống gồm ba thành phần chính: phát hiện/phan đoạn biển hiệu để giới hạn vùng quan tâm, phát hiện văn bản trong patch biển hiệu (ưu tiên OBB/segmentation tuỳ bối cảnh), và nhận dạng chuỗi ký tự bằng mô hình recognizer hiện đại.
+Ngoài ra, chương cũng mô tả bước Align/Rectify để giảm méo hình học, cùng các bước hậu xử lý và chuẩn hoá tiếng Việt nhằm tăng độ ổn định đầu ra.
+Các cấu hình pipeline khác nhau sẽ được đánh giá chi tiết bằng thực nghiệm trong chương tiếp theo.

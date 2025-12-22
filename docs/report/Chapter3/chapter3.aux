@@ -1,17 +1,48 @@
 \relax 
 \providecommand\hyper@newdestlabel[2]{}
-\FN@pp@footnotehinttrue 
-\FN@pp@footnotehinttrue 
-\FN@pp@footnotehinttrue 
-\@writefile{toc}{\contentsline {chapter}{\numberline {3}PHƯƠNG PHÁP }{16}{chapter.3}\protected@file@percent }
+\pp@pagectr{footnote}{3}{25}{16}
+\@writefile{toc}{\contentsline {chapter}{\numberline {3}PHƯƠNG PHÁP}{16}{chapter.3}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{toc}{\contentsline {section}{\numberline {3.1}Hệ thống phát hiện và nhận dạng chữ trên biển hiệu}{16}{section.3.1}\protected@file@percent }
-\FN@pp@footnotehinttrue 
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.1}Bài toán và mục tiêu}{16}{subsection.3.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.2}Kiến trúc tổng thể của pipeline}{17}{subsection.3.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.3}Quy ước biểu diễn hình học (BBox/OBB/Mask)}{17}{subsection.3.1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.4}Chiến lược ``phát hiện biển hiệu trước''}{18}{subsection.3.1.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.2}Mô-đun phát hiện biển hiệu (Signboard Detection/Segmentation)}{18}{section.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}Phát hiện biển hiệu bằng object detection}{18}{subsection.3.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1.1}Lý do ưu tiên OBB cho biển hiệu}{18}{subsubsection.3.2.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1.2}Thiết lập fine-tune}{19}{subsubsection.3.2.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}Phân đoạn biển hiệu bằng segmentation}{19}{subsection.3.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.2.1}Tạo patch biển hiệu từ mask}{20}{subsubsection.3.2.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}Chuẩn hóa hình học (Align/Rectify)}{20}{section.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Động cơ của bước Align}{20}{subsection.3.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}Align dựa trên OBB/4 điểm}{20}{subsection.3.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.4}Mô-đun phát hiện văn bản (Text Detection)}{20}{section.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.1}Bài toán phát hiện văn bản trong patch biển hiệu}{20}{subsection.3.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.2}Lựa chọn hướng tiếp cận: segmentation-based vs OBB-based}{21}{subsection.3.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.3}Quy trình fine-tune text detector}{21}{subsection.3.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.4}Chỉ số đánh giá cho text detection}{21}{subsection.3.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.5}Mô-đun nhận dạng văn bản (Text Recognition)}{22}{section.3.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.1}Bài toán nhận dạng chuỗi ký tự}{22}{subsection.3.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.2}Tiền xử lý patch chữ}{22}{subsection.3.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.3}Mô hình nhận dạng và lý do lựa chọn}{22}{subsection.3.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.4}Chỉ số đánh giá cho text recognition}{22}{subsection.3.5.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.6}Hậu xử lý và chuẩn hoá tiếng Việt}{23}{section.3.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6.1}Chuẩn hoá Unicode và lọc nhiễu ký tự}{23}{subsection.3.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6.2}Gộp kết quả theo dòng/khối (tuỳ chọn)}{23}{subsection.3.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.7}Tổng hợp cấu hình thực nghiệm trong pipeline}{23}{section.3.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.7.1}Nguyên tắc chọn mô hình cho pipeline cuối}{23}{subsection.3.7.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.7.2}Các biến thể pipeline được so sánh}{24}{subsection.3.7.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.8}Tóm tắt chương}{24}{section.3.8}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Kiến trúc tổng thể hệ thống đọc chữ trên biển hiệu: Signboard Detection/Segmentation $\rightarrow $ (Align/Rectify) $\rightarrow $ Text Detection $\rightarrow $ Text Recognition $\rightarrow $ Post-processing.}}{25}{figure.caption.11}\protected@file@percent }
+\newlabel{fig:ch3_pipeline_overall}{{3.1}{25}{Kiến trúc tổng thể hệ thống đọc chữ trên biển hiệu: Signboard Detection/Segmentation $\rightarrow $ (Align/Rectify) $\rightarrow $ Text Detection $\rightarrow $ Text Recognition $\rightarrow $ Post-processing}{figure.caption.11}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces Minh họa bước Align/Rectify dựa trên 4 điểm (OBB) để giảm nghiêng và phối cảnh trước khi phát hiện/nhận dạng chữ.}}{26}{figure.caption.12}\protected@file@percent }
+\newlabel{fig:ch3_align_rectify}{{3.2}{26}{Minh họa bước Align/Rectify dựa trên 4 điểm (OBB) để giảm nghiêng và phối cảnh trước khi phát hiện/nhận dạng chữ}{figure.caption.12}{}}
 \@setckpt{Chapter3/chapter3}{
-\setcounter{page}{17}
+\setcounter{page}{27}
 \setcounter{equation}{0}
-\setcounter{enumi}{0}
+\setcounter{enumi}{6}
 \setcounter{enumii}{0}
 \setcounter{enumiii}{0}
 \setcounter{enumiv}{0}
@@ -19,41 +50,33 @@
 \setcounter{mpfootnote}{0}
 \setcounter{part}{0}
 \setcounter{chapter}{3}
-\setcounter{section}{1}
+\setcounter{section}{8}
 \setcounter{subsection}{0}
 \setcounter{subsubsection}{0}
 \setcounter{paragraph}{0}
 \setcounter{subparagraph}{0}
-\setcounter{figure}{0}
+\setcounter{figure}{2}
 \setcounter{table}{0}
 \setcounter{subfigure}{0}
 \setcounter{lofdepth}{1}
 \setcounter{subtable}{0}
 \setcounter{lotdepth}{1}
-\setcounter{pp@next@reset}{1}
-\setcounter{@fnserial}{0}
-\setcounter{Item}{0}
+\setcounter{pp@a@footnote}{3}
+\setcounter{section@level}{1}
+\setcounter{Item}{6}
 \setcounter{Hfootnote}{0}
-\setcounter{bookmark@seq@number}{28}
+\setcounter{bookmark@seq@number}{58}
 \setcounter{mydef}{0}
 \setcounter{parentequation}{0}
 \setcounter{@pps}{0}
 \setcounter{@ppsavesec}{0}
 \setcounter{@ppsaveapp}{0}
-\setcounter{float@type}{16}
-\setcounter{algorithm}{0}
-\setcounter{ALG@line}{0}
-\setcounter{ALG@rem}{0}
-\setcounter{ALG@nested}{0}
-\setcounter{ALG@Lnr}{2}
-\setcounter{ALG@blocknr}{10}
-\setcounter{ALG@storecount}{0}
-\setcounter{ALG@tmpcounter}{0}
 \setcounter{lstnumber}{1}
-\setcounter{caption@flags}{0}
+\setcounter{caption@flags}{2}
 \setcounter{continuedfloat}{0}
 \setcounter{nlinenum}{0}
 \setcounter{cp@cntr}{0}
+\setcounter{float@type}{8}
 \setcounter{AM@survey}{0}
 \setcounter{blindtext}{1}
 \setcounter{Blindtext}{5}
@@ -67,6 +90,5 @@
 \setcounter{blind@randommax}{0}
 \setcounter{blind@pangramcount}{0}
 \setcounter{blind@pangrammax}{0}
-\setcounter{section@level}{1}
 \setcounter{lstlisting}{0}
 }
