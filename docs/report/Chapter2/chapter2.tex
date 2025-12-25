@@ -8,8 +8,7 @@
 
 \markboth{\MakeUppercase{\thechapter. Cơ sở lý thuyết và các nghiên cứu liên quan}}{\thechapter. Cơ sở lý thuyết và các nghiên cứu liên quan}
 
-\section{Cơ sở lý thuyết}
-\subsection{Tổng quan và ý nghĩa thực tiễn của bài toán phát hiện và nhận dạng văn bản trên biển hiệu trong video đường phố Việt Nam}
+\section{Tổng quan và ý nghĩa thực tiễn của bài toán phát hiện và nhận dạng văn bản trên biển hiệu trong video đường phố Việt Nam}
 Trong môi trường giao thông đô thị tại Việt Nam, biển hiệu chứa đựng lượng lớn thông tin ngữ nghĩa cấp cao, phản ánh trực tiếp danh tính (tên cửa hàng, địa điểm) và loại hình kinh doanh/dịch vụ. Việc tự động trích xuất và hiểu các thông tin này từ luồng video không chỉ giúp giảm bớt việc gán nhãn dữ liệu thủ công mà còn mở ra nhiều ứng dụng thực tiễn hữu ích, có thể kể đến như:
 \begin{itemize}
     \item \textbf{Hệ thống dẫn đường thông minh:} Bổ sung thông tin các địa điểm thực tế (tên cửa hàng, địa điểm) từ biển hiệu vào hệ thống dẫn đường, giúp cải thiện độ chính xác của định vị và điều hướng.
@@ -18,8 +17,8 @@ Trong môi trường giao thông đô thị tại Việt Nam, biển hiệu ch�
 \end{itemize}
 Trong bối cảnh này, để hiện thực hóa các ứng dụng trên, bài toán đặt ra nhiều thách thức kỹ thuật. Ngoài những khó khăn chung của nhận dạng văn bản trong cảnh (như đa dạng phông chữ, điều kiện ánh sáng), việc xử lý trong bối cảnh video hành trình tại Việt Nam còn phải đối mặt với: chất lượng hình ảnh thay đổi liên tục, góc quay và khoảng cách khác nhau, cùng sự xuất hiện của các biển hiệu với thiết kế đa dạng và ngôn ngữ phức tạp (kết hợp tiếng Việt và tiếng Anh). Những thách thức này nhấn mạnh tầm quan trọng và tính thực tiễn của việc nghiên cứu một giải pháp hiệu quả, phù hợp với đặc thù của bài toán.
 
-\subsection{Các phương pháp tiếp cận}
-\subsubsection{Phát hiện đối tượng}
+\section{Các phương pháp tiếp cận}
+\subsection{Phát hiện đối tượng}
 \subsubsection{Cơ sở và hướng tiếp cận chung}
 Phát hiện đối tượng (Object Detection) là một bài toán trong lĩnh vực Thị giác Máy
 tính (Computer Vision), đóng vai trò trung tâm trong nhiều ứng dụng thực tiễn như giám
@@ -68,14 +67,14 @@ Trong những năm gần đây, cùng với sự phát triển mạnh mẽ của
 %     \item \textbf{Mask2Former \cite{cheng2022masked}:} Mask2Former là một kiến trúc phân đoạn dựa trên Transformer theo hướng tiếp cận thống nhất (unified framework), có khả năng xử lý nhiều bài toán phân đoạn khác nhau như phân đoạn ngữ nghĩa (semantic segmentation), phân đoạn theo thể hiện (instance segmentation) và phân đoạn toàn cảnh (panoptic segmentation). Mask2Former áp dụng cơ chế masked attention, cho phép mô hình tập trung vào các vùng đối tượng tiềm năng thông qua các mask dự đoán, từ đó cải thiện khả năng biểu diễn hình dạng và biên đối tượng. Cách tiếp cận này giúp Mask2Former thể hiện hiệu quả trên các trường hợp có đối tượng chồng lấn hoặc hình dạng phức tạp.
 % \end{itemize}
 
-\section{Phát hiện và nhận dạng văn bản ngoại cảnh (Scene Text Detection and Recogntion - STDR)}
-\subsection{Phát hiện văn bản ngoại cảnh (Scene Text Detection - STD)}
-\subsubsection{Cơ sở và hướng tiếp cận chung}
+\subsection{Phát hiện và nhận dạng văn bản ngoại cảnh (Scene Text Detection and Recogntion - STDR)}
+\subsubsection{Phát hiện văn bản ngoại cảnh (Scene Text Detection - STD)}
+\subsubsubsection{Cơ sở và hướng tiếp cận chung}
 Phát hiện văn bản trong ảnh ngoại cảnh (Scene Text Detection) hướng tới mục tiêu xác định và khoanh vùng các khu vực chứa văn bản. Khác với các tác vụ phát hiện đối tượng truyền thống, phát hiện văn bản trong ảnh ngoại cảnh phải đối mặt với nhiều thách thức do sự đa dạng về hình dạng, kích thước, hướng và bố cục của văn bản, cũng như các trường hợp văn bản bị nghiêng, cong, chồng chéo hoặc mờ.  Do đó, bài toán này đòi hỏi kết hợp các kỹ thuật phát hiện đối tượng với các phương pháp chuyên biệt cho văn bản nhằm xác định chính xác và hiệu quả các vùng chứa văn bản.
 
-\subsubsection{Các nghiên cứu liên quan}
+\subsubsubsection{Các nghiên cứu liên quan}
 
-Dựa trên các nghiên cứu khảo sát và tổng quan gần đây \cite{kang2022overview, pal2024comprehensive, han2024spotlight} về phát hiện văn bản trong ảnh ngoại cảnh, các phương pháp tiên tiến hiện nay có thể được phân thành ba nhóm chính: (i) dựa trên hồi quy (regression-based), (ii) dựa trên phân đoạn (segmentation-based) và (iii) dựa trên thành phần liên thông (connected component-based).
+Dựa trên các nghiên cứu khảo sát và tổng quan gần đây \cite{kang2022overview, pal2024comprehensive, naiemi2022scene, han2024spotlight} về phát hiện văn bản trong ảnh ngoại cảnh, các phương pháp tiên tiến hiện nay có thể được phân thành ba nhóm chính: (i) dựa trên hồi quy (regression-based), (ii) dựa trên phân đoạn (segmentation-based) và (iii) dựa trên thành phần liên thông (connected component-based).
 
 \begin{itemize}
     \item \textbf{Các phương pháp dựa trên hồi quy (Regression-based):} Hướng tiếp cận này giải quyết bài toán phát hiện văn bản tương tự như phát hiện đối tượng, bằng cách trực tiếp dự đoán tọa độ các vùng văn bản dưới dạng hộp chữ nhật hoặc đa giác. Nhờ kiến trúc tối ưu cho việc dự đoán tọa độ, các phương pháp này thường có tốc độ suy luận nhanh, phù hợp với các ứng dụng thời gian thực. Liao và cộng sự đã đề xuất \textbf{TextBoxes \cite{liao2017textboxes}}, với điều chỉnh hình dạng convolutional kernel và anchor của SSD để phù hợp với tỷ lệ co giãn đa dạng của văn bản cảnh, cải thiện khả năng phát hiện văn bản đa hướng. \textbf{EAST \cite{zhou2017east}} đề xuất một pipeline hiệu quả, dự đoán trực tiếp khung bao xoay (rotated box) hoặc tứ giác (quadrangle) từ đặc trưng hình ảnh, loại bỏ sự phụ thuộc vào các bước đề xuất vùng (region proposal) phức tạp. Để xử lý văn bản hình dạng bất kỳ, Liu và cộng sự đề xuất \textbf{ABCNet \cite{liu2020abcnet}}, sử dụng đường cong Bezier (Bezier curve) làm biểu diễn tham số hóa linh hoạt cho đường biên văn bản, cho phép mô hình hóa chính xác các văn bản cong. \textbf{FCE-Net \cite{zhu2021fourier}} đề xuất một cách biểu diễn khác thông qua phép nhúng chuỗi Fourier (Fourier contour embedding), giúp biểu diễn hiệu quả và tái tạo các đường biên văn bản phi chuẩn từ đầu ra hồi quy.
@@ -102,8 +101,8 @@ Dựa trên các nghiên cứu khảo sát và tổng quan gần đây \cite{kan
 %     \item \textbf{KPN \cite{zhang2022kernel}:}
 % \end{itemize}
 
-\subsection{Nhận dạng văn bản (Scene Text Recognition - STR)}
-\subsubsection{Cơ sở và hướng tiếp cận chung}
+\subsubsection{Nhận dạng văn bản (Scene Text Recognition - STR)}
+\subsubsubsection{Cơ sở và hướng tiếp cận chung}
 Nhận dạng văn bản trong ảnh ngoại cảnh (Scene Text Recognition) là một bài toán phức tạp trong lĩnh vực Thị giác Máy tính, liên quan đến việc đọc và xác định nội dung của văn bản xuất hiện trong các cảnh ảnh thực tế. Khác với các bài toán nhận dạng văn bản truyền thống trên tài liệu hoặc bảng biểu, văn bản ngoại cảnh thường xuất hiện trong môi trường không đồng nhất, chịu biến dạng, thay đổi lớn về ánh sáng, góc chụp, nền, phông chữ và hình thức trình bày. Mục tiêu là nhận diện chính xác nội dung của các ký tự và từ ngữ trong các vùng văn bản đã được khoanh vùng (cropped text instances), chuyển đổi từng hình ảnh văn bản riêng lẻ thành chuỗi ký tự tương ứng. Bài toán không chỉ đòi hỏi nhận diện ký tự riêng lẻ mà còn cần hiểu ngữ cảnh tổng thể của văn bản trong ảnh, bao gồm mối quan hệ giữa các ký tự, từ ngữ và bố cục, đặc biệt trong các điều kiện biến dạng, cong, nghiêng hoặc không chuẩn.  
 
 % \begin{figure}[t]
@@ -114,9 +113,9 @@ Nhận dạng văn bản trong ảnh ngoại cảnh (Scene Text Recognition) là
 %     \label{fig:chapter2_end_to_end_STR}
 % \end{figure}
 
-\subsubsection{Các nghiên cứu liên quan}
+\subsubsubsection{Các nghiên cứu liên quan}
 Scene Text Recognition (STR) là một lĩnh vực nghiên cứu thu hút sự quan tâm mạnh
-mẽ trong cộng đồng thị giác máy tính. Trong các nghiên cứu khảo sát và tổng quan gần đây \cite{kang2022overview, pal2024comprehensive, do2024signboardtext}, bài toán nhận dạng văn bản trong ảnh ngoại cảnh có thể được chia thành 2 loại chính dựa trên nguyên lý làm việc: (i) các phương pháp dựa trên phân đoạn ký tự (segmentation-based) và (ii) các phương pháp không dựa trên phân đoạn (segmentation-free).
+mẽ trong cộng đồng thị giác máy tính. Trong các nghiên cứu khảo sát và tổng quan gần đây \cite{kang2022overview, pal2024comprehensive, naiemi2022scene, do2024signboardtext}, bài toán nhận dạng văn bản trong ảnh ngoại cảnh có thể được chia thành 2 loại chính dựa trên nguyên lý làm việc: (i) các phương pháp dựa trên phân đoạn ký tự (segmentation-based) và (ii) các phương pháp không dựa trên phân đoạn (segmentation-free).
 
 \begin{itemize}
     \item \textbf{Các phương pháp dựa trên phân đoạn ký tự (Segmentation-based):} Nhóm phương pháp này tiếp cận bài toán STR bằng cách dự đoán nhãn mức pixel cho từng ký tự hoặc thành phần ký tự, sau đó thực hiện nhận dạng dựa trên kết quả phân đoạn. \textbf{MaskTextSpotter \cite{lyu2018mask}} được đề xuất bởi Lyu và cộng sự, sử dụng mạng phân đoạn ký tự kết hợp cơ chế spatial attention để nhận dạng văn bản hình dạng bất kỳ, khắc phục hạn chế do thiếu dữ liệu chú thích cấp ký tự. Để cải thiện độ chính xác trong bối cảnh phức tạp, Ye và cộng sự đề xuất \textbf{TextFuseNet \cite{ye2020textfusenet}}, một kiến trúc tích hợp thông tin đa cấp (character-, word-, và global-level), giúp phân đoạn ký tự mạnh mẽ hơn.
@@ -128,8 +127,8 @@ mẽ trong cộng đồng thị giác máy tính. Trong các nghiên cứu khả
 
     Nhìn chung, hướng tiếp cận này có kiến trúc tương đối gọn nhẹ và khả năng mở rộng tốt nhờ không phụ thuộc vào chú thích ký tự chi tiết. Tuy nhiên, việc không sử dụng phân đoạn tường minh khiến các phương pháp này gặp hạn chế khi xử lý văn bản có hình dạng phức tạp, cong hoặc biến dạng mạnh.
 \end{itemize}
-\subsection{Nhận dạng văn bản ngoại cảnh đầu–cuối (End-to-End Scene Text Recognition)}
-\subsubsection{Cơ sở và hướng tiếp cận chung}
+\subsubsection{Nhận dạng văn bản ngoại cảnh đầu–cuối (End-to-End Scene Text Recognition)}
+\subsubsubsection{Cơ sở và hướng tiếp cận chung}
 Nhận dạng văn bản ngoại cảnh đầu–cuối (End-to-End Scene Text Recognition hướng tới mục tiêu giải quyết đồng thời cả hai bài toán phát hiện văn bản (text detection) và nhận dạng văn bản (text recognition) trong một pipeline thống nhất, thay vì xử lý chúng như hai tác vụ tách biệt. Khác với các hệ thống truyền thống theo pipeline tuần tự, trong đó kết quả phát hiện văn bản được sử dụng làm đầu vào cho bước nhận dạng, các phương pháp end-to-end tìm cách tối ưu hóa toàn bộ quá trình từ ảnh đầu vào đến chuỗi ký tự đầu ra một cách thống nhất. Quy trình tổng quát của hướng tiếp cận này được minh họa trong Hình~\ref{fig:chapter2_end_to_end_STR}
 
 Cách tiếp cận này cho phép mô hình học được mối quan hệ chặt chẽ giữa vị trí, hình dạng và nội dung của văn bản trong ảnh, từ đó giảm thiểu sự phụ thuộc vào các bước trung gian và hạn chế sai lệch lan truyền giữa các giai đoạn. Do đó, End-to-End Scene Text Recognition được xem là hướng tiếp cận hiệu quả cho các ứng dụng thực tế đòi hỏi độ chính xác cao và quy trình xử lý gọn nhẹ.
@@ -143,10 +142,10 @@ Cách tiếp cận này cho phép mô hình học được mối quan hệ chặ
 \end{figure}
 
 
-\subsubsection{Các nghiên cứu liên quan}
+\subsubsubsection{Các nghiên cứu liên quan}
 Trong bối cảnh ngày càng nhiều ứng dụng thực tế yêu cầu trích xuất thông tin văn bản trực tiếp từ ảnh, chẳng hạn như dịch tự động, phân tích nội dung hình ảnh hay hỗ trợ người dùng trong môi trường thông minh, việc xử lý phát hiện và nhận dạng văn bản trong một pipeline thống nhất ngày càng trở nên cần thiết. Chính vì vậy, nhiều nghiên cứu gần đây tập trung vào bài toán nhận dạng văn bản ngoại cảnh đầu-cuối (End-to-End Scene Text Recognition), nhằm đồng thời giải quyết hai nhiệm vụ phát hiện và nhận dạng văn bản trong cùng một pipeline.
 
-Theo các nghiên cứu khảo sát và tổng quan gần đây \cite{kang2022overview, pal2024comprehensive, do2024signboardtext}, bài toán nhận dạng văn bản ngoại cảnh có thể được chia thành hai hướng tiếp cận chính: (i) các phương pháp hai giai đoạn (two-stage scene text spotters) và (ii) các phương pháp một giai đoạn (one-stage scene text spotters).
+Theo các nghiên cứu khảo sát và tổng quan gần đây \cite{kang2022overview, pal2024comprehensive, naiemi2022scene, do2024signboardtext}, bài toán nhận dạng văn bản ngoại cảnh có thể được chia thành hai hướng tiếp cận chính: (i) các phương pháp hai giai đoạn (two-stage scene text spotters) và (ii) các phương pháp một giai đoạn (one-stage scene text spotters).
 
 \begin{itemize}
     \item \textbf{Các phương pháp hai giai đoạn (Two-Stage Scene Text Spotters):} Các phương pháp thuộc nhóm này tiếp cận bài toán text spotting bằng cách kết hợp một mô-đun phát hiện văn bản và một mô-đun nhận dạng văn bản riêng biệt trong một pipeline xử lý tuần tự. Tiêu biểu cho hướng tiếp cận này, \textbf{TextBoxes \cite{liao2017textboxes}} sử dụng bộ phát hiện dựa trên SSD và bộ nhận dạng CRNN, đặt nền móng cho kiến trúc hai giai đoạn trong bài toán text spotting. Tuy nhiên, việc tối ưu tách biệt hai mô-đun có thể gây lan truyền lỗi do thiếu sự phối hợp giữa phát hiện và nhận dạng, từ đó làm suy giảm độ chính xác tổng thể. Gần đây, \textbf{MaskTextSpotter \cite{lyu2018mask}} sử dụng mô-đun Region-of-Interest (RoI) để trích xuất các vùng ứng viên và đưa vào nhánh Fast R-CNN nhằm sinh bản đồ phân đoạn ngữ nghĩa, cho phép xử lý hiệu quả văn bản có hình dạng bất kỳ. Một hướng tiếp cận khác được thể hiện trong \textbf{ABCNet \cite{liu2020abcnet}} với việc sử dụng BezierAlign, một phép biến đổi có tham số học được giúp chuyển đổi chính xác các vùng văn bản hình dạng bất kỳ (đặc biệt là văn bản cong) thành các đặc trưng đầu vào chuẩn cho bộ nhận dạng.
