@@ -1,19 +1,508 @@
 \chapter{THỰC NGHIỆM VÀ ĐÁNH GIÁ}
 \ifpdf
-    \graphicspath{{Chapter4/Chapter3Figs/PNG/}{Chapter4/Chapter4Figs/PDF/}{Chapter4/Chapter4Figs/}}
+    \graphicspath{{Chapter4/Chapter4Figs/PNG/}{Chapter4/Chapter4Figs/PDF/}{Chapter4/Chapter4Figs/}}
 \else
     \graphicspath{{Chapter4/Chapter4Figs/EPS/}{Chapter4/Chapter4Figs/}}
 \fi
 
-\markboth{\MakeUppercase{\thechapter. My Fourth Chapter }}{\thechapter. THỰC NGHIỆM VÀ ĐÁNH GIÁ}
+\markboth{\MakeUppercase{\thechapter. THỰC NGHIỆM VÀ ĐÁNH GIÁ}}{\thechapter. THỰC NGHIỆM VÀ ĐÁNH GIÁ}
 
-\section{Dữ liệu}
+% =================================================
+\section{Tập dữ liệu}
+Để xây dựng và đánh giá hiệu quả cho bài toán phát hiện và nhận dạng văn bản trên biển hiệu trong video đường phố Việt Nam, khóa luận sử dụng bộ dữ liệu \textbf{SignboardText} được giới thiệu bởi \textbf{Do và cộng sự \cite{do2024signboardtext}}. Bộ dữ liệu này cung cấp một tập dữ liệu chuyên biệt cho văn bản trên biển hiệu, với các thách thức đặc thù như văn bản đa ngôn ngữ (tiếng Anh và tiếng Việt), kiểu chữ nghệ thuật, đặc biệt sự xuất hiện của các dấu thanh (tone marks) trong tiếng Việt, một yếu tố có thể ảnh hưởng đáng kể đến độ chính xác của các phương pháp hiện tại vốn thường được huấn luyện trên các ngôn ngữ không dấu.
+
+Dựa trên nghiên cứu nền tảng \cite{do2024signboardtext}, khóa luận tiến hành phân tích và thống kê cấu trúc của bộ dữ liệu SignboardText, bao gồm ba tập con chính: Vietsignboard, English và Vin. Trong đó, tập Vietsignboard đóng vai trò là tập dữ liệu chính, với 1,327 ảnh được Do và cộng sự thu thập thủ công trên đường phố Việt Nam, trong khi các tập English và Vin được bổ sung với 413 và 516 ảnh, chọn lọc từ các bộ dữ liệu benchmark Total-Text, ICDAR2015 và VinText, nhằm tăng cường tính đa dạng cho dataset. Sự phân bố số lượng ảnh của ba tập con được minh họa trong Hình \ref{fig:chapter4_image_distribution}.
+
+\begin{figure}[t]
+    \centering
+    % TODO: cập nhật đường dẫn theo project của bạn
+    \includegraphics[width=1\linewidth]{assets/chapter4/image_distribution.jpg}
+    \caption{Phân bố số lượng hình ảnh trong ba tập con của SignboardText \cite{do2024signboardtext}}
+    \label{fig:chapter4_image_distribution}
+\end{figure}
+
+Về định dạng gán nhãn (annotation), Vietsignboard cung cấp nhãn ở cả hai cấp độ: cấp độ từ (word-level) với 48.638 thể hiện (instances) và cấp độ dòng (line-level) với 10.950 thể hiện (instances). Trong khi đó, các tập English và Vin chỉ được gán nhãn ở cấp độ từ (word-level) với lần lượt 3,646 và 16,615 thể hiện (instances). Phân bố chi tiết của các loại annotation này được trình bày trong Hình \ref{fig:chapter4_annotation_distribution}. Như vậy, trong bộ dữ liệu SignboardText, phần lớn văn bản được gán nhãn ở cấp độ từ (word). Đồng thời, việc kết hợp gán nhãn ở cả cấp độ từ (word) và dòng (line) trong tập Vietsignboard tạo điều kiện thuận lợi cho việc đánh giá linh hoạt hai nhiệm vụ phát hiện và nhận dạng văn bản.
+
+\begin{figure}[t]
+    \centering
+    % TODO: cập nhật đường dẫn theo project của bạn
+    \includegraphics[width=1\linewidth]{assets/chapter4/annotation_distribution.jpg}
+    \caption{Phân bố số lượng thể hiện văn bản (text instances) theo cấp độ nhãn (word-level và line-level) trong các tập con của SignboardText \cite{do2024signboardtext}}
+    \label{fig:chapter4_annotation_distribution}
+\end{figure}
+
+Theo phân tích của Do và cộng sự \cite{do2024signboardtext}, văn bản trong bộ dữ liệu SignboardText có hình dạng rất đa dạng, bao gồm các trường hợp văn bản nằm ngang (horizontal), văn bản có biên dạng tứ giác bất kỳ (arbitrary quadrilateral), cũng như văn bản đa hướng (multi-oriented). Đặc điểm này phản ánh sát với bối cảnh thực tế của biển hiệu ngoài trời, nơi các dòng chữ có thể được bố trí nghiêng, cong hoặc không song song với trục ảnh, qua đó đặt ra thách thức đáng kể cho các phương pháp phát hiện và nhận dạng văn bản tiên tiến hiện nay.
 
 
-\section{Tiền xử lý}
+Mặc dù bộ dữ liệu SignboardText cung cấp hệ thống nhãn chi tiết cho văn bản ở nhiều cấp độ và hình dạng khác nhau, các nhãn (annotation) này vẫn chỉ tập trung vào các vùng văn bản, chưa bao quát toàn bộ đối tượng biển hiệu chứa văn bản. Trong khi đó, theo pipeline được đề xuất trong khóa luận, phát hiện biển hiệu đóng vai trò là bước tiền đề cho các giai đoạn phát hiện và nhận dạng văn bản phía sau. Do đó, nhằm hỗ trợ đánh giá giai đoạn phát hiện biển hiệu, khóa luận tiến hành mở rộng tập dữ liệu SignboardText bằng cách bổ sung lớp nhãn cho đối tượng biển hiệu. Cụ thể, toàn bộ 2.123 ảnh thuộc ba tập con Vietsignboard, English và Vin đã được gán nhãn thủ công, với sự hỗ trợ của công cụ PPOCRLabel \cite{ppocrlabel}, để xác định các vùng chứa của biển hiệu trong ảnh. Trong đó, số lượng đối tượng biển hiệu được gán nhãn trong các tập Vietsignboard, English và Vin lần lượt là 1.327, 488 và 552. Phân bố số lượng các đối tượng này theo từng tập con được minh họa trong Hình~\ref{fig:chapter4_annotation_signboard_distribution}.
 
-\section{Tập câu truy vấn đánh giá}
+\begin{figure}[t]
+    \centering
+    % TODO: cập nhật đường dẫn theo project của bạn
+    \includegraphics[width=1\linewidth]{assets/chapter4/annotation_signboard_distribution.jpg}
+    \caption{Phân bố số lượng đối tượng biển hiệu theo từng tập con của SignboardText}
+    \label{fig:chapter4_annotation_signboard_distribution}
+\end{figure}
 
-\section{Độ đo đánh giá}
+Nhằm đánh giá mối quan hệ giữa các vùng văn bản và vùng biển hiệu trong tập dữ liệu SignboardText, khóa luận tiến hành thống kê tỷ lệ phần trăm văn bản nằm trong vùng biển hiệu so với toàn bộ văn bản xuất hiện trong ảnh, trên từng tập con của bộ dữ liệu. Dựa trên kết quả thống kê được trình bày trong Bảng~\ref{tab:text_in_signboard_ratio}, có thể nhận thấy rằng phần lớn văn bản trong tập dữ liệu SignboardText nằm bên trong các vùng biển hiệu đã được gán nhãn. Cụ thể, trung bình trên toàn bộ tập dữ liệu, khoảng 64,40\% văn bản ở cấp độ từ (word-level) và 57,56\% văn bản ở cấp độ dòng (line-level) thuộc về các đối tượng biển hiệu. Kết quả này cho thấy tập dữ liệu SignboardText phù hợp để đánh giá pipeline phát hiện và nhận dạng văn bản trên biển hiệu được sử dụng trong khóa luận.
 
-\section{Kết quả thực nghiệm}
+\begin{table}[t]
+\centering
+\caption{Thống kê tỷ lệ văn bản nằm trong vùng biển hiệu so với toàn bộ văn bản trong ảnh trên các tập con của SignboardText}
+\label{tab:text_in_signboard_ratio}
+\begin{tabularx}{\linewidth}{|X|*{8}{c|}}
+\hline
+&  \multicolumn{2}{c|}{\textbf{Vietsignboard}} &
+   \multicolumn{2}{c|}{\textbf{English}} &
+   \multicolumn{2}{c|}{\textbf{Vin}} &
+   \multicolumn{2}{c|}{\textbf{Avg}} \\
+\cline{2-9}
+& \textbf{word} & \textbf{line} &
+\textbf{word} & \textbf{line} &
+\textbf{word} & \textbf{line} &
+\textbf{word} & \textbf{line} \\
+\hline
+Text proportion (\%) & 64.50 & 57.56 & 72.68 & -- & 56.03 & -- & 64.40 & 57.56 \\
+\hline
+\end{tabularx}
+\end{table}
+
+Trong khuôn khổ khóa luận này, việc mở rộng tập dữ liệu chủ yếu tập trung vào bổ sung nhãn đối tượng biển hiệu (signboard annotation) cho tập dữ liệu ảnh tĩnh SignboardText hiện có, nhằm phục vụ trực tiếp cho quá trình huấn luyện và đánh giá mô hình. Bên cạnh đó, một tập dữ liệu video được thu thập trong môi trường đường phố Việt Nam và chỉ được sử dụng với mục đích minh họa cũng như kiểm tra khả năng tổng quát hóa của pipeline đề xuất trong bối cảnh thực tế.
+
+\section{Thiết lập thực nghiệm}
+Trong khóa luận này, quá trình thực nghiệm được tổ chức theo hướng phân tách theo từng giai đoạn trong pipeline phát hiện và nhận dạng văn bản trên biển hiệu. Cách tổ chức này nhằm cho phép đánh giá độc lập hiệu quả của từng thành phần, đồng thời giảm chi phí huấn luyện và yêu cầu tài nguyên tính toán khi phải làm việc với nhiều mô hình khác nhau. Cụ thể, các thí nghiệm được thiết kế để lần lượt khảo sát từng giai đoạn chính, từ phát hiện biển hiệu, phát hiện và nhận dạng văn bản trên biển hiệu, cho đến việc xây dựng pipeline đầu-cuối (end-to-end). Kết quả thực nghiệm ở mỗi giai đoạn được sử dụng làm cơ sở để lựa chọn mô hình phù hợp, từ đó kết hợp và hình thành pipeline hoàn chỉnh cho bài toán đặt ra. Việc lựa chọn mô hình được thực hiện dựa trên sự cân bằng giữa độ chính xác, tốc độ xử lý và độ phức tạp mô hình, nhằm đảm bảo tính khả thi khi áp dụng pipeline trong bối cảnh xử lý video đường phố thực tế. Trên cơ sở này, các thiết lập thực nghiệm chi tiết cho từng giai đoạn sẽ được trình bày trong các mục tiếp theo.
+
+\subsection{Phát hiện biển hiệu}
+Trong pipeline phát hiện và nhận dạng văn bản trên biển hiệu, phát hiện biển hiệu đóng vai trò là bước khởi đầu, có ảnh hưởng trực tiếp đến hiệu quả của các giai đoạn xử lý phía sau. Do đặc thù về bối cảnh thu thập dữ liệu và sự khác biệt về miền dữ liệu so với các tập dữ liệu phát hiện đối tượng phổ biến, khóa luận tiến hành tinh chỉnh (fine-tuning) toàn bộ các mô hình khảo sát ở giai đoạn này nhằm đảm bảo khả năng thích ứng với môi trường đường phố Việt Nam.
+
+Các mô hình phát hiện biển hiệu được phân nhóm dựa trên dạng biểu diễn đầu ra, bao gồm: (i) các phương pháp dự đoán vùng bao chữ nhật (rectangle bounding box), (ii) các phương pháp dự đoán vùng bao định hướng (oriented bounding box - OBB), và (iii) các phương pháp dựa trên phân đoạn đối tượng để xác định vùng biển hiệu dưới dạng đa giác (polygon). Việc phân nhóm này cho phép đánh giá một cách có hệ thống các đặc điểm và lợi thế của từng hướng tiếp cận trong bối cảnh bài toán đặt ra. Song song với đó, trong mỗi nhóm mô hình, các phương pháp được so sánh nhằm lựa chọn mô hình tốt nhất cho từng dạng đầu ra. Quá trình này tập trung đánh giá khả năng phát hiện trong điều kiện dữ liệu thực tế, đồng thời xem xét mức độ hiệu quả khi triển khai, làm cơ sở cho việc tích hợp các mô hình này vào pipeline và phục vụ các bước so sánh tổng thể ở các giai đoạn tiếp theo.
+
+Bên cạnh đó, khóa luận tiến hành thực nghiệm bổ sung bước căn chỉnh biển hiệu (signboard alignment) đối với các mô hình có đầu ra là OBB hoặc polygon. Trong thiết lập này, vùng biển hiệu sau khi được phát hiện sẽ được biến đổi phối cảnh (perspective transformation) để đưa về dạng chuẩn, qua đó cho phép so sánh hiệu quả giữa trường hợp không căn chỉnh và có căn chỉnh biển hiệu. Thiết lập này nhằm đánh giá mức độ ảnh hưởng của bước căn chỉnh đối với chất lượng dữ liệu đầu vào cho các giai đoạn phát hiện và nhận dạng văn bản phía sau. Hình \ref{fig:chapter4_signboard_alignment} minh họa ví dụ quá trình căn chỉnh biển hiệu, trong đó vùng biển hiệu được phát hiện với đầu ra dạng polygon được biến đổi phối cảnh để đưa về dạng hình chữ nhật chuẩn, phục vụ cho các bước phát hiện và nhận dạng văn bản tiếp theo.
+
+\begin{figure}[t]
+    \centering
+    % TODO: cập nhật đường dẫn theo project của bạn
+    \includegraphics[width=1\linewidth]{assets/chapter4/signboard_alignment.png}
+    \caption{Hình ảnh minh họa quá trình căn chỉnh biển hiệu (signboard alignment)}
+    \label{fig:chapter4_signboard_alignment}
+\end{figure}
+
+\subsection{Phát hiện và nhận dạng văn bản trên biển hiệu}
+Giai đoạn phát hiện và nhận dạng văn bản trên biển hiệu thực hiện hai nhiệm vụ chính: xác định vị trí các vùng văn bản và nhận dạng nội dung bên trong. Giai đoạn này được khảo sát theo hai hướng tiếp cận: hai giai đoạn (Two-Stage) và một giai đoạn (One-Stage). Các mô hình pretrained được sử dụng làm cơ sở đánh giá, từ đó lựa chọn hướng tiếp cận phù hợp nhằm tiết kiệm thời gian tinh chỉnh (fine-tune) mô hình. Bên cạnh đó, ở giai đoạn này, khóa luận thực nghiệm với tất cả các văn bản xuất hiện trong ảnh, thay vì chỉ giới hạn ở văn bản trên biển hiệu trong tập SignboardText. Điều này cũng giúp mở rộng dữ liệu đánh giá, từ đó cải thiện độ tin cậy của kết quả thực nghiệm.
+
+\paragraph{Hướng tiếp cận hai giai đoạn (Two-Stage)}
+\mbox{}\\
+\textbf{Phát hiện văn bản}
+
+% \subsection{Nguồn dữ liệu}
+% Trong khóa luận này, nhóm sử dụng bộ dữ liệu \textbf{SignboardText} được giới thiệu trong bài báo
+% \textit{``SignboardText: Text Detection and Recognition in In-the-Wild Signboard Images''} (IEEE),
+% với các tác giả Tien Do, Thuyen Tran, Thua Nguyen, Duy-Dinh Le và Thanh Duc Ngo. \cite{do2024signboardtext}
+
+% Bộ dữ liệu tập trung vào văn bản trên biển hiệu trong điều kiện tự nhiên (in-the-wild), phù hợp với bối cảnh street-view/video hành trình do có nhiều biến thiên về phông chữ, kích thước, hướng, bố cục, đa ngôn ngữ và nền phức tạp.
+
+% \subsection{Thống kê dữ liệu}
+% Theo thống kê trên tập dữ liệu mà nhóm sử dụng (các biểu đồ Dataset Statistic), SignboardText được chia thành ba nhóm:
+% \begin{itemize}
+%     \item \textbf{Vietsignboard}: 1{,}194 ảnh.
+%     \item \textbf{English}: 413 ảnh.
+%     \item \textbf{Vin}: 516 ảnh.
+% \end{itemize}
+
+% Số lượng văn bản được gán nhãn (annotated text):
+% \begin{itemize}
+%     \item \textbf{Vietsignboard}: 48{,}638 \textit{word} và 10{,}950 \textit{text-line}.
+%     \item \textbf{English}: 3{,}646 \textit{word}.
+%     \item \textbf{Vin}: 16{,}615 \textit{word}.
+% \end{itemize}
+
+% Số lượng biển hiệu được gán nhãn (annotated signboard):
+% \begin{itemize}
+%     \item \textbf{Vietsignboard}: 1{,}327 biển hiệu.
+%     \item \textbf{English}: 488 biển hiệu.
+%     \item \textbf{Vin}: 552 biển hiệu.
+% \end{itemize}
+
+% % --- placeholder figures (bạn tự sửa path) ---
+% \begin{figure}[t]
+%     \centering
+%     \includegraphics[width=0.95\linewidth]{dataset_image_distribution.png}
+%     \caption{Phân bố số lượng ảnh theo nhóm trong SignboardText.}
+%     \label{fig:ch4_dataset_image_dist}
+% \end{figure}
+
+% \begin{figure}[t]
+%     \centering
+%     \includegraphics[width=0.95\linewidth]{dataset_annotated_text_distribution.png}
+%     \caption{Phân bố số lượng văn bản được gán nhãn (word/line) theo nhóm trong SignboardText.}
+%     \label{fig:ch4_dataset_text_dist}
+% \end{figure}
+
+% \begin{figure}[t]
+%     \centering
+%     \includegraphics[width=0.95\linewidth]{dataset_annotated_signboard_distribution.png}
+%     \caption{Phân bố số lượng biển hiệu được gán nhãn theo nhóm trong SignboardText.}
+%     \label{fig:ch4_dataset_signboard_dist}
+% \end{figure}
+
+% \subsection{Đặc trưng hình học và kích thước mẫu}
+% Bộ dữ liệu hỗ trợ nhiều dạng hình học văn bản (\textit{horizontal, arbitrary quadrilateral, multi-oriented}) và mang tính đa ngôn ngữ (ML).
+% Thống kê kích thước ảnh/văn bản/biển hiệu (px) được tổng hợp ở Bảng~\ref{tab:ch4_size_stats}.
+
+% \begin{table}[t]
+% \centering
+% \caption{Thống kê kích thước (px) trên SignboardText dùng trong khóa luận.}
+% \label{tab:ch4_size_stats}
+% \begin{tabular}{l|cc|cc|cc|cc}
+% \hline
+% \textbf{Loại} & \multicolumn{2}{c|}{\textbf{Image}} & \multicolumn{2}{c|}{\textbf{Word}} & \multicolumn{2}{c|}{\textbf{Line}} & \multicolumn{2}{c}{\textbf{Signboard}} \\
+%  & W & H & W & H & W & H & W & H \\
+% \hline
+% Min  & 190  & 86   & 16   & 7    & 21   & 8    & 20   & 28   \\
+% Max  & 4608 & 4160 & 3556 & 1125 & 3952 & 1032 & 4536 & 4057 \\
+% Mean & 1015.99 & 710.75 & 128.03 & 60.75 & 255.33 & 52.68 & 706.33 & 330.32 \\
+% \hline
+% \end{tabular}
+% \end{table}
+
+% \subsection{Tỷ lệ văn bản nằm trong vùng biển hiệu}
+% Bảng~\ref{tab:ch4_text_prop} thể hiện tỷ lệ phần trăm văn bản thuộc vùng biển hiệu so với toàn bộ văn bản xuất hiện trong ảnh.
+
+% \begin{table}[t]
+% \centering
+% \caption{Tỷ lệ văn bản nằm trong vùng biển hiệu (\%).}
+% \label{tab:ch4_text_prop}
+% \begin{tabular}{l|cc|cc|cc|cc}
+% \hline
+% \textbf{Nhóm} & \multicolumn{2}{c|}{\textbf{Vietsignboard}} & \multicolumn{2}{c|}{\textbf{English}} & \multicolumn{2}{c|}{\textbf{Vin}} & \multicolumn{2}{c}{\textbf{Avg}} \\
+%  & word & line & word & line & word & line & word & line \\
+% \hline
+% Text proportion (\%) & 64.50 & 57.56 & 72.68 & -- & 56.03 & -- & 64.40 & 57.56 \\
+% \hline
+% \end{tabular}
+% \end{table}
+
+% \subsection{Chia tập Train/Validation/Test}
+% Để phục vụ huấn luyện và đánh giá, nhóm sử dụng cách chia dữ liệu như Bảng~\ref{tab:ch4_split}.
+
+% \begin{table}[t]
+% \centering
+% \caption{Chia tập dữ liệu theo nhiệm vụ.}
+% \label{tab:ch4_split}
+% \begin{tabular}{l|ccc|l}
+% \hline
+% \textbf{Loại dữ liệu} & \textbf{Train} & \textbf{Validation} & \textbf{Test} & \textbf{Task} \\
+% \hline
+% Images      & 1357 & 340   & 426   & Signboard/Text Detection \\
+% Word Images & 44238 & 10661 & 13988 & Text Recognition \\
+% \hline
+% \end{tabular}
+% \end{table}
+
+% % =================================================
+% \section{Tiền xử lý}
+% \subsection{Chuẩn hóa nhãn và định dạng dữ liệu}
+% Nhóm thực hiện chuẩn hóa nhãn để phục vụ nhiều họ mô hình khác nhau:
+% \begin{itemize}
+%     \item \textbf{Signboard detection}: chuyển nhãn biển hiệu về BBox hoặc OBB tùy mô hình.
+%     \item \textbf{Signboard segmentation}: biểu diễn biển hiệu bằng mask nhị phân.
+%     \item \textbf{Text detection}: chuẩn hóa nhãn vùng chữ về polygon/quad hoặc OBB/bbox tùy hướng tiếp cận.
+% \end{itemize}
+
+% \subsection{Tạo dữ liệu cho Text Recognition}
+% Từ nhãn \textit{word-level}, nhóm cắt (crop) vùng chữ để tạo tập \textbf{Word Images}. Với các trường hợp văn bản bị nghiêng, nhóm áp dụng bước \textbf{rectify/align} (warp theo 4 điểm) trước khi resize về kích thước đầu vào của recognizer.
+
+% \subsection{Tăng cường dữ liệu (Augmentation)}
+% Trong huấn luyện/fine-tune, nhóm sử dụng augmentation mức cơ bản phù hợp street-view:
+% \begin{itemize}
+%     \item thay đổi sáng/tương phản,
+%     \item scale và rotate nhỏ,
+%     \item blur nhẹ (tuỳ chọn) để mô phỏng rung/mờ.
+% \end{itemize}
+
+% % =================================================
+% \section{Mô hình thực nghiệm}
+% \subsection{Phát hiện biển hiệu (Signboard Detection)}
+% Nhóm đánh giá hai hướng:
+% \begin{itemize}
+%     \item \textbf{Object detection (BBox/OBB)}: DETR, YOLOv8, RT-DETRv2, YOLOv11; và các biến thể \textbf{YOLOv8-obb}, \textbf{YOLOv11-obb}.
+%     \item \textbf{Segmentation (mask)}: SegFormer và Mask2Former.
+% \end{itemize}
+
+% \subsection{Phát hiện văn bản (Text Detection)}
+% Nhóm so sánh các mô hình text detection: PANet, DBNet++, TextPMs, FAST, KPN. Sau đó, chọn các mô hình có kết quả tốt để fine-tune trên SignboardText.
+
+% \subsection{Nhận dạng văn bản (Text Recognition)}
+% Nhóm đánh giá các recognizer: ViTSTR, PARSeq, CDistNet, SMTR, SVTRv2; và thực hiện fine-tune cho các mô hình tốt nhất trên dữ liệu Word Images.
+
+% \subsection{Text spotting (End-to-end / Two-stage)}
+% Nhóm so sánh:
+% \begin{itemize}
+%     \item \textbf{End-to-end one-stage}: TESTR, DeepSolo, UNITS, DNTextSpotter.
+%     \item \textbf{Two-stage}: kết hợp (Text Detector) + (Text Recognizer), gồm TextPMs+SVTRv2, DBNet++ + SVTRv2, FAST + SVTRv2.
+% \end{itemize}
+
+% % =================================================
+% \section{Độ đo đánh giá}
+% \subsection{Signboard detection}
+% Nhóm sử dụng các chỉ số chuẩn của object detection:
+% \begin{itemize}
+%     \item $\textbf{AP}_{50}$ (IoU = 0.5),
+%     \item $\textbf{AP}_{50:95}$ (trung bình IoU từ 0.5 đến 0.95),
+%     \item \textbf{FPS} để đánh giá tốc độ suy luận.
+% \end{itemize}
+
+% \subsection{Signboard segmentation}
+% Với segmentation, nhóm sử dụng:
+% \begin{itemize}
+%     \item \textbf{mIoU} và \textbf{mAccuracy},
+%     \item \textbf{FPS}.
+% \end{itemize}
+
+% \subsection{Text detection}
+% Khóa luận sử dụng Precision/Recall/Hmean:
+% \[
+% P = \frac{TP}{TP+FP},\quad
+% R = \frac{TP}{TP+FN},\quad
+% H = \frac{2PR}{P+R}.
+% \]
+% Tiêu chí khớp giữa dự đoán và ground-truth dựa trên IoU (với bbox/obb) hoặc IoU theo polygon/quad (tùy dạng nhãn).
+
+% \subsection{Text recognition}
+% Khóa luận sử dụng:
+% \begin{itemize}
+%     \item \textbf{Exact-match accuracy}: đúng hoàn toàn chuỗi ký tự,
+%     \item \textbf{Normalized-match accuracy}: so khớp sau chuẩn hóa (Unicode/NFC, khoảng trắng, dấu câu theo quy ước).
+% \end{itemize}
+
+% \subsection{Text spotting}
+% Nhóm sử dụng \textbf{Hmean} cho kết quả end-to-end (phát hiện + nhận dạng) và báo cáo thêm \textbf{FPS}.
+
+% % =================================================
+% \section{Kết quả thực nghiệm}
+% \subsection{Kết quả phát hiện biển hiệu (BBox/OBB)}
+% \begin{table}[t]
+% \centering
+% \caption{Kết quả signboard detection với rectangle bounding box.}
+% \label{tab:ch4_sb_det_bbox}
+% \begin{tabular}{l|c|c|c|c|c|c}
+% \hline
+% \textbf{Model} & \textbf{Year} & \textbf{Params(M)} & \textbf{Epochs} & \textbf{FPS} & $\textbf{AP}_{50}$ & $\textbf{AP}_{50:95}$ \\
+% \hline
+% DETR      & 2020 & 41.50 & 50 & 42.82  & 89.30 & 68.95 \\
+% YOLOv8    & 2023 & 3.01  & 50 & 133.01 & 86.85 & 74.20 \\
+% RT-DETRv2 & 2024 & 42.73 & 50 & 26.44  & 90.71 & 81.22 \\
+% YOLOv11   & 2024 & 2.59  & 50 & 96.06  & 88.00 & 73.47 \\
+% \hline
+% \end{tabular}
+% \end{table}
+
+% \begin{table}[t]
+% \centering
+% \caption{Kết quả signboard detection với oriented bounding box (OBB).}
+% \label{tab:ch4_sb_det_obb}
+% \begin{tabular}{l|c|c|c|c|c|c}
+% \hline
+% \textbf{Model} & \textbf{Year} & \textbf{Params(M)} & \textbf{Epochs} & \textbf{FPS} & $\textbf{AP}_{50}$ & $\textbf{AP}_{50:95}$ \\
+% \hline
+% YOLOv8-obb  & 2023 & 3.01 & 50 & 133.01 & 93.04 & 79.08 \\
+% YOLOv11-obb & 2024 & 2.59 & 50 & 96.06  & 93.20 & 80.78 \\
+% \hline
+% \end{tabular}
+% \end{table}
+
+% \noindent\textbf{Nhận xét:}
+% RT-DETRv2 đạt $\text{AP}_{50:95}$ cao nhất ở thiết lập BBox, trong khi YOLOv8 đạt tốc độ suy luận cao nhất.
+% Ở thiết lập OBB, YOLOv11-obb nhỉnh hơn về $\text{AP}_{50:95}$, phù hợp với biển hiệu bị nghiêng/phối cảnh.
+
+% \subsection{Kết quả phân đoạn biển hiệu (Segmentation)}
+% \begin{table}[t]
+% \centering
+% \caption{Kết quả signboard segmentation.}
+% \label{tab:ch4_sb_seg}
+% \begin{tabular}{l|c|c|c|c|c|c}
+% \hline
+% \textbf{Model} & \textbf{Year} & \textbf{Params(M)} & \textbf{Epochs} & \textbf{FPS} & \textbf{mIoU(\%)} & \textbf{mAccuracy(\%)} \\
+% \hline
+% SegFormer   & 2021 & 3.8  & 50 & 97.5 & 89.03 & 93.92 \\
+% Mask2Former & 2022 & 47.4 & 50 & 15.9 & 90.48 & 94.44 \\
+% \hline
+% \end{tabular}
+% \end{table}
+
+% \subsection{Kết quả text detection (mô hình tiền huấn luyện)}
+% \begin{table}[t]
+% \centering
+% \caption{So sánh các mô hình text detection tiền huấn luyện trên SignboardText.}
+% \label{tab:ch4_textdet_pretrained}
+% \begin{tabular}{l|c|c|ccc|ccc|ccc|c}
+% \hline
+% \textbf{Model} & \textbf{Year} & \textbf{Params(M)} &
+% \multicolumn{3}{c|}{\textbf{Vietsignboard}} &
+% \multicolumn{3}{c|}{\textbf{English}} &
+% \multicolumn{3}{c|}{\textbf{Vin}} &
+% \textbf{FPS} \\
+% & & & P & R & H & P & R & H & P & R & H & \\
+% \hline
+% PANet   & 2020 & 12.25 & 81.00 & 82.25 & 81.62 & 61.00 & 72.56 & 66.28 & 81.71 & 75.82 & 78.66 & 1.58 \\
+% DBNet++ & 2022 & 26.43 & 89.86 & 80.31 & 84.82 & 73.38 & 60.95 & 65.59 & 91.52 & 74.18 & 81.94 & 18.69 \\
+% TextPMs & 2022 & 36.43 & 90.27 & 84.85 & 87.48 & 78.82 & 77.58 & 78.20 & 93.41 & 81.32 & 86.95 & 20.75 \\
+% FAST    & 2023 & 10.58 & 83.98 & 86.32 & 85.13 & 64.34 & 80.25 & 71.42 & 84.45 & 79.09 & 81.69 & 15.30 \\
+% KPN     & 2023 & 58.24 & 81.19 & 81.85 & 81.52 & 63.49 & 85.90 & 73.01 & 83.49 & 78.37 & 80.85 & 4.17 \\
+% \hline
+% \end{tabular}
+% \end{table}
+
+% \subsection{Kết quả text detection sau fine-tune}
+% \begin{table}[t]
+% \centering
+% \caption{Kết quả text detection sau fine-tune trên SignboardText.}
+% \label{tab:ch4_textdet_finetune}
+% \begin{tabular}{l|ccc|ccc|ccc}
+% \hline
+% \textbf{Model} &
+% \multicolumn{3}{c|}{\textbf{Vietsignboard}} &
+% \multicolumn{3}{c|}{\textbf{English}} &
+% \multicolumn{3}{c}{\textbf{Vin}} \\
+% & P & R & H & P & R & H & P & R & H \\
+% \hline
+% DBNet++     & 90.40 & 81.94 & 85.96 & 84.42 & 61.75 & 71.33 & 92.22 & 76.34 & 83.53 \\
+% TextPMs     & 90.36 & 85.29 & 87.75 & 83.80 & 82.39 & 83.09 & 92.98 & 84.46 & 88.51 \\
+% YOLOv8-obb  & 91.14 & 83.94 & 87.39 & 83.77 & 81.42 & 82.58 & 93.34 & 77.57 & 84.73 \\
+% YOLOv11-obb & 91.49 & 82.97 & 87.02 & 84.16 & 78.70 & 81.34 & 93.10 & 76.84 & 84.19 \\
+% \hline
+% \end{tabular}
+% \end{table}
+
+% \subsection{Kết quả text recognition (mô hình tiền huấn luyện)}
+% \begin{table}[t]
+% \centering
+% \caption{So sánh các mô hình text recognition tiền huấn luyện trên SignboardText.}
+% \label{tab:ch4_textrec_pretrained}
+% \begin{tabular}{l|c|c|cc|cc|cc|c}
+% \hline
+% \textbf{Model} & \textbf{Year} & \textbf{Params(M)} &
+% \multicolumn{2}{c|}{\textbf{Vietsignboard}} &
+% \multicolumn{2}{c|}{\textbf{English}} &
+% \multicolumn{2}{c|}{\textbf{Vin}} &
+% \textbf{Speed (ms)} \\
+% & & & Word & Line & Word & Line & Word & Line & \\
+% \hline
+% ViTSTR   & 2021 & 85.48 & 56.70 & 29.01 & 48.71 & -- & 50.82 & -- & 9.80 \\
+% PARSeq   & 2022 & 23.83 & 80.76 & 59.08 & 78.28 & -- & 72.96 & -- & 12.71 \\
+% CDistNet & 2024 & 65.46 & 63.25 & 42.43 & 68.13 & -- & 56.39 & -- & 120.33 \\
+% SMTR     & 2025 & 15.82 & 79.58 & 64.54 & 76.77 & -- & 70.64 & -- & 23.47 \\
+% SVTRv2   & 2025 & 21.02 & 80.82 & 65.64 & 78.33 & -- & 72.34 & -- & 18.81 \\
+% \hline
+% \end{tabular}
+% \end{table}
+
+% \subsection{Kết quả text recognition sau fine-tune}
+% \begin{table}[t]
+% \centering
+% \caption{Kết quả text recognition sau fine-tune (Exact-match và Norm-match).}
+% \label{tab:ch4_textrec_finetune}
+% \begin{tabular}{l|cc|cc|cc}
+% \hline
+% \textbf{Model} &
+% \multicolumn{2}{c|}{\textbf{Vietsignboard}} &
+% \multicolumn{2}{c|}{\textbf{English}} &
+% \multicolumn{2}{c}{\textbf{Vin}} \\
+% & Exact & Norm & Exact & Norm & Exact & Norm \\
+% \hline
+% PARSeq & 79.19 & 80.26 & 60.68 & 62.11 & 76.95 & 78.67 \\
+% SMTR   & 77.40 & 78.47 & 59.64 & 61.07 & 75.06 & 76.58 \\
+% SVTRv2 & 76.39 & 77.96 & 57.55 & 58.59 & 76.46 & 78.10 \\
+% \hline
+% \end{tabular}
+% \end{table}
+
+% \subsection{Kết quả text spotting}
+% \begin{table}[t]
+% \centering
+% \caption{Kết quả text spotting (Hmean \%) với one-stage và two-stage.}
+% \label{tab:ch4_textspotting}
+% \begin{tabular}{l|c|c|cc|cc|cc|c}
+% \hline
+% \textbf{Model} & \textbf{Year} & \textbf{Params(M)} &
+% \multicolumn{2}{c|}{\textbf{Viet}} &
+% \multicolumn{2}{c|}{\textbf{English}} &
+% \multicolumn{2}{c|}{\textbf{Vin}} &
+% \textbf{FPS} \\
+% & & & Word & Line & Word & Line & Word & Line & \\
+% \hline
+% TESTR         & 2022 & 49.48  & 48.77 & 7.43 & 60.43 & -- & 50.11 & -- & 11.11 \\
+% DeepSolo      & 2023 & 42.59  & 47.61 & 8.02 & 70.71 & -- & 53.32 & -- & 12.21 \\
+% UNITS         & 2023 & 101.00 & 63.19 & 9.75 & 88.00 & -- & 64.88 & -- & 1.28 \\
+% DNTextSpotter & 2025 & 42.73  & 49.17 & 9.20 & 73.20 & -- & 53.57 & -- & 12.40 \\
+% \hline
+% TextPMs+SVTRv2 & -- & 57.45 & 66.48 & 9.79 & 68.59 & -- & 68.50 & -- & 5.52 \\
+% DBNet++ +SVTRv2& -- & 47.45 & 66.58 & 8.22 & 59.21 & -- & 67.32 & -- & -- \\
+% FAST   +SVTRv2 & -- & 31.60 & 64.22 & 9.06 & 56.90 & -- & 62.18 & -- & -- \\
+% \hline
+% \end{tabular}
+% \end{table}
+
+% \subsection{Đánh giá pipeline trên vùng biển hiệu}
+% Nhóm so sánh các biến thể pipeline theo cấu trúc:
+% \[
+% (\text{Signboard module}) + (\text{Text detector}) + (\text{Text recognizer}) + (\text{Align}).
+% \]
+% Kết quả Text Detection trên vùng biển hiệu được tổng hợp ở Bảng~\ref{tab:ch4_textdet_on_signboard}.
+
+% \begin{table}[t]
+% \centering
+% \caption{Kết quả Text Detection trên vùng biển hiệu với các biến thể pipeline.}
+% \label{tab:ch4_textdet_on_signboard}
+% \begin{tabular}{l|l|l|ccc|ccc|ccc}
+% \hline
+% \textbf{Signboard} & \textbf{Text Det} & \textbf{Text Rec} &
+% \multicolumn{3}{c|}{\textbf{Vietsignboard}} &
+% \multicolumn{3}{c|}{\textbf{English}} &
+% \multicolumn{3}{c}{\textbf{Vin}} \\
+% & & & P & R & H & P & R & H & P & R & H \\
+% \hline
+% RTDETRv2          & YOLOv8-obb & PARSeq & 91.79 & 87.59 & 89.64 & 80.13 & 72.16 & 75.94 & 92.41 & 87.32 & 89.79 \\
+% YOLOv11-obb       & YOLOv8-obb & PARSeq & 89.34 & 86.76 & 88.03 & 73.47 & 67.54 & 70.38 & 89.39 & 85.59 & 87.45 \\
+% SegFormer         & YOLOv8-obb & PARSeq & 83.50 & 89.05 & 86.19 & 67.04 & 79.95 & 72.93 & 82.53 & 88.67 & 85.44 \\
+% YOLOv11-obb + Align & YOLOv8-obb & PARSeq & 89.78 & 86.79 & 88.26 & 73.48 & 67.41 & 70.32 & 89.25 & 85.33 & 87.25 \\
+% SegFormer + Align   & YOLOv8-obb & PARSeq & 85.42 & 87.27 & 86.34 & 68.09 & 73.31 & 70.60 & 84.35 & 87.96 & 86.12 \\
+% \hline
+% \end{tabular}
+% \end{table}
+
+% Kết quả Text Recognition trong pipeline được tổng hợp ở Bảng~\ref{tab:ch4_textrec_on_signboard}.
+
+% \begin{table}[t]
+% \centering
+% \caption{Kết quả Text Recognition trên vùng biển hiệu (pipeline).}
+% \label{tab:ch4_textrec_on_signboard}
+% \begin{tabular}{l|l|l|cc|cc|cc}
+% \hline
+% \textbf{Signboard} & \textbf{Text Det} & \textbf{Text Rec} &
+% \multicolumn{2}{c|}{\textbf{Vietsignboard}} &
+% \multicolumn{2}{c|}{\textbf{English}} &
+% \multicolumn{2}{c}{\textbf{Vin}} \\
+% & & & Exact & Norm & Exact & Norm & Exact & Norm \\
+% \hline
+% RTDETRv2            & YOLOv8-obb & PARSeq & 71.36 & 72.32 & 48.68 & 49.70 & 70.35 & 72.23 \\
+% YOLOv11-obb         & YOLOv8-obb & PARSeq & 70.23 & 71.19 & 41.65 & 42.66 & 69.00 & 70.69 \\
+% SegFormer           & YOLOv8-obb & PARSeq & 67.91 & 68.89 & 45.63 & 46.29 & 66.68 & 68.25 \\
+% YOLOv11-obb + Align & YOLOv8-obb & PARSeq & 70.46 & 71.43 & 41.69 & 42.70 & 68.32 & 70.02 \\
+% SegFormer + Align   & YOLOv8-obb & PARSeq & 68.16 & 69.16 & 42.35 & 43.08 & 67.34 & 68.72 \\
+% \hline
+% \end{tabular}
+% \end{table}
+
+% % --- placeholder figure for qualitative comparison ---
+% \begin{figure}[t]
+%     \centering
+%     \includegraphics[width=0.98\linewidth]{qualitative_align_compare.png}
+%     \caption{Ví dụ định tính: phát hiện/nhận dạng văn bản trước và sau khi căn chỉnh biển hiệu (Align).}
+%     \label{fig:ch4_align_qualitative}
+% \end{figure}
+
+% % =================================================
+% \section{Tóm tắt chương}
+% Chương này đã mô tả bộ dữ liệu SignboardText và các thống kê quan trọng, quy trình tiền xử lý, các mô hình được lựa chọn để đánh giá cho từng mô-đun (phát hiện/phân đoạn biển hiệu, phát hiện văn bản, nhận dạng văn bản, và text spotting), cùng các độ đo đánh giá tương ứng.
+% Kết quả thực nghiệm cho thấy các mô hình OBB phù hợp hơn cho biển hiệu/văn bản bị nghiêng; đồng thời các cấu hình two-stage và pipeline ``phát hiện biển hiệu trước'' mang lại hiệu quả tổng thể tốt hơn trong bối cảnh dữ liệu street-view.
