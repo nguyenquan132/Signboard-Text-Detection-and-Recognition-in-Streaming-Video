@@ -97,6 +97,12 @@
 
 \renewcommand{\figurename}{Hình}
 \renewcommand{\tablename}{Bảng}
+\renewcommand{\contentsname}{Mục lục}
+\renewcommand{\listfigurename}{Danh mục hình}
+\renewcommand{\listtablename}{Danh mục bảng}
+\renewcommand{\chaptername}{Chương}
+\renewcommand{\appendixname}{Phụ lục}
+\renewcommand{\bibname}{Tài liệu tham khảo}
 
 
 \DeclareUnicodeCharacter{0301}{\'{}}
@@ -112,7 +118,7 @@
 
 \begin{document}
 
-\maketitle
+% \maketitle
 \fontsize{13}{17.3}\selectfont
 
 
@@ -124,10 +130,10 @@
 \frontmatter % book mode only
 \pagenumbering{roman}
 
-% \includepdf[pages=-]{SERequiment/cai_bia.pdf}
+\includepdf[pages=-]{SERequiment/biaKL.pdf}
 % \include{SERequiment/BiaKhoaLuan}
 % \includepdf[pages=-]{SERequiment/bia_v3}
-% \include{Appendix1/danh_sach_hoi_dong}
+\include{Appendix1/danh_sach_hoi_dong}
 \include{Appendix1/appendix1}
 \include{Summary/summary}
 
@@ -136,6 +142,7 @@
 \tableofcontents
 \listoffigures
 \listoftables
+\input{Abbreviations/abbreviations}
 % \include{Appendix1/appendix1}
 %\printnomenclature  
 %\addcontentsline{toc}{chapter}{Nomenclature}

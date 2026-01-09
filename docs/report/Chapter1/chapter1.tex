@@ -58,8 +58,8 @@ Hơn nữa, khi mở rộng phạm vi từ ảnh tĩnh sang \textbf{video hành 
 Từ những thách thức nêu trên, bài toán phát hiện và nhận dạng văn bản trên biển hiệu trong bối cảnh \textbf{video hành trình} có thể được định nghĩa một cách cụ thể như sau (hình ảnh minh họa trực quan tại Hình~\ref{fig:chapter1_input_output}):
 
 \begin{itemize}
-    \item \textbf{Đầu vào (Input)}: Các hình ảnh hoặc khung hình thực tế được trích xuất từ video camera hành trình trên đường phố Việt Nam, chứa các cảnh có biển hiệu trong nhiều điều kiện khác nhau, bao gồm ban ngày/ban đêm, trời nắng/mưa và các góc nhìn đa dạng.
-    \item \textbf{Đầu ra (Ouput)}: Đối với mỗi hình ảnh (hoặc khung hình video) đầu vào, bài toán cần trả về hai thông tin chính:
+    \item \textbf{Đầu vào (Input)}: Hình ảnh hoặc khung hình thực tế được trích xuất từ video camera hành trình trên đường phố Việt Nam, chứa các cảnh có biển hiệu trong nhiều điều kiện khác nhau, bao gồm ban ngày/ban đêm, trời nắng/mưa và các góc nhìn đa dạng.
+    \item \textbf{Đầu ra (Output)}: Với hình ảnh (hoặc khung hình video) đầu vào, hệ thống cần trả về hai thông tin chính:
     \begin{itemize}
         \item \textbf{Vị trí của biển hiệu}: Danh sách các vùng (bounding regions) xác định vùng chứa biển hiệu trong ảnh.
         \item \textbf{Thông tin văn bản trên từng biển hiệu}: Ứng với mỗi biển hiệu, cung cấp vị trí và nội dung văn bản đã được nhận dạng trên biển hiệu đó.
@@ -85,8 +85,8 @@ Trước những thách thức thực tế và dựa trên các kết quả nghi
 Để đạt được các mục tiêu trên, khóa luận sẽ tiến hành khảo sát, thực nghiệm so sánh và lựa chọn các phương pháp tiên tiến hiện nay cho từng tác vụ con, đồng thời so sánh hai hướng tiếp cận chính cho bài toán text spotting. Các phương pháp cụ thể được xem xét bao gồm:
 
 \begin{itemize}
-    \item \textbf{Phát hiện biển hiệu (Signboard Detection):} Các biến thể YOLO \cite{redmon2016you}, DETR \cite{carion2020end}, RTDETR v2 \cite{lv2024rt}, SegFormer \cite{xie2021segformer}, Mask2Former \cite{cheng2022masked}.
-    \item \textbf{Phát hiện văn bản (Text Detection):} PANet \cite{liu2018path}, DBNet++ \cite{liao2022real}, TextPMs \cite{zhang2022arbitrary}, FAST \cite{chen2021fast}, KPN \cite{zhang2022kernel}, các biến thể YOLO \cite{redmon2016you} với hộp giới hạn xoay.
+    \item \textbf{Phát hiện biển hiệu (Signboard Detection):} YOLOv8 \cite{ultralytics}, YOLOv11 \cite{ultralytics} , DETR \cite{carion2020end}, RTDETR v2 \cite{lv2024rt}, YOLOv8-OBB \cite{ultralytics}, YOLOv11-OBB \cite{ultralytics}, SegFormer \cite{xie2021segformer}, Mask2Former \cite{cheng2022masked}.
+    \item \textbf{Phát hiện văn bản (Text Detection):} PANet \cite{liu2018path}, DBNet++ \cite{liao2022real}, TextPMs \cite{zhang2022arbitrary}, FAST \cite{chen2021fast}, KPN \cite{zhang2022kernel}, YOLOv8-OBB \cite{ultralytics}, YOLOv11-OBB \cite{ultralytics}.
     \item \textbf{Nhận dạng văn bản (Text Recognition):} ViTSTR \cite{atienza2021vision}, PARSeq \cite{bautista2022scene}, CDistNet \cite{zheng2024cdistnet}, SMTR \cite{du2025out}, SVTRv2 \cite{du2025svtrv2}
     \item \textbf{Text Spotting (End-to-End):} TESTR \cite{zhang2022text}, DeepSolo \cite{ye2023deepsolo}, UNITS \cite{kil2023towards}, DNTextSpotter \cite{qiao2024dntextspotter}
 \end{itemize}
@@ -100,7 +100,7 @@ Trên cơ sở kết quả đánh giá và so sánh từ thực nghiệm cho t�
 
 Trong khóa luận này, sinh viên đề ra các mục tiêu như sau:
 \begin{itemize}
-    \item Mở rộng và chuẩn bị tập dữ liệu ảnh tĩnh SignboardText~\cite{do2024signboardtext} bằng cách bổ sung nhãn đối tượng biển hiệu (\textit{signboard}), nhằm hỗ trợ đánh giá bài toán phát hiện biển hiệu.
+    \item Mở rộng và chuẩn bị tập dữ liệu ảnh tĩnh SignboardText~\cite{do2024signboardtext} bằng cách bổ sung nhãn đối tượng biển hiệu (\textit{signboard}), nhằm hỗ trợ đánh giá bài toán phát hiện biển hiệu. Đồng thời, thu thập dữ liệu video đường phố giúp đánh giá khả năng tổng quát hóa của pipeline phát hiện và nhận dạng văn bản trên biển hiệu.
     \item Thực nghiệm, so sánh và đánh giá một số phương pháp tiên tiến hiện nay cho từng tác vụ con (phát hiện biển hiệu, phát hiện văn bản, nhận dạng văn bản) trên tập dữ liệu được chuẩn bị, từ đó rút ra ưu điểm, nhược điểm của từng phương pháp.
     \item Xây dựng một pipeline end-to-end cho bài toán phát hiện và nhận dạng văn bản trên biển hiệu trong video hành trình tại Việt Nam.
 \end{itemize}
@@ -119,8 +119,8 @@ Phạm vi của khóa luận được giới hạn nhằm đảm bảo tính t�
 
 Các đóng góp chính của khóa luận bao gồm:
 \begin{itemize}
-    \item \textbf{Mở rộng bộ dữ liệu:} Bổ sung nhãn đối tượng biển hiệu (signboard bounding box) cho tập dữ liệu ảnh tĩnh SignboardText~\cite{do2024signboardtext}, hỗ trợ thực nghiệm và đánh giá cho bài toán phát hiện biển hiệu. Đồng thời, thu thập một tập dữ liệu video hành trình thực tế để phục vụ minh họa và kiểm tra tính tổng quát.
-    \item \textbf{Thực nghiệm và đánh giá:} Tiến hành cài đặt, thực nghiệm và so sánh một một số phương pháp tiên tiến cho ba tác vụ thành phần: phát hiện biển hiệu, phát hiện văn bản và nhận dạng văn bản. Kết quả đánh giá đi kèm phân tích ưu/nhược điểm cụ thể trong bối cảnh dữ liệu tiếng Việt và cảnh quan đường phố.
+    \item \textbf{Mở rộng bộ dữ liệu:} Bổ sung nhãn đối tượng biển hiệu (signboard bounding box) cho tập dữ liệu ảnh tĩnh SignboardText~\cite{do2024signboardtext}, hỗ trợ thực nghiệm và đánh giá cho bài toán phát hiện biển hiệu. Đồng thời, thu thập một tập dữ liệu video hành trình thực tế để phục vụ minh họa và kiểm tra tính tổng quát của pipeline.
+    \item \textbf{Thực nghiệm và đánh giá:} Tiến hành cài đặt, thực nghiệm và so sánh một một số phương pháp tiên tiến cho ba tác vụ thành phần: phát hiện biển hiệu, phát hiện văn bản và nhận dạng văn bản. Kết quả đánh giá đi kèm phân tích ưu và nhược điểm của các phương pháp trong bối cảnh dữ liệu tiếng Việt và cảnh quan đường phố.
     \item \textbf{Phát triển pipeline end-to-end:} Trên cơ sở kết quả thực nghiệm, phát triển một pipeline cho bài toán phát hiện và nhận dạng văn bản trên biển hiệu trong video hành trình trên đường phố Việt Nam. Pipeline hướng tới việc cung cấp đầu ra vị trí và nội dung văn bản, làm cơ sở cho các tác vụ truy xuất thông tin trong tương lai.
 \end{itemize}
 
@@ -129,14 +129,12 @@ Các đóng góp chính của khóa luận bao gồm:
 
 Nội dung khóa luận được tổ chức như sau:
 
-\textbf{Chương 1:} Tổng quan bài toán, bối cảnh, động lực, mục tiêu, phạm vi và đóng góp.
+\textbf{Chương 1:} Tổng quan bài toán, mục tiêu, phạm vi và đóng góp.
 
-\textbf{Chương 2:} Cơ sở lý thuyết và các nghiên cứu liên quan đến phát hiện biển hiệu, phát hiện/nhận dạng văn bản và các kỹ thuật xử lý video.
+\textbf{Chương 2:} Cơ sở lý thuyết và các nghiên cứu liên quan.
 
-\textbf{Chương 3:} Các phương pháp và pipeline đề xuất cho bài toán phát hiện và nhận dạng văn bản biển hiệu trong video, bao gồm mô tả kiến trúc hệ thống và mô-đun xử lý.
+\textbf{Chương 3:} Phương pháp tiếp cận.
 
-\textbf{Chương 4:} Thực nghiệm và đánh giá trên tập dữ liệu SignboardText mở rộng và dữ liệu video hành trình; phân tích kết quả và thảo luận.
+\textbf{Chương 4:} Thực nghiệm và đánh giá.
 
-\textbf{Chương 5:} Xây dựng ứng dụng minh họa và mô tả các chức năng khai thác thông tin văn bản biển hiệu.
-
-\textbf{Chương 6:} Kết luận và hướng phát triển trong tương lai.
+\textbf{Chương 5:} Kết luận và hướng phát triển.
