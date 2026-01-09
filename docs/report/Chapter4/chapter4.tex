@@ -31,7 +31,7 @@ Về định dạng gán nhãn (annotation), Vietsignboard cung cấp nhãn ở 
     \label{fig:chapter4_annotation_distribution}
 \end{figure}
 
-Theo phân tích của Do và cộng sự \cite{do2024signboardtext}, văn bản trong bộ dữ liệu SignboardText có hình dạng rất đa dạng, bao gồm các trường hợp văn bản nằm ngang (horizontal), văn bản có biên dạng tứ giác bất kỳ (arbitrary quadrilateral), cũng như văn bản đa hướng (multi-oriented). Đặc điểm này phản ánh sát với bối cảnh thực tế của biển hiệu ngoài trời, nơi các dòng chữ có thể được bố trí nghiêng, cong hoặc không song song với trục ảnh, qua đó đặt ra thách thức đáng kể cho các phương pháp phát hiện và nhận dạng văn bản tiên tiến hiện nay.
+Theo phân tích của Do và cộng sự \cite{do2024signboardtext}, văn bản trong bộ dữ liệu SignboardText có hình dạng đa dạng, bao gồm các trường hợp văn bản nằm ngang (horizontal), văn bản có biên dạng tứ giác bất kỳ (arbitrary quadrilateral), cũng như văn bản đa hướng (multi-oriented). Đặc điểm này phản ánh sát với bối cảnh thực tế của biển hiệu ngoài trời, nơi các dòng chữ có thể được bố trí nghiêng, cong hoặc không song song với trục ảnh, qua đó đặt ra thách thức đáng kể cho các phương pháp phát hiện và nhận dạng văn bản tiên tiến hiện nay.
 
 
 Mặc dù bộ dữ liệu SignboardText cung cấp hệ thống nhãn chi tiết cho văn bản ở nhiều cấp độ và hình dạng khác nhau, các nhãn (annotation) này vẫn chỉ tập trung vào các vùng văn bản, chưa bao quát toàn bộ đối tượng biển hiệu chứa văn bản. Trong khi đó, theo pipeline được đề xuất trong khóa luận, phát hiện biển hiệu đóng vai trò là bước tiền đề cho các giai đoạn phát hiện và nhận dạng văn bản phía sau. Do đó, nhằm hỗ trợ đánh giá giai đoạn phát hiện biển hiệu, khóa luận tiến hành mở rộng tập dữ liệu SignboardText bằng cách bổ sung lớp nhãn cho đối tượng biển hiệu. Cụ thể, toàn bộ 2.123 ảnh thuộc ba tập con Vietsignboard, English và Vin đã được gán nhãn thủ công, với sự hỗ trợ của công cụ PPOCRLabel \cite{ppocrlabel}, để xác định các vùng chứa của biển hiệu trong ảnh. Trong đó, số lượng đối tượng biển hiệu được gán nhãn trong các tập Vietsignboard, English và Vin lần lượt là 1.327, 488 và 552. Phân bố số lượng các đối tượng này theo từng tập con được minh họa trong Hình~\ref{fig:chapter4_annotation_signboard_distribution}.
@@ -44,7 +44,7 @@ Mặc dù bộ dữ liệu SignboardText cung cấp hệ thống nhãn chi tiế
     \label{fig:chapter4_annotation_signboard_distribution}
 \end{figure}
 
-Nhằm đánh giá mối quan hệ giữa các vùng văn bản và vùng biển hiệu trong tập dữ liệu SignboardText, khóa luận tiến hành thống kê tỷ lệ phần trăm văn bản nằm trong vùng biển hiệu so với toàn bộ văn bản xuất hiện trong ảnh, trên từng tập con của bộ dữ liệu. Dựa trên kết quả thống kê được trình bày trong Bảng~\ref{tab:text_in_signboard_ratio}, có thể nhận thấy rằng phần lớn văn bản trong tập dữ liệu SignboardText nằm bên trong các vùng biển hiệu đã được gán nhãn. Cụ thể, trung bình trên toàn bộ tập dữ liệu, khoảng 64,40\% văn bản ở cấp độ từ (word-level) và 57,56\% văn bản ở cấp độ dòng (line-level) thuộc về các đối tượng biển hiệu. Kết quả này cho thấy tập dữ liệu SignboardText phù hợp để đánh giá pipeline phát hiện và nhận dạng văn bản trên biển hiệu được sử dụng trong khóa luận.
+Nhằm đánh giá mối quan hệ giữa các vùng văn bản và vùng biển hiệu trong tập dữ liệu SignboardText, khóa luận tiến hành thống kê tỷ lệ phần trăm văn bản nằm trong vùng biển hiệu so với toàn bộ văn bản xuất hiện trong ảnh, trên từng tập con của bộ dữ liệu. Dựa trên kết quả thống kê được trình bày trong Bảng~\ref{tab:text_in_signboard_ratio}, có thể nhận thấy rằng phần lớn văn bản trong tập dữ liệu SignboardText nằm bên trong các vùng biển hiệu đã được gán nhãn. Cụ thể, trung bình trên toàn bộ tập dữ liệu, 64,40\% văn bản ở cấp độ từ (word-level) và 57,56\% văn bản ở cấp độ dòng (line-level) thuộc về các đối tượng biển hiệu. Kết quả này cho thấy tập dữ liệu SignboardText phù hợp để đánh giá pipeline phát hiện và nhận dạng văn bản trên biển hiệu được đề xuất trong khóa luận.
 
 \begin{table}[t]
 \centering
@@ -67,17 +67,40 @@ Text proportion (\%) & 64.50 & 57.56 & 72.68 & -- & 56.03 & -- & 64.40 & 57.56 \
 \end{tabularx}
 \end{table}
 
-Trong khuôn khổ khóa luận này, việc mở rộng tập dữ liệu chủ yếu tập trung vào bổ sung nhãn đối tượng biển hiệu (signboard annotation) cho tập dữ liệu ảnh tĩnh SignboardText hiện có, nhằm phục vụ trực tiếp cho quá trình huấn luyện và đánh giá mô hình. Bên cạnh đó, một tập dữ liệu video được thu thập trong môi trường đường phố Việt Nam và chỉ được sử dụng với mục đích minh họa cũng như kiểm tra khả năng tổng quát hóa của pipeline đề xuất trong bối cảnh thực tế.
+Trong khuôn khổ khóa luận này, việc mở rộng tập dữ liệu chủ yếu tập trung vào bổ sung nhãn đối tượng biển hiệu (signboard annotation) cho tập dữ liệu ảnh tĩnh SignboardText hiện có, nhằm phục vụ trực tiếp cho quá trình huấn luyện và đánh giá mô hình. Bên cạnh đó, một tập dữ liệu video được thu thập trong môi trường đường phố Việt Nam, được sử dụng với mục đích minh họa cũng như kiểm tra khả năng tổng quát hóa của pipeline đề xuất trong bối cảnh thực tế.
+
+\section{Phân chia bộ dữ liệu cho tập thực nghiệm}
+Nhằm đánh giá hiệu năng của các mô hình tiền huấn luyện cho các bài toán phát hiện văn bản, nhận dạng văn bản và phát hiện-nhận dạng văn bản đầu-cuối (end-to-end), toàn bộ dữ liệu của ba tập con Vietsignboard, English và Vin thuộc tập dữ liệu SignboardText mở rộng được sử dụng cho quá trình thực nghiệm. Việc sử dụng đầy đủ dữ liệu nhằm đảm bảo tính tin cậy và khả năng tổng quát hóa của các mô hình tiền huấn luyện trên dữ liệu biển hiệu đa ngôn ngữ.
+
+Đối với giai đoạn tinh chỉnh mô hình, mỗi tập con Vietsignboard, English và Vin của tập dữ liệu SignboardText mở rộng được phân chia độc lập thành ba tập phục vụ cho huấn luyện, kiểm định và kiểm tra. Cụ thể, mỗi tập con được chia theo cùng một tỷ lệ gồm 65\% cho tập huấn luyện, 15\% cho tập kiểm định và 20\% cho tập kiểm tra. 
+
+Sau khi hoàn tất việc phân chia dữ liệu hình ảnh cho các bài toán phát hiện biển hiệu và phát hiện văn bản, các vùng văn bản tương ứng tiếp tục được cắt từ các tập huấn luyện, kiểm định và kiểm tra để phục vụ cho bài toán nhận dạng văn bản. Số lượng cụ thể của từng tập được trình bày như sau:
+
+\begin{itemize}
+    \item \textbf{Tập huấn luyện (Train set):} Chiếm 65\% dữ liệu của mỗi tập con, với tổng cộng 1357 hình ảnh, trong đó Vietsignboard, English và Vin lần lượt gồm 764, 263 và 329 hình ảnh. Từ các hình ảnh này, các vùng văn bản được cắt ra với số lượng tương ứng là 31480, 2265 và 10493. Tập huấn luyện được sử dụng cho quá trình học tham số của mô hình và yêu cầu đảm bảo đủ số lượng dữ liệu để mô hình hội tụ ổn định.
+    
+    \item \textbf{Tập kiểm định (Validation set):} Chiếm 15\% dữ liệu của mỗi tập con, bao gồm tổng cộng 340 hình ảnh, trong đó Vietsignboard, English và Vin lần lượt có 191, 66 và 83 hình ảnh. Số lượng vùng văn bản được trích xuất tương ứng là 7427, 610 và 2624. Tập này được sử dụng để tinh chỉnh siêu tham số và theo dõi hiệu năng mô hình trong quá trình huấn luyện.
+    
+    \item \textbf{Tập kiểm tra (Test set):} Chiếm 20\% dữ liệu của mỗi tập con, với tổng cộng 340 hình ảnh, trong đó Vietsignboard, English và Vin lần lượt gồm 239, 82 và 104 hình ảnh. Từ các hình ảnh này, các vùng văn bản được cắt ra với số lượng tương ứng là 9730, 767 và 3491. Tập kiểm tra được sử dụng để đánh giá hiệu năng của mô hình sau khi hoàn tất quá trình tinh chỉnh.
+\end{itemize}
+
+Việc phân chia dữ liệu theo từng tập con Vietsignboard, English và Vin một cách độc lập
+nhằm đảm bảo mỗi tập con đều được phân bố nhất quán vào các tập huấn luyện, kiểm định
+và kiểm tra, qua đó tránh hiện tượng phân bố lệch dữ liệu giữa các tập thực nghiệm.
+Nhờ vậy, hiệu năng mô hình có thể được đánh giá một cách tin cậy và rõ ràng trên dữ
+liệu tiếng Việt và tiếng Anh.
 
 \section{Thiết lập thực nghiệm}
-Trong khóa luận này, quá trình thực nghiệm được tổ chức theo hướng phân tách theo từng giai đoạn trong pipeline phát hiện và nhận dạng văn bản trên biển hiệu. Cách tổ chức này nhằm cho phép đánh giá độc lập hiệu quả của từng thành phần, đồng thời giảm chi phí huấn luyện và yêu cầu tài nguyên tính toán khi phải làm việc với nhiều mô hình khác nhau. Cụ thể, các thí nghiệm được thiết kế để lần lượt khảo sát từng giai đoạn chính, từ phát hiện biển hiệu, phát hiện và nhận dạng văn bản trên biển hiệu, cho đến việc xây dựng pipeline đầu-cuối (end-to-end). Kết quả thực nghiệm ở mỗi giai đoạn được sử dụng làm cơ sở để lựa chọn mô hình phù hợp, từ đó kết hợp và hình thành pipeline hoàn chỉnh cho bài toán đặt ra. Việc lựa chọn mô hình được thực hiện dựa trên sự cân bằng giữa độ chính xác, tốc độ xử lý và độ phức tạp mô hình, nhằm đảm bảo tính khả thi khi áp dụng pipeline trong bối cảnh xử lý video đường phố thực tế. Trên cơ sở này, các thiết lập thực nghiệm chi tiết cho từng giai đoạn sẽ được trình bày trong các mục tiếp theo.
+\label{sec:setup_experiment}
+Trong khóa luận này, quá trình thực nghiệm được tổ chức theo hướng đánh giá từng giai đoạn một cách độc lập trong pipeline phát hiện và nhận dạng văn bản trên biển hiệu. Cách tổ chức này nhằm cho phép đánh giá độc lập hiệu quả của từng thành phần, đồng thời giảm chi phí huấn luyện và yêu cầu tài nguyên tính toán khi phải làm việc với nhiều mô hình khác nhau. Cụ thể, các thí nghiệm được thiết kế để lần lượt khảo sát từng giai đoạn chính, từ phát hiện biển hiệu, phát hiện và nhận dạng văn bản trên biển hiệu, cho đến việc xây dựng pipeline đầu-cuối (end-to-end). Kết quả thực nghiệm ở mỗi giai đoạn được sử dụng làm cơ sở để lựa chọn mô hình phù hợp, từ đó kết hợp và hình thành pipeline hoàn chỉnh cho bài toán đặt ra. Việc lựa chọn mô hình được thực hiện dựa trên sự cân bằng giữa độ chính xác, tốc độ xử lý và độ phức tạp mô hình, nhằm đảm bảo tính khả thi khi áp dụng pipeline trong bối cảnh xử lý video đường phố thực tế. Trên cơ sở này, các thiết lập thực nghiệm chi tiết cho từng giai đoạn sẽ được trình bày trong các mục tiếp theo.
 
 \subsection{Phát hiện biển hiệu}
+\label{subsec:signboard_detection}
 Trong pipeline phát hiện và nhận dạng văn bản trên biển hiệu, phát hiện biển hiệu đóng vai trò là bước khởi đầu, có ảnh hưởng trực tiếp đến hiệu quả của các giai đoạn xử lý phía sau. Do đặc thù về bối cảnh thu thập dữ liệu và sự khác biệt về miền dữ liệu so với các tập dữ liệu phát hiện đối tượng phổ biến, khóa luận tiến hành tinh chỉnh (fine-tuning) toàn bộ các mô hình khảo sát ở giai đoạn này nhằm đảm bảo khả năng thích ứng với môi trường đường phố Việt Nam.
 
-Các mô hình phát hiện biển hiệu được phân nhóm dựa trên dạng biểu diễn đầu ra, bao gồm: (i) các phương pháp dự đoán vùng bao chữ nhật (rectangle bounding box), (ii) các phương pháp dự đoán vùng bao định hướng (oriented bounding box - OBB), và (iii) các phương pháp dựa trên phân đoạn đối tượng để xác định vùng biển hiệu dưới dạng đa giác (polygon). Việc phân nhóm này cho phép đánh giá một cách có hệ thống các đặc điểm và lợi thế của từng hướng tiếp cận trong bối cảnh bài toán đặt ra. Song song với đó, trong mỗi nhóm mô hình, các phương pháp được so sánh nhằm lựa chọn mô hình tốt nhất cho từng dạng đầu ra. Quá trình này tập trung đánh giá khả năng phát hiện trong điều kiện dữ liệu thực tế, đồng thời xem xét mức độ hiệu quả khi triển khai, làm cơ sở cho việc tích hợp các mô hình này vào pipeline và phục vụ các bước so sánh tổng thể ở các giai đoạn tiếp theo.
+Các mô hình phát hiện biển hiệu được phân nhóm dựa trên dạng biểu diễn đầu ra, bao gồm: (i) các phương pháp dự đoán vùng bao chữ nhật (rectangle bounding box), (ii) các phương pháp dự đoán vùng bao định hướng (oriented bounding box - OBB), và (iii) các phương pháp dựa trên phân đoạn ngữ nghĩa để xác định vùng biển hiệu dưới dạng đa giác (polygon). Việc phân nhóm này cho phép đánh giá một cách có hệ thống các đặc điểm và ưu điểm của từng hướng tiếp cận trong bối cảnh bài toán đặt ra. Song song với đó, trong mỗi nhóm mô hình, các phương pháp được so sánh nhằm lựa chọn mô hình tốt nhất cho từng dạng đầu ra. Quá trình này tập trung đánh giá khả năng phát hiện trong điều kiện dữ liệu thực tế, đồng thời xem xét mức độ hiệu quả khi triển khai, làm cơ sở cho việc tích hợp các mô hình này vào pipeline và phục vụ các bước so sánh tổng thể ở các giai đoạn tiếp theo.
 
-Bên cạnh đó, khóa luận tiến hành thực nghiệm bổ sung bước căn chỉnh biển hiệu (signboard alignment) đối với các mô hình có đầu ra là OBB hoặc polygon. Trong thiết lập này, vùng biển hiệu sau khi được phát hiện sẽ được biến đổi phối cảnh (perspective transformation) để đưa về dạng chuẩn, qua đó cho phép so sánh hiệu quả giữa trường hợp không căn chỉnh và có căn chỉnh biển hiệu. Thiết lập này nhằm đánh giá mức độ ảnh hưởng của bước căn chỉnh đối với chất lượng dữ liệu đầu vào cho các giai đoạn phát hiện và nhận dạng văn bản phía sau. Hình \ref{fig:chapter4_signboard_alignment} minh họa ví dụ quá trình căn chỉnh biển hiệu, trong đó vùng biển hiệu được phát hiện với đầu ra dạng polygon được biến đổi phối cảnh để đưa về dạng hình chữ nhật chuẩn, phục vụ cho các bước phát hiện và nhận dạng văn bản tiếp theo.
+Bên cạnh đó, khóa luận tiến hành thực nghiệm bổ sung bước căn chỉnh biển hiệu (signboard alignment) đối với các mô hình có đầu ra là là vùng bao định hướng (Oriented Bounding Box - OBB) hoặc đa giác (polygon). Trong thiết lập này, vùng biển hiệu sau khi được phát hiện sẽ được biến đổi phối cảnh (perspective transformation) để đưa về dạng chuẩn, qua đó cho phép so sánh hiệu quả giữa trường hợp không căn chỉnh và có căn chỉnh biển hiệu. Thiết lập này nhằm đánh giá mức độ ảnh hưởng của bước căn chỉnh đối với chất lượng dữ liệu đầu vào cho các giai đoạn phát hiện và nhận dạng văn bản phía sau. Hình \ref{fig:chapter4_signboard_alignment} minh họa ví dụ quá trình căn chỉnh biển hiệu, trong đó vùng biển hiệu được phát hiện với đầu ra dạng đa giác (polygon) được biến đổi phối cảnh để đưa về dạng hình chữ nhật chuẩn, phục vụ cho các bước phát hiện và nhận dạng văn bản tiếp theo.
 
 \begin{figure}[t]
     \centering
@@ -88,421 +111,446 @@ Bên cạnh đó, khóa luận tiến hành thực nghiệm bổ sung bước c�
 \end{figure}
 
 \subsection{Phát hiện và nhận dạng văn bản trên biển hiệu}
-Giai đoạn phát hiện và nhận dạng văn bản trên biển hiệu thực hiện hai nhiệm vụ chính: xác định vị trí các vùng văn bản và nhận dạng nội dung bên trong. Giai đoạn này được khảo sát theo hai hướng tiếp cận: hai giai đoạn (Two-Stage) và một giai đoạn (One-Stage). Các mô hình pretrained được sử dụng làm cơ sở đánh giá, từ đó lựa chọn hướng tiếp cận phù hợp nhằm tiết kiệm thời gian tinh chỉnh (fine-tune) mô hình. Bên cạnh đó, ở giai đoạn này, khóa luận thực nghiệm với tất cả các văn bản xuất hiện trong ảnh, thay vì chỉ giới hạn ở văn bản trên biển hiệu trong tập SignboardText. Điều này cũng giúp mở rộng dữ liệu đánh giá, từ đó cải thiện độ tin cậy của kết quả thực nghiệm.
+\label{subsec:text_spotting}
+Bài toán phát hiện và nhận dạng văn bản trên biển hiệu thực hiện hai nhiệm vụ chính: xác định vị trí các vùng văn bản và nhận dạng nội dung bên trong. Để giải quyết bài toán này, khóa luận khảo sát theo hai hướng tiếp cận: hai giai đoạn (Two-Stage) và một giai đoạn (One-Stage). Các mô hình tiền huấn luyện (pretrained model) được sử dụng làm cơ sở đánh giá, từ đó lựa chọn hướng tiếp cận phù hợp nhằm tiết kiệm thời gian tinh chỉnh (fine-tune) mô hình. Bên cạnh đó, ở giai đoạn này, khóa luận thực nghiệm với tất cả các văn bản xuất hiện trong ảnh, thay vì chỉ giới hạn ở văn bản trên biển hiệu trong tập SignboardText mở rộng. Điều này giúp mở rộng dữ liệu đánh giá, từ đó cải thiện độ tin cậy của kết quả thực nghiệm.
 
-\paragraph{Hướng tiếp cận hai giai đoạn (Two-Stage)}
-\mbox{}\\
-\textbf{Phát hiện văn bản}
+\subsubsection{Hướng tiếp cận hai giai đoạn (Two-Stage)}
+\label{subsubsec:text_spotting_two_stage}
+\paragraph{Phát hiện văn bản} Trong bối cảnh bài toán phát hiện văn bản, khóa luận tiến hành thực nghiệm trên năm mô hình tiền huấn luyện, gồm PANet, DBNet++, TextPMs, FAST và KPN, được giới thiệu tại Mục~\ref{sec:text_detection}. Dựa trên kết quả đánh giá hiệu suất các mô hình tiền huấn luyện (pretrained models), mô hình có hiệu năng cao nhất được lựa chọn để tiến hành tinh chỉnh (fine-tune) trên tập dữ liệu SignboardText, nhằm tối ưu hóa chi phí huấn luyện và đảm bảo tính khả thi trong quá trình thực nghiệm.
 
-% \subsection{Nguồn dữ liệu}
-% Trong khóa luận này, nhóm sử dụng bộ dữ liệu \textbf{SignboardText} được giới thiệu trong bài báo
-% \textit{``SignboardText: Text Detection and Recognition in In-the-Wild Signboard Images''} (IEEE),
-% với các tác giả Tien Do, Thuyen Tran, Thua Nguyen, Duy-Dinh Le và Thanh Duc Ngo. \cite{do2024signboardtext}
+Bên cạnh các mô hình chuyên biệt cho phát hiện văn bản trong ảnh ngoại cảnh, hai phiên bản YOLOv8-OBB và YOLOv11-OBB, nổi bật nhờ sự cân bằng giữa độ chính xác và tốc độ xử lý, được áp dụng trong quá trình thực nghiệm. Do được huấn luyện ban đầu trên dữ liệu tổng quát (general object), các mô hình này cần được tinh chỉnh trực tiếp trên SignboardText để thích ứng với đặc thù văn bản trên biển hiệu, bao gồm các dòng chữ nghiêng và kích thước nhỏ. Sau quá trình tinh chỉnh, các mô hình được đánh giá tổng quan để lựa chọn ra mô hình tối ưu nhất cho việc tích hợp vào pipeline đề xuất.
 
-% Bộ dữ liệu tập trung vào văn bản trên biển hiệu trong điều kiện tự nhiên (in-the-wild), phù hợp với bối cảnh street-view/video hành trình do có nhiều biến thiên về phông chữ, kích thước, hướng, bố cục, đa ngôn ngữ và nền phức tạp.
+\paragraph{Nhận dạng nội dung văn bản} Quá trình thực nghiệm cho bài toán nhận dạng được thực hiện trên các vùng văn bản đã được cắt ra từ tập SignboardText. Dựa trên chiến lược áp dụng cho bài toán phát hiện văn bản, các mô hình tiền huấn luyện (pretrained models) được sử dụng làm cơ sở đánh giá. Tuy nhiên, do các mô hình này được huấn luyện trên dữ liệu tiếng Anh, khóa luận thực hiện tiền xử lý nhằm phù hợp với văn bản tiếng Việt bằng cách loại bỏ dấu tiếng Việt và các ký tự đặc biệt trong dữ liệu nhãn cũng như kết quả đầu ra của mô hình. Hình \ref{fig:chapter4_without_accent} minh họa quá trình loại bỏ dấu tiếng Việt. Trên cơ sở kết quả đánh giá, ba mô hình có hiệu năng tốt nhất được lựa chọn để tiến hành tinh chỉnh trên tập SignboardText. Việc lựa chọn ba mô hình nhằm đánh giá khả năng tổng quát hóa trên văn bản tiếng Việt, đặc biệt khi số lượng ký tự tăng lên.
 
-% \subsection{Thống kê dữ liệu}
-% Theo thống kê trên tập dữ liệu mà nhóm sử dụng (các biểu đồ Dataset Statistic), SignboardText được chia thành ba nhóm:
-% \begin{itemize}
-%     \item \textbf{Vietsignboard}: 1{,}194 ảnh.
-%     \item \textbf{English}: 413 ảnh.
-%     \item \textbf{Vin}: 516 ảnh.
-% \end{itemize}
+\begin{figure}[t]
+    \centering
+    % TODO: cập nhật đường dẫn theo project của bạn
+    \includegraphics[width=1\linewidth]{assets/chapter4/without_accent.jpeg}
+    \caption{Hình ảnh minh họa quá trình loại bỏ dấu tiếng Việt trên dữ liệu nhãn và kết quả đầu ra của mô hình}
+    \label{fig:chapter4_without_accent}
+\end{figure}
 
-% Số lượng văn bản được gán nhãn (annotated text):
-% \begin{itemize}
-%     \item \textbf{Vietsignboard}: 48{,}638 \textit{word} và 10{,}950 \textit{text-line}.
-%     \item \textbf{English}: 3{,}646 \textit{word}.
-%     \item \textbf{Vin}: 16{,}615 \textit{word}.
-% \end{itemize}
+\subsubsection{Hướng tiếp cận một giai đoạn (One-Stage)}
+\label{subsubsec:text_spotting_one_stage}
+Sau khi xác định mô hình tiền huấn luyện (pretrained model) tối ưu cho nhiệm vụ phát hiện và nhận dạng văn bản trong hướng tiếp cận hai giai đoạn, hai mô hình này được tích hợp để hình thành pipeline đầu-cuối (end-to-end), nhằm so sánh với các mô hình tiền huấn luyện (pretrained model) một giai đoạn (one-stage) được trình bày tại Mục~\ref{sec:one_stage_methods}. Việc đánh giá này cho phép xác định hiệu quả của pipeline đầu-cuối (end-to-end) so với các mô hình một giai đoạn (one-stage), đồng thời cung cấp cơ sở để lựa chọn hướng tiếp cận phù hợp cho quá trình tinh chỉnh (fine-tune) trên tập SignboardText. Kết quả so sánh cũng đem lại cái nhìn tổng quan về sự khác biệt hiệu năng giữa chiến lược two-stage và one-stage, cũng như tối ưu hóa chi phí huấn luyện.
 
-% Số lượng biển hiệu được gán nhãn (annotated signboard):
-% \begin{itemize}
-%     \item \textbf{Vietsignboard}: 1{,}327 biển hiệu.
-%     \item \textbf{English}: 488 biển hiệu.
-%     \item \textbf{Vin}: 552 biển hiệu.
-% \end{itemize}
 
-% % --- placeholder figures (bạn tự sửa path) ---
-% \begin{figure}[t]
-%     \centering
-%     \includegraphics[width=0.95\linewidth]{dataset_image_distribution.png}
-%     \caption{Phân bố số lượng ảnh theo nhóm trong SignboardText.}
-%     \label{fig:ch4_dataset_image_dist}
-% \end{figure}
+\section{Tiền xử lý dữ liệu}
+Trong giai đoạn tinh chỉnh mô hình, với tính chất khảo sát và so sánh các mô hình hiện đại cho các tác vụ phát hiện văn bản và nhận dạng nội dung văn bản, mỗi mô hình được huấn luyện và đánh giá theo đúng pipeline tiền xử lý được đề xuất trong công trình gốc. 
 
-% \begin{figure}[t]
-%     \centering
-%     \includegraphics[width=0.95\linewidth]{dataset_annotated_text_distribution.png}
-%     \caption{Phân bố số lượng văn bản được gán nhãn (word/line) theo nhóm trong SignboardText.}
-%     \label{fig:ch4_dataset_text_dist}
-% \end{figure}
+Trong khi đó, bài toán phát hiện biển hiệu vẫn áp dụng nhất quán các bước tiền xử lý ảnh như chuẩn hóa kích thước và giá trị đầu vào theo cấu hình của từng mô hình gốc. Đối với các phép tăng cường dữ liệu, khóa luận lựa chọn và áp dụng khác biệt giữa các nhóm kiến trúc phương pháp. Cụ thể, một số mô hình như DETR và RT-DETRv2 áp dụng các phép tăng cường liên quan đến biến đổi hình học và phối cảnh nhằm cải thiện khả năng phát hiện đối tượng trong các điều kiện chụp khác nhau. Các mô hình phân đoạn như SegFormer và Mask2Former ưu tiên các phép tăng cường liên quan đến biến dạng, hướng và điều kiện chiếu sáng nhằm nâng cao khả năng khái quát hóa ở mức pixel. Đối với các phiên bản YOLO \cite{ultralytics}, quy trình tiền xử lý và tăng cường dữ liệu được áp dụng theo thiết lập được đề xuất trong công trình gốc.
 
-% \begin{figure}[t]
-%     \centering
-%     \includegraphics[width=0.95\linewidth]{dataset_annotated_signboard_distribution.png}
-%     \caption{Phân bố số lượng biển hiệu được gán nhãn theo nhóm trong SignboardText.}
-%     \label{fig:ch4_dataset_signboard_dist}
-% \end{figure}
+\section{Độ đo đánh giá}
+Để đánh giá chính xác hiệu quả và độ tin cậy của hệ thống phát hiện và nhận dạng văn bản trên biển hiệu, khóa luận sử dụng các độ đo phổ biến, phù hợp với từng giai đoạn xử lý. Chất lượng phát hiện biển hiệu được đánh giá thông qua mean Average Precision (mAP) cho các hộp giới hạn (bounding box) và mean Intersection over Union (mIoU) cho các vùng phân đoạn ngữ nghĩa của đối tượng biển hiệu. Đối với bài toán phát hiện văn bản, các độ đo Precision, Recall và Hmean theo giao thức \textbf{TedEval \cite{lee2019tedeval}} phản ánh khả năng xác định chính xác vị trí các vùng văn bản. Tỷ lệ nhận dạng chính xác chuỗi ký tự được đánh giá bằng Accuracy. Đặc biệt, nhằm đánh giá toàn diện hiệu quả hệ thống, bài toán phát hiện và nhận dạng văn bản đầu-cuối (end-to-end) sử dụng độ đo Hmean, kết hợp cả tiêu chí về vị trí (IoU) và nhận dạng nội dung, nhằm phản ánh đầy đủ chất lượng hệ thống.
 
-% \subsection{Đặc trưng hình học và kích thước mẫu}
-% Bộ dữ liệu hỗ trợ nhiều dạng hình học văn bản (\textit{horizontal, arbitrary quadrilateral, multi-oriented}) và mang tính đa ngôn ngữ (ML).
-% Thống kê kích thước ảnh/văn bản/biển hiệu (px) được tổng hợp ở Bảng~\ref{tab:ch4_size_stats}.
+\subsection{Phát hiện biển hiệu}
+\paragraph{Mean Average Precision (mAP)} Chỉ số mAP đánh giá khả năng phát hiện chính xác các vùng biển hiệu dựa trên đường cong Precision–Recall. Cụ thể, Average Precision (AP) cho một lớp đối tượng được tính bằng diện tích dưới đường cong này, sử dụng phương pháp nội suy toàn điểm (all-point interpolation).
 
-% \begin{table}[t]
-% \centering
-% \caption{Thống kê kích thước (px) trên SignboardText dùng trong khóa luận.}
-% \label{tab:ch4_size_stats}
-% \begin{tabular}{l|cc|cc|cc|cc}
-% \hline
-% \textbf{Loại} & \multicolumn{2}{c|}{\textbf{Image}} & \multicolumn{2}{c|}{\textbf{Word}} & \multicolumn{2}{c|}{\textbf{Line}} & \multicolumn{2}{c}{\textbf{Signboard}} \\
-%  & W & H & W & H & W & H & W & H \\
-% \hline
-% Min  & 190  & 86   & 16   & 7    & 21   & 8    & 20   & 28   \\
-% Max  & 4608 & 4160 & 3556 & 1125 & 3952 & 1032 & 4536 & 4057 \\
-% Mean & 1015.99 & 710.75 & 128.03 & 60.75 & 255.33 & 52.68 & 706.33 & 330.32 \\
-% \hline
-% \end{tabular}
-% \end{table}
+\begin{equation}
+    \text{AP} = \sum_{n} (r_{n+1} - r_n) \cdot \max_{\tilde{r} \geq r_{n+1}} p(\tilde{r})
+\end{equation}
 
-% \subsection{Tỷ lệ văn bản nằm trong vùng biển hiệu}
-% Bảng~\ref{tab:ch4_text_prop} thể hiện tỷ lệ phần trăm văn bản thuộc vùng biển hiệu so với toàn bộ văn bản xuất hiện trong ảnh.
+Trong đó, $p(\tilde{r})$ và $\tilde{r}$ lần lượt là giá trị precision và recall tại một ngưỡng nhất định. Giá trị mAP cuối cùng được tính bằng trung bình của AP trên tất cả các lớp. Trong khóa luận này, các ngưỡng IoU áp dụng bao gồm 0.5 (mAP@0.5) và trung bình từ 0.5 đến 0.95 (mAP@[0.5:0.95]), được tính toán thông qua công cụ \cite{object_detection_metrics_github}.
 
-% \begin{table}[t]
-% \centering
-% \caption{Tỷ lệ văn bản nằm trong vùng biển hiệu (\%).}
-% \label{tab:ch4_text_prop}
-% \begin{tabular}{l|cc|cc|cc|cc}
-% \hline
-% \textbf{Nhóm} & \multicolumn{2}{c|}{\textbf{Vietsignboard}} & \multicolumn{2}{c|}{\textbf{English}} & \multicolumn{2}{c|}{\textbf{Vin}} & \multicolumn{2}{c}{\textbf{Avg}} \\
-%  & word & line & word & line & word & line & word & line \\
-% \hline
-% Text proportion (\%) & 64.50 & 57.56 & 72.68 & -- & 56.03 & -- & 64.40 & 57.56 \\
-% \hline
-% \end{tabular}
-% \end{table}
+\paragraph{Mean Intersection over Union (mIoU)} Nhằm đo lường mức độ trùng khớp giữa vùng dự đoán và vùng thực tế (ground truth) cho đối tượng biển hiệu, khóa luận sử dụng chỉ số mIoU, được tính bằng trung bình các IoU của từng lớp, ở cấp độ pixel.
 
-% \subsection{Chia tập Train/Validation/Test}
-% Để phục vụ huấn luyện và đánh giá, nhóm sử dụng cách chia dữ liệu như Bảng~\ref{tab:ch4_split}.
+\begin{equation}
+    \text{IoU} = \frac{TP}{TP + FP + FN}
+\end{equation}
 
-% \begin{table}[t]
-% \centering
-% \caption{Chia tập dữ liệu theo nhiệm vụ.}
-% \label{tab:ch4_split}
-% \begin{tabular}{l|ccc|l}
-% \hline
-% \textbf{Loại dữ liệu} & \textbf{Train} & \textbf{Validation} & \textbf{Test} & \textbf{Task} \\
-% \hline
-% Images      & 1357 & 340   & 426   & Signboard/Text Detection \\
-% Word Images & 44238 & 10661 & 13988 & Text Recognition \\
-% \hline
-% \end{tabular}
-% \end{table}
+Trong đó: 
+Trong đó: \begin{itemize} \item TP (True Positive): Số pixel được dự đoán đúng là biển hiệu \item FP (False Positive): Số pixel bị dự đoán nhầm là biển hiệu (thực tế là nền hoặc đối tượng khác) \item FN (False Negative): Số pixel thuộc biển hiệu thực tế nhưng bị dự đoán sai (thành nền hoặc đối tượng khác) \end{itemize}
 
-% % =================================================
-% \section{Tiền xử lý}
-% \subsection{Chuẩn hóa nhãn và định dạng dữ liệu}
-% Nhóm thực hiện chuẩn hóa nhãn để phục vụ nhiều họ mô hình khác nhau:
-% \begin{itemize}
-%     \item \textbf{Signboard detection}: chuyển nhãn biển hiệu về BBox hoặc OBB tùy mô hình.
-%     \item \textbf{Signboard segmentation}: biểu diễn biển hiệu bằng mask nhị phân.
-%     \item \textbf{Text detection}: chuẩn hóa nhãn vùng chữ về polygon/quad hoặc OBB/bbox tùy hướng tiếp cận.
-% \end{itemize}
+\subsection{Phát hiện văn bản}
+Dựa trên nghiên cứu TedEval \cite{lee2019tedeval}, phương pháp đánh giá này được xem là phù hợp và ổn định trong việc đánh giá chất lượng phát hiện văn bản trong ảnh ngoại cảnh. Do đó, khóa luận sử dụng các độ đo Precision (P), Recall (R) và Hmean (F1-score) cho việc đánh giá.
 
-% \subsection{Tạo dữ liệu cho Text Recognition}
-% Từ nhãn \textit{word-level}, nhóm cắt (crop) vùng chữ để tạo tập \textbf{Word Images}. Với các trường hợp văn bản bị nghiêng, nhóm áp dụng bước \textbf{rectify/align} (warp theo 4 điểm) trước khi resize về kích thước đầu vào của recognizer.
+\begin{align}
+    Precision &= \frac{TP}{TP + FP}, \\
+    Recall &= \frac{TP}{TP + FN}, \\
+    H\text{mean} &= \frac{2 \cdot Precision \cdot Rrecall}{Precision + Recall}
+\end{align}
 
-% \subsection{Tăng cường dữ liệu (Augmentation)}
-% Trong huấn luyện/fine-tune, nhóm sử dụng augmentation mức cơ bản phù hợp street-view:
-% \begin{itemize}
-%     \item thay đổi sáng/tương phản,
-%     \item scale và rotate nhỏ,
-%     \item blur nhẹ (tuỳ chọn) để mô phỏng rung/mờ.
-% \end{itemize}
+Trong đó, TP, FP và FN lần lượt là True Positive, False Positive và False Negative.
 
-% % =================================================
-% \section{Mô hình thực nghiệm}
-% \subsection{Phát hiện biển hiệu (Signboard Detection)}
-% Nhóm đánh giá hai hướng:
-% \begin{itemize}
-%     \item \textbf{Object detection (BBox/OBB)}: DETR, YOLOv8, RT-DETRv2, YOLOv11; và các biến thể \textbf{YOLOv8-obb}, \textbf{YOLOv11-obb}.
-%     \item \textbf{Segmentation (mask)}: SegFormer và Mask2Former.
-% \end{itemize}
+\subsection{Nhận dạng văn bản}
+Nhằm phản ánh hiệu quả nhận dạng văn bản trong ảnh ngoại cảnh, khóa luận sử dụng độ đo Accuracy, đánh giá tỷ lệ chuỗi ký tự dự đoán chính xác.
 
-% \subsection{Phát hiện văn bản (Text Detection)}
-% Nhóm so sánh các mô hình text detection: PANet, DBNet++, TextPMs, FAST, KPN. Sau đó, chọn các mô hình có kết quả tốt để fine-tune trên SignboardText.
+\begin{equation}
+    \text{Accuracy} = \frac{\text{Số từ (hoặc dòng) nhận dạng đúng}}{\text{Tổng số từ (hoặc dòng)}}
+\end{equation}
 
-% \subsection{Nhận dạng văn bản (Text Recognition)}
-% Nhóm đánh giá các recognizer: ViTSTR, PARSeq, CDistNet, SMTR, SVTRv2; và thực hiện fine-tune cho các mô hình tốt nhất trên dữ liệu Word Images.
+Trong đó, một từ hoặc dòng chỉ được tính là đúng khi chuỗi ký tự dự đoán khớp hoàn toàn với chuỗi ký tự trong thực tế (ground truth).
 
-% \subsection{Text spotting (End-to-end / Two-stage)}
-% Nhóm so sánh:
-% \begin{itemize}
-%     \item \textbf{End-to-end one-stage}: TESTR, DeepSolo, UNITS, DNTextSpotter.
-%     \item \textbf{Two-stage}: kết hợp (Text Detector) + (Text Recognizer), gồm TextPMs+SVTRv2, DBNet++ + SVTRv2, FAST + SVTRv2.
-% \end{itemize}
+\subsection{Phát hiện và nhận dạng văn bản đầu-cuối (end-to-end)}
+Để đánh giá toàn diện khả năng phát hiện và nhận dạng, khóa luận sử dụng độ đo Hmean đầu-cuối (end-to-end), với cặp giá trị dự đoán và thực tế chỉ được xét khi thỏa hai điều kiện, gồm vùng phát hiện trùng với nhãn (ground truth) theo một ngưỡng IoU nhất định (ví dụ: IoU $\ge$ 0.5) , và chuỗi ký tự nhận dạng khớp với nhãn.
 
-% % =================================================
-% \section{Độ đo đánh giá}
-% \subsection{Signboard detection}
-% Nhóm sử dụng các chỉ số chuẩn của object detection:
-% \begin{itemize}
-%     \item $\textbf{AP}_{50}$ (IoU = 0.5),
-%     \item $\textbf{AP}_{50:95}$ (trung bình IoU từ 0.5 đến 0.95),
-%     \item \textbf{FPS} để đánh giá tốc độ suy luận.
-% \end{itemize}
+\begin{equation}
+    H\text{mean}_{\text{e2e}} = \frac{2 \cdot \text{Precision}_{\text{e2e}} \cdot \text{Recall}_{\text{e2e}}}{\text{Precision}_{\text{e2e}} + \text{Recall}_{\text{e2e}}}
+\end{equation}
+Trong đó, \(\text{Precision}_{\text{e2e}}\) và \(\text{Recall}_{\text{e2e}}\) được xác định dựa trên các thể hiện (instances) thỏa mãn điều kiện, nhằm phản ánh đồng thời chất lượng phát hiện và nhận dạng của hệ thống.
 
-% \subsection{Signboard segmentation}
-% Với segmentation, nhóm sử dụng:
-% \begin{itemize}
-%     \item \textbf{mIoU} và \textbf{mAccuracy},
-%     \item \textbf{FPS}.
-% \end{itemize}
+\section{Kết quả thực nghiệm}
+Trong phần này, khóa luận trình bày chi tiết kết quả thực nghiệm dựa trên các thiết lập được mô tả tại Mục \ref{sec:setup_experiment}. Trước tiên, các kết quả được đánh giá độc lập theo từng giai đoạn. Với giai đoạn phát hiện biển hiệu, mô hình tốt nhất trong mỗi nhóm đầu ra được lựa chọn, sau đó các mô hình tối ưu cho từng giai đoạn khác cũng được xác định. Các mô hình này được tích hợp vào pipeline và đánh giá tổng thể hiệu quả hệ thống phát hiện và nhận dạng văn bản trên biển hiệu. 
 
-% \subsection{Text detection}
-% Khóa luận sử dụng Precision/Recall/Hmean:
-% \[
-% P = \frac{TP}{TP+FP},\quad
-% R = \frac{TP}{TP+FN},\quad
-% H = \frac{2PR}{P+R}.
-% \]
-% Tiêu chí khớp giữa dự đoán và ground-truth dựa trên IoU (với bbox/obb) hoặc IoU theo polygon/quad (tùy dạng nhãn).
+\subsection{Kết quả mô hình phát hiện biển hiệu đã tinh chỉnh (fine-tuning)}
+\label{subsec:results_signboard_det}
+Như đã đề cập tại Mục~\ref{subsec:signboard_detection}, tất cả các mô hình khảo sát trong giai đoạn phát hiện biển hiệu được tinh chỉnh (fine-tune) trên tập dữ liệu SignboardText đã được mở rộng, và các mô hình được phân loại thành ba nhóm dựa trên dạng biểu diễn đầu ra. Việc phân nhóm này cho phép đánh giá một cách hệ thống các đặc điểm và ưu điểm của từng hướng tiếp cận, đồng thời so sánh hiệu năng giữa các mô hình trong cùng nhóm mà không gây nhầm lẫn giữa các dạng đầu ra khác nhau.
 
-% \subsection{Text recognition}
-% Khóa luận sử dụng:
-% \begin{itemize}
-%     \item \textbf{Exact-match accuracy}: đúng hoàn toàn chuỗi ký tự,
-%     \item \textbf{Normalized-match accuracy}: so khớp sau chuẩn hóa (Unicode/NFC, khoảng trắng, dấu câu theo quy ước).
-% \end{itemize}
+\begin{table}[t]
+\centering
+\caption{Hiệu suất phát hiện biển hiệu của các mô hình với đầu ra dạng hình chữ nhật (rectangle bounding box). Chỉ số tốt nhất được đánh dấu đậm, chỉ số tốt thứ hai được gạch dưới.}
+\label{tab:results_bbox}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|l|c|c|c|c|c|c|}
+\hline
+Model & Year & Params(M) & Epochs & FPS & $\text{mAP}_{50}~(\%)$ & $\text{mAP}_{50\text{-}95}~(\%)$ \\
+\hline
+DETR & 2020 & 41.50 & 50 & 42.82 & \underline{89.30} & 68.95\\
+\hline
+YOLOv8 & 2023 & 3.01 & 50 & \textbf{133.01} & 86.85 & \underline{74.20} \\
+\hline
+RT-DETRv2 & 2024 & 42.73 & 50 & 26.44 & \textbf{90.71} & \textbf{81.22} \\
+\hline
+YOLOv11 & 2024 & 2.59 & 50 &  \underline{96.06} & 88.00 & 73.47 \\ 
+\hline
+\end{tabular}
+}
+\end{table}
 
-% \subsection{Text spotting}
-% Nhóm sử dụng \textbf{Hmean} cho kết quả end-to-end (phát hiện + nhận dạng) và báo cáo thêm \textbf{FPS}.
+Bảng~\ref{tab:results_bbox} trình bày kết quả các mô hình phát hiện biển hiệu với đầu ra dạng hình chữ nhật (rectangle bounding box). Trong nhóm này, RT-DETRv2 đạt hiệu suất tốt nhất với các chỉ số $\text{mAP}_{50}$ và $\text{mAP}_{50\text{-}95}$ lần lượt là \textbf{90.71\%} và \textbf{81.22}\%, cho thấy khả năng phát hiện chính xác các biển hiệu có kích thước đa dạng. Đồng thời, chỉ số FPS của RT-DETRv2 cho phép mô hình thực hiện trong thời gian thực, cho thấy mô hình này phù hợp để tích hợp vào pipeline đề xuất cho giai đoạn phát hiện biển hiệu. Bên cạnh đó, các mô hình còn lại như DETR, YOLOv8 và YOLOv11 thể hiện sự cân bằng giữa độ chính xác và tốc độ xử lý, trong đó YOLOv8 nổi bật với tốc độ \textbf{133.01} FPS, phù hợp cho các ứng dụng yêu cầu xử lý thời gian thực. Nhìn chung, các kết quả này cung cấp cơ sở để lựa chọn mô hình tối ưu, trong đó RT-DETRv2 được xem là lựa chọn ưu tiên cho đầu ra dạng hình chữ nhật, về cả độ chính xác lẫn hiệu năng thực thi.
 
-% % =================================================
-% \section{Kết quả thực nghiệm}
-% \subsection{Kết quả phát hiện biển hiệu (BBox/OBB)}
-% \begin{table}[t]
-% \centering
-% \caption{Kết quả signboard detection với rectangle bounding box.}
-% \label{tab:ch4_sb_det_bbox}
-% \begin{tabular}{l|c|c|c|c|c|c}
-% \hline
-% \textbf{Model} & \textbf{Year} & \textbf{Params(M)} & \textbf{Epochs} & \textbf{FPS} & $\textbf{AP}_{50}$ & $\textbf{AP}_{50:95}$ \\
-% \hline
-% DETR      & 2020 & 41.50 & 50 & 42.82  & 89.30 & 68.95 \\
-% YOLOv8    & 2023 & 3.01  & 50 & 133.01 & 86.85 & 74.20 \\
-% RT-DETRv2 & 2024 & 42.73 & 50 & 26.44  & 90.71 & 81.22 \\
-% YOLOv11   & 2024 & 2.59  & 50 & 96.06  & 88.00 & 73.47 \\
-% \hline
-% \end{tabular}
-% \end{table}
+\begin{table}[t]
+\centering
+\caption{Hiệu suất phát hiện biển hiệu của các mô hình với đầu ra dạng vùng bao định hướng (Oriented Bounding Box - OBB). Chỉ số tốt nhất được đánh dấu đậm}
+\label{tab:results_obb}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|l|c|c|c|c|c|c|}
+\hline
+Model & Year & Params(M) & Epochs & FPS & $\text{mAP}_{50}~(\%)$ & $\text{mAP}_{50\text{-}95}~(\%)$ \\
+\hline
+YOLOv8-OBB & 2023 & 3.01 & 50 & \textbf{133.01} & 93.04 & 79.08 \\
+\hline
+YOLOv11-OBB & 2024 & 2.59 & 50 &  96.06 & \textbf{93.20} & \textbf{80.78} \\ 
+\hline
+\end{tabular}
+}
+\end{table}
 
-% \begin{table}[t]
-% \centering
-% \caption{Kết quả signboard detection với oriented bounding box (OBB).}
-% \label{tab:ch4_sb_det_obb}
-% \begin{tabular}{l|c|c|c|c|c|c}
-% \hline
-% \textbf{Model} & \textbf{Year} & \textbf{Params(M)} & \textbf{Epochs} & \textbf{FPS} & $\textbf{AP}_{50}$ & $\textbf{AP}_{50:95}$ \\
-% \hline
-% YOLOv8-obb  & 2023 & 3.01 & 50 & 133.01 & 93.04 & 79.08 \\
-% YOLOv11-obb & 2024 & 2.59 & 50 & 96.06  & 93.20 & 80.78 \\
-% \hline
-% \end{tabular}
-% \end{table}
+Bảng \ref{tab:results_obb} trình bày kết quả các mô hình dự đoán vùng bao định hướng. Cả hai mô hình YOLOv8-OBB và YOLOv11-OBB đều đạt giá trị $\text{mAP}_{50}$ và $\text{mAP}_{50\text{-}95}$ cao. Trong đó, YOLOv11-OBB nổi bật với $\text{mAP}_{50\text{-}95}$ \textbf{80.78\%} và là lựa chọn tối ưu để tích hợp vào pipeline, nhờ khả năng phát hiện chính xác các biển hiệu nghiêng hoặc không vuông góc với camera. Kết quả này đồng thời cải thiện chất lượng dữ liệu đầu vào cho giai đoạn phát hiện và nhận dạng văn bản.
 
-% \noindent\textbf{Nhận xét:}
-% RT-DETRv2 đạt $\text{AP}_{50:95}$ cao nhất ở thiết lập BBox, trong khi YOLOv8 đạt tốc độ suy luận cao nhất.
-% Ở thiết lập OBB, YOLOv11-obb nhỉnh hơn về $\text{AP}_{50:95}$, phù hợp với biển hiệu bị nghiêng/phối cảnh.
+\begin{table}[t]
+\centering
+\caption{Hiệu suất phát hiện vùng biển hiệu của các mô hình phân đoạn ngữ nghĩa. Chỉ số tốt nhất được đánh dấu đậm.}
+\label{tab:results_segmentation}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|c|c|*{5}{c|}}
+\hline
+Model & Year & Params(M) & Epochs & FPS & mIOU(\%) & mAccuracy(\%)\\
+\hline
+SegFormer & 2021 & 3.8 & 50 & \textbf{97.5} & 89.03 & 93.92 \\
+\hline
+Mask2Former & 2022 & 47.4 & 50  & 15.9 & \textbf{90.48} & \textbf{94.44} \\
+\hline
+\end{tabular}
+}
+\end{table}
 
-% \subsection{Kết quả phân đoạn biển hiệu (Segmentation)}
-% \begin{table}[t]
-% \centering
-% \caption{Kết quả signboard segmentation.}
-% \label{tab:ch4_sb_seg}
-% \begin{tabular}{l|c|c|c|c|c|c}
-% \hline
-% \textbf{Model} & \textbf{Year} & \textbf{Params(M)} & \textbf{Epochs} & \textbf{FPS} & \textbf{mIoU(\%)} & \textbf{mAccuracy(\%)} \\
-% \hline
-% SegFormer   & 2021 & 3.8  & 50 & 97.5 & 89.03 & 93.92 \\
-% Mask2Former & 2022 & 47.4 & 50 & 15.9 & 90.48 & 94.44 \\
-% \hline
-% \end{tabular}
-% \end{table}
+Bên cạnh các mô hình phát hiện dựa trên bounding box, khóa luận tiến hành thực nghiệm mô hình SegFormer và Mask2Former nhằm xác định chính xác vùng biển hiệu, giúp giảm chi phí tính toán cho các giai đoạn phát hiện và nhận dạng văn bản, nhờ hạn chế phần nền thừa không liên quan, đồng thời hữu ích với các biển hiệu nghiêng hoặc có hình dạng không đều. Theo kết quả trong Bảng~\ref{tab:results_segmentation}, Mask2Former thể hiện ưu thế rõ rệt về độ chính xác khi đạt các chỉ số mIoU và mAccuracy cao hơn SegFormer, lần lượt là \textbf{90.48\%} và \textbf{94.44\%}. Mặt khác, SegFormer lại nổi bật với tốc độ xử lý cao hơn đáng kể với chỉ số FPS \textbf{97.5}, chứng tỏ sự cân bằng giữa độ chính xác và hiệu năng thực thi, phù hợp cho các ứng dụng yêu cầu thời gian thực. Do đó, SegFormer được lựa chọn làm mô hình tối ưu cho giai đoạn phân đoạn biển hiệu trong pipeline đề xuất, đảm bảo vừa duy trì độ chính xác vừa đáp ứng yêu cầu tốc độ xử lý.
+ 
+\subsection{Kết quả mô hình tiền huấn luyện đối với bài toán phát hiện văn bản}
+\label{subsec:results_pretrained_det}
+Nhằm tối ưu chi phí huấn luyện và tài nguyên tính toán, thay vì tinh chỉnh toàn bộ các mô hình phát hiện văn bản tiên tiến hiện nay, khóa luận tiến hành đánh giá hiệu quả của các mô hình tiền huấn luyện trên tập dữ liệu SignboardText đã được mở rộng. Cụ thể, các mô hình được kiểm tra trên ba tập con VietSignboard, English và Vin, với hai cấp độ đánh giá là cấp độ từ (word-level) và cấp độ dòng (line-level). Theo thiết lập đã trình bày tại Mục~\ref{subsec:text_spotting}, khóa luận thực nghiệm trên toàn bộ các vùng văn bản xuất hiện trong ảnh, thay vì chỉ giới hạn trong phạm vi biển hiệu. Trên cơ sở đó, mô hình tiền huấn luyện có hiệu suất tốt nhất sẽ được lựa chọn để tiếp tục tinh chỉnh (fine-tuning) cho bài toán phát hiện văn bản.
 
-% \subsection{Kết quả text detection (mô hình tiền huấn luyện)}
-% \begin{table}[t]
-% \centering
-% \caption{So sánh các mô hình text detection tiền huấn luyện trên SignboardText.}
-% \label{tab:ch4_textdet_pretrained}
-% \begin{tabular}{l|c|c|ccc|ccc|ccc|c}
-% \hline
-% \textbf{Model} & \textbf{Year} & \textbf{Params(M)} &
-% \multicolumn{3}{c|}{\textbf{Vietsignboard}} &
-% \multicolumn{3}{c|}{\textbf{English}} &
-% \multicolumn{3}{c|}{\textbf{Vin}} &
-% \textbf{FPS} \\
-% & & & P & R & H & P & R & H & P & R & H & \\
-% \hline
-% PANet   & 2020 & 12.25 & 81.00 & 82.25 & 81.62 & 61.00 & 72.56 & 66.28 & 81.71 & 75.82 & 78.66 & 1.58 \\
-% DBNet++ & 2022 & 26.43 & 89.86 & 80.31 & 84.82 & 73.38 & 60.95 & 65.59 & 91.52 & 74.18 & 81.94 & 18.69 \\
-% TextPMs & 2022 & 36.43 & 90.27 & 84.85 & 87.48 & 78.82 & 77.58 & 78.20 & 93.41 & 81.32 & 86.95 & 20.75 \\
-% FAST    & 2023 & 10.58 & 83.98 & 86.32 & 85.13 & 64.34 & 80.25 & 71.42 & 84.45 & 79.09 & 81.69 & 15.30 \\
-% KPN     & 2023 & 58.24 & 81.19 & 81.85 & 81.52 & 63.49 & 85.90 & 73.01 & 83.49 & 78.37 & 80.85 & 4.17 \\
-% \hline
-% \end{tabular}
-% \end{table}
+\paragraph{Đánh giá ở cấp độ từ (word-level)}
+Kết quả đánh giá các mô hình tiền huấn luyện ở cấp độ từ được trình bày trong Bảng~\ref{tab:pretrained_text_det_word}. Nhìn chung, hầu hết các mô hình đều cho kết quả khả quan trên cả ba tập con. Đáng chú ý, các mô hình vẫn cho kết quả tốt trên hai tập VietSignboard và Vin, mặc dù không được huấn luyện trực tiếp trên dữ liệu tiếng Việt, cho thấy khả năng tổng quát hóa tương đối tốt.
 
-% \subsection{Kết quả text detection sau fine-tune}
-% \begin{table}[t]
-% \centering
-% \caption{Kết quả text detection sau fine-tune trên SignboardText.}
-% \label{tab:ch4_textdet_finetune}
-% \begin{tabular}{l|ccc|ccc|ccc}
-% \hline
-% \textbf{Model} &
-% \multicolumn{3}{c|}{\textbf{Vietsignboard}} &
-% \multicolumn{3}{c|}{\textbf{English}} &
-% \multicolumn{3}{c}{\textbf{Vin}} \\
-% & P & R & H & P & R & H & P & R & H \\
-% \hline
-% DBNet++     & 90.40 & 81.94 & 85.96 & 84.42 & 61.75 & 71.33 & 92.22 & 76.34 & 83.53 \\
-% TextPMs     & 90.36 & 85.29 & 87.75 & 83.80 & 82.39 & 83.09 & 92.98 & 84.46 & 88.51 \\
-% YOLOv8-obb  & 91.14 & 83.94 & 87.39 & 83.77 & 81.42 & 82.58 & 93.34 & 77.57 & 84.73 \\
-% YOLOv11-obb & 91.49 & 82.97 & 87.02 & 84.16 & 78.70 & 81.34 & 93.10 & 76.84 & 84.19 \\
-% \hline
-% \end{tabular}
-% \end{table}
+Trong số các mô hình được khảo sát, TextPMs thể hiện hiệu suất vượt trội trên cả ba tập con VietSignboard, English và Vin, với chỉ số Hmean lần lượt đạt \textbf{87.48\%}, \textbf{78.20\%} và \textbf{86.95\%}. Đặc biệt, xét theo chỉ số Precision, TextPMs đạt giá trị cao trên hai tập VietSignboard và Vin, lần lượt là \textbf{90.27\%} và \textbf{93.41\%}, cho thấy phần lớn các vùng mô hình phát hiện đều là văn bản thật, phản ánh khả năng lọc nhiễu và giảm thiểu dự đoán sai. Bên cạnh độ chính xác, TextPMs cũng đạt tốc độ xử lý cao nhất trong số các mô hình được khảo sát, với chỉ số FPS \textbf{20.75}, thể hiện sự cân bằng hợp lý giữa hiệu quả phát hiện và hiệu năng thực thi. Ngoài ra, FAST và KPN cũng cho thấy kết quả đáng chú ý, khi lần lượt đạt Recall cao nhất trên hai tập con VietSignboard với \textbf{86.32\%} và English với \textbf{85.90\%}, tuy nhiên hiệu suất tổng thể và tốc độ xử lý vẫn kém hơn so với TextPMs.
 
-% \subsection{Kết quả text recognition (mô hình tiền huấn luyện)}
-% \begin{table}[t]
-% \centering
-% \caption{So sánh các mô hình text recognition tiền huấn luyện trên SignboardText.}
-% \label{tab:ch4_textrec_pretrained}
-% \begin{tabular}{l|c|c|cc|cc|cc|c}
-% \hline
-% \textbf{Model} & \textbf{Year} & \textbf{Params(M)} &
-% \multicolumn{2}{c|}{\textbf{Vietsignboard}} &
-% \multicolumn{2}{c|}{\textbf{English}} &
-% \multicolumn{2}{c|}{\textbf{Vin}} &
-% \textbf{Speed (ms)} \\
-% & & & Word & Line & Word & Line & Word & Line & \\
-% \hline
-% ViTSTR   & 2021 & 85.48 & 56.70 & 29.01 & 48.71 & -- & 50.82 & -- & 9.80 \\
-% PARSeq   & 2022 & 23.83 & 80.76 & 59.08 & 78.28 & -- & 72.96 & -- & 12.71 \\
-% CDistNet & 2024 & 65.46 & 63.25 & 42.43 & 68.13 & -- & 56.39 & -- & 120.33 \\
-% SMTR     & 2025 & 15.82 & 79.58 & 64.54 & 76.77 & -- & 70.64 & -- & 23.47 \\
-% SVTRv2   & 2025 & 21.02 & 80.82 & 65.64 & 78.33 & -- & 72.34 & -- & 18.81 \\
-% \hline
-% \end{tabular}
-% \end{table}
+\paragraph{Đánh giá ở cấp độ dòng (line-level)}
+Bên cạnh đánh giá ở cấp độ từ (word-level), khóa luận tiếp tục khảo sát hiệu quả của các mô hình tiền huấn luyện ở cấp độ dòng (line-level) trên tập con VietSignboard, với kết quả được trình bày trong Bảng~\ref{tab:pretrained_text_det_line}. Kết quả cho thấy hiệu suất của hầu hết các mô hình đều giảm đáng kể so với đánh giá ở cấp độ từ, thể hiện qua chỉ số Hmean thấp. Từ đó có thể nhận thấy rằng phần lớn các mô hình tiền huấn luyện này được tối ưu chủ yếu cho bài toán phát hiện văn bản ở cấp độ từ, và chưa phù hợp khi áp dụng trực tiếp cho kịch bản phát hiện ở cấp độ dòng mà không có điều chỉnh hoặc huấn luyện bổ sung.
 
-% \subsection{Kết quả text recognition sau fine-tune}
-% \begin{table}[t]
-% \centering
-% \caption{Kết quả text recognition sau fine-tune (Exact-match và Norm-match).}
-% \label{tab:ch4_textrec_finetune}
-% \begin{tabular}{l|cc|cc|cc}
-% \hline
-% \textbf{Model} &
-% \multicolumn{2}{c|}{\textbf{Vietsignboard}} &
-% \multicolumn{2}{c|}{\textbf{English}} &
-% \multicolumn{2}{c}{\textbf{Vin}} \\
-% & Exact & Norm & Exact & Norm & Exact & Norm \\
-% \hline
-% PARSeq & 79.19 & 80.26 & 60.68 & 62.11 & 76.95 & 78.67 \\
-% SMTR   & 77.40 & 78.47 & 59.64 & 61.07 & 75.06 & 76.58 \\
-% SVTRv2 & 76.39 & 77.96 & 57.55 & 58.59 & 76.46 & 78.10 \\
-% \hline
-% \end{tabular}
-% \end{table}
 
-% \subsection{Kết quả text spotting}
-% \begin{table}[t]
-% \centering
-% \caption{Kết quả text spotting (Hmean \%) với one-stage và two-stage.}
-% \label{tab:ch4_textspotting}
-% \begin{tabular}{l|c|c|cc|cc|cc|c}
-% \hline
-% \textbf{Model} & \textbf{Year} & \textbf{Params(M)} &
-% \multicolumn{2}{c|}{\textbf{Viet}} &
-% \multicolumn{2}{c|}{\textbf{English}} &
-% \multicolumn{2}{c|}{\textbf{Vin}} &
-% \textbf{FPS} \\
-% & & & Word & Line & Word & Line & Word & Line & \\
-% \hline
-% TESTR         & 2022 & 49.48  & 48.77 & 7.43 & 60.43 & -- & 50.11 & -- & 11.11 \\
-% DeepSolo      & 2023 & 42.59  & 47.61 & 8.02 & 70.71 & -- & 53.32 & -- & 12.21 \\
-% UNITS         & 2023 & 101.00 & 63.19 & 9.75 & 88.00 & -- & 64.88 & -- & 1.28 \\
-% DNTextSpotter & 2025 & 42.73  & 49.17 & 9.20 & 73.20 & -- & 53.57 & -- & 12.40 \\
-% \hline
-% TextPMs+SVTRv2 & -- & 57.45 & 66.48 & 9.79 & 68.59 & -- & 68.50 & -- & 5.52 \\
-% DBNet++ +SVTRv2& -- & 47.45 & 66.58 & 8.22 & 59.21 & -- & 67.32 & -- & -- \\
-% FAST   +SVTRv2 & -- & 31.60 & 64.22 & 9.06 & 56.90 & -- & 62.18 & -- & -- \\
-% \hline
-% \end{tabular}
-% \end{table}
+Dựa trên kết quả đánh giá năm mô hình tiền huấn luyện trên ba tập con VietSignboard, English và Vin, có thể thấy TextPMs là mô hình đạt hiệu suất tổng thể tốt nhất, xét trên cả độ chính xác và tốc độ xử lý, ngay cả trong bối cảnh dữ liệu tiếng Việt chưa xuất hiện trong quá trình huấn luyện ban đầu. Bên cạnh đó, sự khác biệt rõ rệt giữa kết quả ở cấp độ từ và cấp độ dòng, cung cấp cơ sở thực nghiệm quan trọng để khóa luận lựa chọn chiến lược tinh chỉnh các mô hình theo hướng cấp đồ từ (word-level) cho bài toán phát hiện văn bản trong pipeline đề xuất.
 
-% \subsection{Đánh giá pipeline trên vùng biển hiệu}
-% Nhóm so sánh các biến thể pipeline theo cấu trúc:
-% \[
-% (\text{Signboard module}) + (\text{Text detector}) + (\text{Text recognizer}) + (\text{Align}).
-% \]
-% Kết quả Text Detection trên vùng biển hiệu được tổng hợp ở Bảng~\ref{tab:ch4_textdet_on_signboard}.
 
-% \begin{table}[t]
-% \centering
-% \caption{Kết quả Text Detection trên vùng biển hiệu với các biến thể pipeline.}
-% \label{tab:ch4_textdet_on_signboard}
-% \begin{tabular}{l|l|l|ccc|ccc|ccc}
-% \hline
-% \textbf{Signboard} & \textbf{Text Det} & \textbf{Text Rec} &
-% \multicolumn{3}{c|}{\textbf{Vietsignboard}} &
-% \multicolumn{3}{c|}{\textbf{English}} &
-% \multicolumn{3}{c}{\textbf{Vin}} \\
-% & & & P & R & H & P & R & H & P & R & H \\
-% \hline
-% RTDETRv2          & YOLOv8-obb & PARSeq & 91.79 & 87.59 & 89.64 & 80.13 & 72.16 & 75.94 & 92.41 & 87.32 & 89.79 \\
-% YOLOv11-obb       & YOLOv8-obb & PARSeq & 89.34 & 86.76 & 88.03 & 73.47 & 67.54 & 70.38 & 89.39 & 85.59 & 87.45 \\
-% SegFormer         & YOLOv8-obb & PARSeq & 83.50 & 89.05 & 86.19 & 67.04 & 79.95 & 72.93 & 82.53 & 88.67 & 85.44 \\
-% YOLOv11-obb + Align & YOLOv8-obb & PARSeq & 89.78 & 86.79 & 88.26 & 73.48 & 67.41 & 70.32 & 89.25 & 85.33 & 87.25 \\
-% SegFormer + Align   & YOLOv8-obb & PARSeq & 85.42 & 87.27 & 86.34 & 68.09 & 73.31 & 70.60 & 84.35 & 87.96 & 86.12 \\
-% \hline
-% \end{tabular}
-% \end{table}
+\begin{table}[t]
+\centering
+\caption{Hiệu suất mô hình tiền huấn luyện trong bài toán phát hiện văn bản ở cấp độ từ (word-level) trên ba tập con VietSignboard, English và Vin của tập dữ liệu SignboardText mở rộng. Chỉ số tốt nhất được đánh dấu đậm, chỉ số tốt thứ hai được gạch dưới.}
+\label{tab:pretrained_text_det_word}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\multirow{2}{*}{Model} & \multirow{2}{*}{Year} & \multirow{2}{*}{Params(M)} & \multicolumn{3}{c|}{Vietsignboard} & \multicolumn{3}{c|}{English} & \multicolumn{3}{c|}{Vin} & \multirow{2}{*}{FPS}\\
+\cline{4-12}
+ & & & P & R & H & P & R & H & P & R & H & \\
+\hline
+PANet & 2020 & 12.25 & 81.00 & 82.25 & 81.62 & 61.00 & 72.56 & 66.28 & 81.71& 75.82 & 78.66 & 11.58\\
+\hline
+DBNet++ & 2022 & 26.43 & \underline{89.86} & 80.31 & 84.82 & \underline{73.38} & 60.95 & 65.59 & \underline{91.52} & 74.18 & \underline{81.94} & \underline{18.69}\\
+\hline
+TextPMs & 2022 & 36.43 & \textbf{90.27} & \underline{84.85} & \textbf{87.48} & \textbf{78.82} & 77.58 & \textbf{78.20} & \textbf{93.41} & \textbf{81.32} & \textbf{86.95} & \textbf{20.75}\\
+\hline
+FAST & 2023 & 10.58 & 83.98 & \textbf{86.32} & \underline{85.13} & 64.34 & \underline{80.25} & 71.42 & 84.45 & \underline{79.09} & 81.69 & 15.30\\
+\hline
+KPN & 2023 & 58.24 & 81.19 & 81.85 & 81.52 & 63.49 & \textbf{85.90} & \underline{73.01} & 83.49 & 78.37 & 80.85 & 4.17\\
+\hline
+\end{tabular}
+}
+\end{table}
 
-% Kết quả Text Recognition trong pipeline được tổng hợp ở Bảng~\ref{tab:ch4_textrec_on_signboard}.
 
-% \begin{table}[t]
-% \centering
-% \caption{Kết quả Text Recognition trên vùng biển hiệu (pipeline).}
-% \label{tab:ch4_textrec_on_signboard}
-% \begin{tabular}{l|l|l|cc|cc|cc}
-% \hline
-% \textbf{Signboard} & \textbf{Text Det} & \textbf{Text Rec} &
-% \multicolumn{2}{c|}{\textbf{Vietsignboard}} &
-% \multicolumn{2}{c|}{\textbf{English}} &
-% \multicolumn{2}{c}{\textbf{Vin}} \\
-% & & & Exact & Norm & Exact & Norm & Exact & Norm \\
-% \hline
-% RTDETRv2            & YOLOv8-obb & PARSeq & 71.36 & 72.32 & 48.68 & 49.70 & 70.35 & 72.23 \\
-% YOLOv11-obb         & YOLOv8-obb & PARSeq & 70.23 & 71.19 & 41.65 & 42.66 & 69.00 & 70.69 \\
-% SegFormer           & YOLOv8-obb & PARSeq & 67.91 & 68.89 & 45.63 & 46.29 & 66.68 & 68.25 \\
-% YOLOv11-obb + Align & YOLOv8-obb & PARSeq & 70.46 & 71.43 & 41.69 & 42.70 & 68.32 & 70.02 \\
-% SegFormer + Align   & YOLOv8-obb & PARSeq & 68.16 & 69.16 & 42.35 & 43.08 & 67.34 & 68.72 \\
-% \hline
-% \end{tabular}
-% \end{table}
+\begin{table}[t]
+\centering
+\caption{Hiệu suất mô hình tiền huấn luyện trong bài toán phát hiện văn bản ở cấp độ dòng (line-level) trên tập con VietSignboard của tập dữ liệu SignboardText mở rộng. Chỉ số tốt nhất được đánh dấu đậm, chỉ số tốt thứ hai được gạch dưới.}
+\label{tab:pretrained_text_det_line}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\multirow{2}{*}{Model} & \multicolumn{3}{c|}{Vietsignboard}\\
+\cline{2-4}
+ & P & R & H \\
+\hline
+PANet & 21.68 & 74.62 & 33.60 \\
+\hline
+DBNet++ & 22.14 & 70.54 & 33.70 \\
+\hline
+TextPMs & \underline{22.84} & \underline{75.27} & \underline{35.04} \\
+\hline
+FAST & 21.91 & 79.92 & 34.39 \\
+\hline
+KPN & \textbf{25.23} & \textbf{78.48} & \textbf{38.18} \\
+\hline
+\end{tabular}
+\end{table}
 
-% % --- placeholder figure for qualitative comparison ---
-% \begin{figure}[t]
-%     \centering
-%     \includegraphics[width=0.98\linewidth]{qualitative_align_compare.png}
-%     \caption{Ví dụ định tính: phát hiện/nhận dạng văn bản trước và sau khi căn chỉnh biển hiệu (Align).}
-%     \label{fig:ch4_align_qualitative}
-% \end{figure}
+\subsection{Kết quả mô hình tiền huấn luyện đối với bài toán nhận dạng văn bản}
+\label{subsec:results_pretrained_rec}
+Kế thừa chiến lược đánh giá trong bài toán phát hiện văn bản, khóa luận tiếp tục khảo sát hiệu suất của các mô hình tiền huấn luyện trong bài toán nhận dạng văn bản. Cụ thể, năm mô hình ViTSTR, PARSeq, CDistNet, SMTR và SVTRv2 được thực nghiệm trên các vùng văn bản đã được cắt ra từ ba tập con VietSignboard, English và Vin. Việc đánh giá được thực hiện ở hai cấp độ: cấp độ từ (word-level) và cấp độ dòng (line-level). Tuy nhiên, như đã trình bày trong thiết lập thực nghiệm tại Mục~\ref{subsec:text_spotting}, do các mô hình nhận dạng được huấn luyện chủ yếu trên dữ liệu tiếng Anh, khóa luận tiến hành bước tiền xử lý nhằm phù hợp với văn bản tiếng Việt. Cụ thể, dấu tiếng Việt và các ký tự đặc biệt được loại bỏ trong cả dữ liệu nhãn và kết quả dự đoán của mô hình, nhằm đảm bảo tính nhất quán trong quá trình đánh giá.
 
-% % =================================================
-% \section{Tóm tắt chương}
-% Chương này đã mô tả bộ dữ liệu SignboardText và các thống kê quan trọng, quy trình tiền xử lý, các mô hình được lựa chọn để đánh giá cho từng mô-đun (phát hiện/phân đoạn biển hiệu, phát hiện văn bản, nhận dạng văn bản, và text spotting), cùng các độ đo đánh giá tương ứng.
-% Kết quả thực nghiệm cho thấy các mô hình OBB phù hợp hơn cho biển hiệu/văn bản bị nghiêng; đồng thời các cấu hình two-stage và pipeline ``phát hiện biển hiệu trước'' mang lại hiệu quả tổng thể tốt hơn trong bối cảnh dữ liệu street-view.
+Trên cơ sở đó, Bảng~\ref{tab:pretrained_text_rec} trình bày kết quả hiệu suất của các mô hình tiền huấn luyện trên ba tập con ở cả hai cấp độ đánh giá. Nhìn chung, PARSeq, SMTR và SVTRv2 thể hiện hiệu suất vượt trội so với ViTSTR và CDistNet trên cả ba tập dữ liệu, cho thấy khả năng tổng quát hóa tốt hơn trong bối cảnh văn bản đa ngôn ngữ.
+
+Đặc biệt ở cấp độ từ (word-level) SVTRv2 đạt độ chính xác cao nhất trên hai tập VietSignboard và English, lần lượt là \textbf{80.82\%} và \textbf{78.33\%}, trong khi PARSeq cho kết quả tốt hơn trên tập Vin với độ chính xác \textbf{72.96\%}. Điều này cho thấy hai mô hình đều thể hiện khả năng nhận dạng từ đơn lẻ hiệu quả. Trong khi ở cấp độ dòng (line-level), SVTRv2 và SMTR tiếp tục duy trì hiệu suất cao trên tập VietSignboard, lần lượt đạt \textbf{65.64\%} và \textbf{64.54\%} so với các mô hình còn lại. Kết quả này phản ánh hiệu quả của chiến lược điều chỉnh đầu vào đa kích thước (multi-size resizing) được áp dụng trong hai mô hình, như đã trình bày tại Mục~\ref{subsec:sota_rec}. Bên cạnh độ chính xác, tốc độ suy luận cũng là một yếu tố quan trọng trong bối cảnh triển khai thực tế. Đáng chú ý, mặc dù ViTSTR có số lượng tham số lớn nhất, mô hình này đạt tốc độ suy luận nhanh nhất trong số các phương pháp được so sánh, phản ánh thiết kế kiến trúc tương đối đơn giản và hiệu quả. 
+
+Dựa trên thiết kế thực nghiệm đã trình bày, khóa luận lựa chọn ba mô hình PARSeq, SMTR và SVTRv2 để tiến hành tinh chỉnh trên tập dữ liệu SignboardText đã được mở rộng. Đồng thời, do các mô hình thể hiện sự hiệu quả rõ rệt ở cấp độ từ, quá trình tinh chỉnh trong bài toán nhận dạng văn bản được thực hiện theo chiến lược word-level.
+
+\begin{table}[t]
+\centering
+\caption{Hiệu suất các mô hình tiền huấn luyện trong bài toán nhận dạng văn bản trên ba tập con VietSignboard, English và Vin của tập dữ liệu SignboardText đã được mở rộng, với hai cấp độ đánh giá từ (word-level) và dòng (line-level). Chỉ số tốt nhất được đánh dấu đậm, chỉ số tốt thứ hai được gạch dưới.}
+\label{tab:pretrained_text_rec}
+\newcommand{\twocols}[1]{\multicolumn{2}{c|}{#1}}
+\newcommand{\wordline}{Word & Line}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|c|c|c|*{6}{c|}c|}
+\hline
+\multirow{3}{*}{Model} & \multirow{3}{*}{Year} & \multirow{3}{*}{Params(M)} & \multicolumn{6}{c|}{Accuracy(\%)} & \multirow{3}{*}{Speed(ms)}\\
+\cline{4-9}
+ & & & \twocols{Vietsignboard} & \twocols{English} & \twocols{Vin} &\\
+\cline{4-9}
+ & & & \wordline & \wordline & \wordline &\\
+\hline
+ViTSTR & 2021 & 85.48 & 56.70 & 29.01 & 48.71 & - & 50.82 & - & \textbf{9.80} \\
+\hline
+PARSeq & 2022 & 23.83 & \underline{80.76} & 59.08 & \underline{78.28} & - & \textbf{72.96} & - & \underline{12.71} \\
+\hline
+CDistNet & 2024 & 65.46 & 63.25 & 42.43 & 68.13 & - & 56.39 & - & 120.33 \\
+\hline
+SMTR & 2025 & 15.82 & 79.58 & \underline{64.54} & 76.77 & - & 70.64 & - & 23.47 \\
+\hline
+SVTRv2 & 2025 & 21.02 & \textbf{80.82} & \textbf{65.64} & \textbf{78.33} & - & \underline{72.34} & - & 18.81 \\
+\hline
+\end{tabular}
+}
+\end{table}
+
+\subsection{Kết quả so sánh hướng tiếp cận hai giai đoạn (two-stage) và một giai đoạn (one-stage) trong bài toán phát hiện và nhận dạng văn bản}
+
+Sau khi đánh giá riêng biệt các mô hình tiền huấn luyện cho hai nhiệm vụ phát hiện và nhận dạng văn bản trong hướng tiếp cận hai giai đoạn (two-stage), khóa luận tiến hành kết hợp hai mô hình có hiệu năng tốt nhất là TextPMs cho giai đoạn phát hiện và SVTRv2 cho giai đoạn nhận dạng nhằm xây dựng pipeline đầu-cuối (end-to-end). Pipeline này được sử dụng để so sánh với các mô hình tiền huấn luyện một giai đoạn (one-stage) tiêu biểu, bao gồm TESTR, DeepSolo, UNITS và DNTextSpotter. Mục tiêu của phép so sánh này là đánh giá hiệu quả tương đối giữa hai chiến lược tiếp cận, từ đó lựa chọn hướng tiếp cận phù hợp cho quá trình tinh chỉnh (fine-tune) trên tập dữ liệu SignboardText đã được mở rộng. Thiết lập thực nghiệm với hướng tiếp cận one-stage được trình bày tại Mục~\ref{subsubsec:text_spotting_one_stage}.
+
+Bảng~\ref{tab:pretrained_two_and_one_stage} trình bày kết quả so sánh giữa pipeline hai giai đoạn và các mô hình tiền huấn luyện một giai đoạn trên ba tập con VietSignboard, English và Vin, theo hai cấp độ đánh giá từ (word-level) và dòng (line-level).
+
+Xét ở cấp độ từ, pipeline kết hợp TextPMs và SVTRv2 thể hiện ưu thế rõ rệt trên hai tập VietSignboard và Vin, với chỉ số Hmean lần lượt đạt \textbf{66.48\%} và \textbf{68.50\%}. Kết quả này cho thấy pipeline hai giai đoạn có khả năng tổng quát hóa tốt hơn trên văn bản tiếng Việt so với các mô hình one-stage còn lại. Trong khi đó, trên tập English, các mô hình one-stage đạt kết quả cao hơn pipeline hai giai đoạn. Trong đó, UNITS cho hiệu suất nổi bật trên cả ba tập con. Tuy nhiên, mô hình này có số lượng tham số lớn với 101M và tốc độ xử lý thấp với 1.28 FPS, dẫn đến hạn chế đáng kể về khả năng triển khai trong các trường hợp ứng dụng yêu cầu hiệu năng thời gian hoặc tài nguyên tính toán hạn chế. Các mô hình one-stage còn lại như TESTR, DeepSolo và DNTextSpotter có tốc độ xử lý cao hơn pipeline hai giai đoạn, tuy nhiên hiệu suất tổng thể (Hmean) trên các tập dữ liệu tiếng Việt thấp hơn đáng kể.
+
+Tương tự xu hướng đã quan sát trong các thí nghiệm trước đó (Mục~\ref{subsec:results_pretrained_det} và Mục~\ref{subsec:results_pretrained_rec}), các mô hình one-stage nhìn chung không đạt hiệu quả cao khi đánh giá ở cấp độ dòng (line-level). Thậm chí, dù SVTRv2 cho kết quả tương đối tốt ở cấp độ dòng trên tập VietSignboard, pipeline hai giai đoạn vẫn chịu hạn chế cố hữu khi độ chính xác của giai đoạn nhận dạng phụ thuộc chặt chẽ vào chất lượng phát hiện văn bản ở giai đoạn trước.
+
+Dựa trên kết quả phân tích và thực nghiệm, khóa luận lựa chọn hướng tiếp cận hai giai đoạn làm chiến lược chính cho pipeline phát hiện và nhận dạng văn bản trên biển hiệu. Mặc dù các mô hình one-stage đạt kết quả tốt hơn trên tập English, bài toán nghiên cứu hướng tới bối cảnh ứng dụng thực tế tại Việt Nam. Do đó, hiệu suất trên hai tập VietSignboard và Vin được ưu tiên trong quá trình lựa chọn hướng tiếp cận.
+
+\begin{table}[t]
+\centering
+\caption{So sánh hiệu suất mô hình tiền huấn luyện theo hai hướng tiếp cận hai giai đoạn (two-stage) và một giai đoạn (one-stage) trong bài toán phát hiện và nhận dạng văn bản trên ba tập con VietSignboard, English và Vin của tập dữ liệu SignboardText, với hai cấp độ đánh giá từ (word-level) và dòng (line-level). Chỉ số tốt nhất được đánh dấu đậm, chỉ số tốt thứ hai được gạch dưới}
+\label{tab:pretrained_two_and_one_stage}
+\newcommand{\twocols}[1]{\multicolumn{2}{c|}{#1}}
+\newcommand{\wordline}{Word & Line}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|c|c|c|*{6}{c|}c|}
+\hline
+\multirow{3}{*}{Model} & \multirow{3}{*}{Year} & \multirow{3}{*}{Params(M)} & \multicolumn{6}{c|}{Hmean$_{\mathrm{e2e}}$ (\%)} & \multirow{3}{*}{FPS}\\
+\cline{4-9}
+ & & & \twocols{Vietsignboard} & \twocols{English} & \twocols{Vin} &\\
+\cline{4-9}
+ & & & \wordline & \wordline & \wordline & \\
+\hline
+TESTR & 2022 & 49.48 & 48.77 & 7.43 & 60.43 & - & 50.11 & - & 11.11 \\
+\hline
+DeepSolo & 2023 & 42.59 & 47.61 & 8.02 & 70.71 & - & 53.32 & - & $\underline{12.21}$ \\
+\hline
+UNITS & 2023 & 101.00 & 63.19 & \underline{9.75} & \textbf{88.00} & - & 64.88 & - & 1.28\\
+\hline
+DNTextSpotter & 2025 & 42.73 & 49.17 & 9.20 & \underline{73.20} & - & 53.57 & - & \textbf{12.40}\\
+\hline
+TextPMs + SVTRv2 & - & 57.45 & \underline{66.48} & \textbf{9.79} & 68.59 & - & \textbf{68.50} & - & 10.21 \\
+\hline
+\end{tabular}
+}
+\end{table}
+
+\subsection{Kết quả mô hình phát hiện văn bản đã tình chỉnh (fine-tuned)}
+\label{subsec:results_finetuned_text_det}
+Trên cơ sở kết quả đánh giá các mô hình tiền huấn luyện cho bài toán phát hiện văn bản được trình bày tại Mục~\ref{subsec:results_pretrained_det}, khóa luận tiến hành tinh chỉnh (fine-tune) ba mô hình TextPMs, YOLOv8-OBB và YOLOv11-OBB, được lựa chọn dựa trên sự cân bằng giữa độ chính xác, tốc độ xử lý và khả năng thích ứng với đặc thù văn bản trên biển hiệu, nhằm tối ưu hóa hiệu suất phát hiện văn bản trên tập dữ liệu SignboardText. 
+
+Bảng~\ref{tab:finetuned_det} trình bày hiệu suất của ba mô hình sau khi được tinh chỉnh trên các tập hình ảnh thuộc ba tập con VietSignboard, English và Vin của tập dữ liệu SignboardText mở rộng theo cấp độ từ (word-level). Kết quả cho thấy TextPMs tiếp tục khẳng định ưu thế, đạt chỉ số Hmean cao nhất trên cả ba tập dữ liệu lần lượt là \textbf{87.75\%}, \textbf{83.09\%} và \textbf{88.51\%}. Đặc biệt, TextPMs cải thiện đáng kể chỉ số Recall sau khi tinh chỉnh, cho thấy khả năng phát hiện được nhiều vùng văn bản thực sự hơn.
+
+Đáng chú ý, mặc dù YOLOv8 và YOLOv11 không phải là các kiến trúc chuyên biệt cho bài toán phát hiện văn bản trong ảnh ngoại cảnh, cả hai đều cho kết quả rất ấn tượng sau khi tinh chỉnh. YOLOv8-OBB thể hiện hiệu suất cạnh tranh trực tiếp với TextPMs, với Hmean đạt \textbf{87.39\%}, \textbf{82.58\%}, và \textbf{84.73\%} trên ba tập, đồng thời vượt trội về chỉ số Precision trên tập Vietsignboard với \textbf{91.14\%}. Kết quả này không chỉ phản ánh tính đa năng của kiến trúc YOLO mà còn cho thấy tiềm năng ứng dụng của chúng vào bài toán phát hiện văn bản khi được huấn luyện trên dữ liệu phù hợp.
+
+Dựa trên kết quả tổng hợp, TextPMs tiếp tục là mô hình đạt hiệu suất cao nhất xét theo chỉ số Hmean, cho thấy tính hiệu quả và độ ổn định trên cả ba tập dữ liệu VietSignboard, English và Vin. Tuy nhiên, trong bối cảnh tích hợp vào một pipeline ứng dụng thực tế, việc lựa chọn mô hình không chỉ phụ thuộc vào độ chính xác mà còn cần xem xét đến tốc độ xử lý. Theo đó, YOLOv8-OBB nổi lên như một lựa chọn phù hợp khi vừa duy trì hiệu suất phát hiện tương đương với TextPMs (với chênh lệch Hmean không đáng kể trên các tập VietSignboard và English), vừa thể hiện ưu thế vượt trội về tốc độ xử lý. Cụ thể, kết quả đánh giá ở Bảng~\ref{tab:results_obb} cho thấy YOLOv8-OBB đạt tốc độ lên tới 133.01 FPS, cao hơn đáng kể so với TextPMs. Bên cạnh đó, sau khi tinh chỉnh, YOLOv8-OBB cũng cho kết quả tốt hơn YOLOv11-OBB trên cả ba tập dữ liệu. Do đó, YOLOv8-OBB là lựa chọn phù hợp để tích hợp vào pipeline đề xuất, khi đáp ứng được sự cân bằng tối ưu giữa độ chính xác cao và tốc độ xử lý nhanh.
+
+\begin{table}[t]
+\centering
+\caption{Hiệu suất mô hình phát hiện văn bản đã tinh chỉnh. Chỉ số tốt nhất được đánh dấu đậm, chỉ số tốt thứ hai được gạch dưới.}
+\label{tab:finetuned_det}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\multirow{2}{*}{Model} & \multicolumn{3}{c|}{Vietsignboard} & \multicolumn{3}{c|}{English} & \multicolumn{3}{c|}{Vin}\\
+\cline{2-10}
+ & P & R & H & P & R & H & P & R & H \\
+\hline
+TextPMs & 90.36 & \textbf{85.29} & \textbf{87.75} & 83.80 & \textbf{82.39} & \textbf{83.09} & 92.98 & \textbf{84.46} & \textbf{88.51} \\
+\hline
+YOLOv8-OBB & \underline{91.14} & \underline{83.94} & \underline{87.39} & 83.77 & \underline{81.42} & \underline{82.58} & \textbf{93.34} & \underline{77.57} & \underline{84.73} \\
+\hline 
+YOLOv11-OBB & \textbf{91.49} & 82.97 & 87.02 & \underline{84.16} & 78.70 & 81.34 & \underline{93.10} & 76.84 & 84.19 \\
+\hline 
+\end{tabular}
+}
+\end{table}
+
+\subsection{Kết quả mô hình nhận dạng văn bản đã tình chỉnh (fine-tuned)}
+\label{subsec:results_finetuned_text_rec}
+Kế thừa kết quả thực nghiệm đánh giá các mô hình tiền huấn luyện trong bài toán nhận dạng văn bản được trình bày tại Mục~\ref{subsec:results_pretrained_rec}, khóa luận tiến hành tinh chỉnh ba mô hình PARSeq, SMTR và SVTRv2 trên các vùng văn bản được cắt ra từ tập dữ liệu SignboardText đã được mở rộng, nhằm nâng cao khả năng thích nghi với văn bản tiếng Việt trong bối cảnh biển hiệu đường phố Việt Nam và lựa chọn mô hình tối ưu cho giai đoạn nhận dạng văn bản trong pipeline đề xuất. Kết quả đánh giá hiệu suất của ba mô hình PARSeq, SMTR và SVTRv2 đã tinh chỉnh được trình bày trong Bảng \ref{tab:finetuned_rec}, với hai tiêu chí đánh giá là Exact-match và Normalized-match. Exact-match đánh giá độ chính xác khi chuỗi dự đoán trùng khớp hoàn toàn với nhãn gốc. Trong khi đó, Normalized-match áp dụng cùng tiêu chí so sánh, nhưng thực hiện chuẩn hóa chữ hoa-chữ thường (lowercase) trước khi đánh giá, nhằm giảm ảnh hưởng của sự không nhất quán về chữ hoa-chữ thường, vốn thường xuất hiện trong văn bản trên biển hiệu thực tế.
+
+Nhìn chung, cả ba mô hình PARSeq, SMTR và SVTRv2 đều đạt hiệu suất tương đối tốt trên ba tập con VietSignboard, English và Vin. Đặc biệt, kết quả trên hai tập VietSignboard và Vin cho thấy các mô hình có khả năng thích nghi và tổng quát hóa hiệu quả đối với văn bản tiếng Việt trong bối cảnh biển hiệu đường phố. Trong số đó, PARSeq thể hiện hiệu suất vượt trội khi đạt độ chính xác cao nhất ở cả hai tiêu chí Exact-match và Normalized-match, lần lượt là \textbf{79.19\%} và \textbf{80.26\%} trên tập VietSignboard, cũng như \textbf{76.95\%} và \textbf{78.67\%} trên tập Vin. Kết quả này phản ánh khả năng nhận dạng từ đơn lẻ hiệu quả và ổn định của PARSeq sau quá trình tinh chỉnh trên dữ liệu tiếng Việt. 
+
+Đáng chú ý, mặc dù SVTRv2 đạt hiệu suất cao ở giai đoạn tiền huấn luyện, mức độ cải thiện của mô hình sau khi tinh chỉnh lại thấp hơn so với PARSeq và SMTR. Điều này cho thấy khả năng thích nghi của SVTRv2 với miền dữ liệu biển hiệu tiếng Việt chưa thực sự vượt trội so với hai mô hình còn lại. Bên cạnh đó, kết quả trên tập English cho thấy hiệu suất của cả ba mô hình có xu hướng giảm nhẹ so với các tập tiếng Việt. Nguyên nhân có thể xuất phát từ việc các mô hình được tinh chỉnh chuyên sâu trên dữ liệu tiếng Việt với số lượng ký tự và biến thể phong phú hơn, dẫn đến khó khăn nhất định khi áp dụng cho dữ liệu tiếng Anh không dấu.
+
+Dựa trên kết quả thực nghiệm, PARSeq là mô hình đạt hiệu suất cao nhất trên cả ba tập dữ liệu VietSignboard, English và Vin, đồng thời thể hiện sự vượt trội ổn định ở cả hai tiêu chí Exact-match và Normalized-match. Do đó, PARSeq được lựa chọn làm mô hình nhận dạng văn bản chính để tích hợp vào pipeline được đề xuất cho giai đoạn nhận dạng văn bản trên các vùng văn bản đã được xác định.
+
+\begin{table}[t]
+\centering
+\caption{Hiệu suất mô hình nhận dạng văn bản đã tinh chỉnh. Chỉ số tốt nhất được đánh dấu đậm, chỉ số tốt thứ hai được gạch dưới.}
+\label{tab:finetuned_rec}
+\newcommand{\twocols}[1]{\multicolumn{2}{c|}{#1}}
+\newcommand{\case}{Exact-match & Norm-match}
+\resizebox{\linewidth}{!}{
+\begin{tabular}{|c|*{6}{c|}}
+\hline
+\multirow{3}{*}{Model} & \multicolumn{6}{c|}{Accuracy(\%)} \\
+\cline{2-7}
+& \twocols{Vietsignboard} & \twocols{English} & \twocols{Vin}\\
+\cline{2-7}
+& \case & \case & \case \\
+\hline 
+PARSeq & \textbf{79.19} & \textbf{80.26} & \textbf{60.68} & \textbf{62.11} & \textbf{76.95} & \textbf{78.67} \\
+\hline
+SMTR & \underline{77.40} & \underline{78.47} & \underline{59.64} & \underline{61.07} & 75.06 & 76.58 \\
+\hline 
+SVTRv2 & 76.39 & 77.96 & 57.55 & 58.59 & \underline{76.46} & \underline{78.10} \\
+\hline
+\end{tabular}
+}
+\end{table}
+
+\subsection{Kết quả đánh giá pipeline đề xuất phát hiện và nhận dạng văn bản trên biển hiệu}
+Sau khi tiến hành đánh giá độc lập và lựa chọn các mô hình tối ưu cho từng giai đoạn trong pipeline, phần này trình bày kết quả đánh giá tổng thể hệ thống phát hiện và nhận dạng văn bản trên biển hiệu được đề xuất. Cụ thể, các mô hình được tích hợp vào pipeline dựa trên kết quả thực nghiệm của các giai đoạn đã trình bày tại Mục~\ref{subsec:results_signboard_det}, \ref{subsec:results_finetuned_text_det} và \ref{subsec:results_finetuned_rec_det}, trong đó mô hình có hiệu suất tốt nhất được lựa chọn cho mỗi thành phần tương ứng. Đối với giai đoạn phát hiện biển hiệu, việc lựa chọn mô hình được thực hiện trong từng nhóm phương pháp dựa trên dạng biểu diễn đầu ra, bao gồm vùng bao chữ nhật, vùng bao định hướng và phân đoạn đa giác, nhằm đảm bảo tính công bằng và nhất quán trong so sánh. Ngoài ra, pipeline cũng xem xét việc có và không áp dụng bước căn chỉnh biển hiệu đối với các mô hình có đầu ra định hướng hoặc đa giác, nhằm đánh giá ảnh hưởng của bước tiền xử lý này đến hiệu quả tổng thể của hệ thống. Trên cơ sở đó, pipeline hoàn chỉnh được xây dựng và đánh giá theo cách tiếp cận đầu cuối (end-to-end), nhằm phản ánh hiệu quả hoạt động của hệ thống trong bối cảnh thực tế của biển hiệu đường phố Việt Nam.
+
+\paragraph{Đánh giá kết quả phát hiện văn bản trong pipeline} Bảng~\ref{tab:eval_pipeline_det} trình bày kết quả đánh giá hiệu suất phát hiện văn bản của pipeline trên ba tập con VietSignboard, English và Vin của tập dữ liệu SignboardText. Nhìn chung, các pipeline đề xuất đều đạt kết quả ổn định trên cả ba tập con, trong đó hiệu suất trên hai tập VietSignboard và Vin nổi bật hơn, phản ánh tính phù hợp và hiệu quả của hệ thống trong bối cảnh đường phố tại Việt Nam.
+
+Đáng chú ý, pipeline kết hợp ba mô hình RTDETRv2, YOLOv8-OBB và PARSeq, tương ứng với các giai đoạn phát hiện biển hiệu, phát hiện văn bản và nhận dạng văn bản, đạt hiệu suất vượt trội so với các cấu hình pipeline còn lại. Cụ thể, pipeline này đạt chỉ số Precision lần lượt là \textbf{91.79}, \textbf{80.13} và \textbf{92.41} trên ba tập VietSignboard, English và Vin, cho thấy khả năng phát hiện chính xác phần lớn các vùng văn bản trong ảnh. Đồng thời, chỉ số Hmean của pipeline này đạt \textbf{89.64} trên VietSignboard và \textbf{89.79} trên Vin, khẳng định hiệu quả tổng thể của pipeline trong các trường hợp biển hiệu thực tế.
+
+Trong khi đó, pipeline sử dụng mô hình SegFormer cho giai đoạn phát hiện biển hiệu kết hợp với YOLOv8-OBB và PARSeq thể hiện ưu thế rõ rệt về chỉ số Recall. Pipeline này đạt Recall cao nhất hai tập English và Vin với các giá trị lần lượt là \textbf{80.25} và \textbf{87.44}. Đặc biệt, trên tập English, pipeline với SegFormer còn vượt trội pipeline sử dụng RTDETRv2 về chỉ số Hmean, đạt \textbf{77.72}, cho thấy khả năng phát hiện các vùng văn bản trong bối cảnh biển hiệu có bố cục phức tạp hoặc góc nhìn không thuận lợi.
+
+Bên cạnh đó, khóa luận tiến hành đánh giá ảnh hưởng của bước căn chỉnh biển hiệu (signboard alignment) đối với các mô hình có đầu ra định hướng hoặc đa giác. Kết quả cho thấy, việc áp dụng căn chỉnh biển hiệu giúp cải thiện nhẹ các chỉ số Precision và Hmean trên hai tập VietSignboard và Vin, tuy nhiên mức cải thiện chưa thực sự đáng kể. Ngược lại, trên tập English, bước căn chỉnh có xu hướng làm giảm hiệu suất, đặc biệt ở các chỉ số Recall và Hmean, cho thấy cơ chế căn chỉnh không phải lúc nào cũng mang lại lợi ích trong các trường hợp biển hiệu có đặc điểm hình học đa dạng. Điều này phản ánh tính ổn định của mô hình YOLOv8-OBB trong cả hai thiết lập có và không áp dụng căn chỉnh biển hiệu. Hình \ref{fig:align_vis} minh họa kết quả phát hiện văn bản trên biển hiệu trong hai trường hợp: không áp dụng và có áp dụng điều chỉnh biển hiệu với cơ chế perspective transformation (được trình bày tại Mục~\ref{subsec:signboard_detection}). Có thể thấy rằng việc căn chỉnh giúp chuẩn hóa hình dạng vùng biển hiệu, từ đó cải thiện chất lượng dữ liệu đầu vào cho các bước xử lý phía sau.
+
+Dựa trên phân tích kết quả có thể thấy rằng pipeline kết hợp RTDETRv2, YOLOv8-OBB và PARSeq là lựa chọn phù hợp khi triển khai trong bối cảnh đường phố Việt Nam, nhờ đạt độ chính xác cao và tính ổn định trên nhiều tập dữ liệu. Tuy nhiên, trong các tình huống thực tế mà biển hiệu thường bị nghiêng hoặc biến dạng mạnh theo góc nhìn camera, việc sử dụng SegFormer kết hợp với bước căn chỉnh biển hiệu cũng là một hướng tiếp cận tiềm năng. Ngoài ra, kết quả trong Bảng~\ref{tab:eval_pipeline_det} cho thấy khi giới hạn phạm vi phát hiện văn bản trong vùng biển hiệu, mô hình YOLOv8-OBB đạt độ chính xác cao hơn so với việc phát hiện trực tiếp trên toàn ảnh ngoại cảnh. Điều này cho thấy hiệu quả của bài toán khi tập trung phát hiện văn bản trong phạm vi biển hiệu, qua đó giảm ảnh hưởng của một số văn bản nhiễu hoặc khó đọc, đồng thời vẫn bảo đảm thông tin quan trọng phục vụ cho các ứng dụng trích xuất thông tin và phân tích nội dung biển hiệu.
+
+\begin{figure}[t]
+    \centering
+    % TODO: cập nhật đường dẫn theo project của bạn
+    \includegraphics[width=1\linewidth]{assets/chapter4/compare_align.png}
+    \caption{So sánh trực quan kết quả phát hiện văn bản trên biển hiệu trong hai trường hợp không áp dụng và có áp dụng căn chỉnh biển hiệu (signboard alignment)}
+    \label{fig:align_vis}
+\end{figure}
+
+\paragraph{Đánh giá kết quả nhận dạng văn bản trong pipeline} Bảng~\ref{tab:eval_pipeline_rec} trình bày kết quả đánh giá hiệu suất nhận dạng văn bản theo cách tiếp cận đầu cuối (end-to-end) của các pipeline đề xuất trên ba tập con VietSignboard, English và Vin. Chỉ số Hmean$_{\mathrm{e2e}}$ được tính theo hai tiêu chí Exact-match và Normalized-match, qua đó phản ánh không chỉ hiệu quả của giai đoạn nhận dạng văn bản mà còn mức độ ảnh hưởng từ các bước phát hiện biển hiệu và phát hiện văn bản trước đó.
+
+% Kết quả thực nghiệm cho thấy các pipeline đạt hiệu suất nhận dạng tốt hơn trên hai tập VietSignboard và Vin so với tập English. Điều này cho thấy pipeline đạt hiệu quả trên dữ liệu biển hiệu tiếng Việt vẫn duy trì khả năng thích nghi tương đối tốt trong bối cảnh đa ngôn ngữ. Đồng thời, sự chênh lệch giữa Exact-match và Normalized-match trên cả ba tập là không lớn, cho thấy lỗi do không nhất quán chữ hoa--chữ thường chỉ chiếm tỷ lệ nhỏ trong tổng lỗi nhận dạng.
+
+Dựa trên kết quả thực nghiệm, pipeline kết hợp RTDETRv2, YOLOv8-OBB và PARSeq đạt hiệu suất cao nhất trên hai tập VietSignboard và Vin, với với Hmean$_{\mathrm{e2e}}$ lần lượt đạt \textbf{71.36\%} (Exact-match) và \textbf{72.32\%} (Normalized-match) trên tập VietSignboard, và \textbf{70.35\%} (Exact-match) và \textbf{72.23\%} (Normalized-match) trên tập Vin. Hiệu quả của các giai đoạn phát hiện đóng vai trò quan trọng trong việc giúp mô hình PARSeq khai thác tốt các vùng văn bản đầu vào, qua đó nâng cao độ chính xác của kết quả nhận dạng theo cách tiếp cận đầu-cuối (end-to-end).
+
+Trong khi đó, trên tập English, pipeline sử dụng SegFormer cho giai đoạn phát hiện biển hiệu đạt hiệu suất tốt nhất, với Hmean$_{\mathrm{e2e}}$ đạt \textbf{48.92\%} (Exact-match) và \textbf{49.67\%} (Normalized-match), cho thấy SegFormer có khả năng thích ứng tốt hơn trong bối cảnh dữ liệu tiếng Anh. Bên cạnh đó, việc kết hợp bước căn chỉnh biển hiệu mang lại cải thiện nhẹ trên hai tập VietSignboard và Vin, đặc biệt trong các trường hợp biển hiệu có góc nghiêng lớn hoặc hình dạng không chuẩn.
+
+
+\begin{table}[t]
+\centering
+\caption{Hiệu suất phát hiện văn bản của pipeline trên ba tập con VietSignboard, English và Vin của tập dữ liệu SignboardText. Chỉ số tốt nhất được đánh dấu đậm, chỉ số tốt thứ hai được gạch dưới.}
+\label{tab:eval_pipeline_det}
+\resizebox{\linewidth}{!}{
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{3}{|c|}{Model} & \multicolumn{3}{c|}{Vietsignboard} & \multicolumn{3}{c|}{English} & \multicolumn{3}{c|}{Vin}\\
+\cline{1-12}
+Signboard Det & Text Det & Text Rec & P & R & H & P & R & H & P & R & H \\
+\hline
+RTDETRv2 & YOLOv8-OBB & PARSeq & \textbf{91.79} & \textbf{87.59} & \textbf{89.64} & \textbf{80.13} & \underline{72.16} & \underline{75.94} & \textbf{92.41} & \underline{87.32} & \textbf{89.79} \\
+\hline
+YOLOv11-OBB & YOLOv8-OBB & PARSeq & 89.34 & 86.76 & 88.03 & 73.47 & 67.54 & 70.38 & 89.39 & 85.59 & 87.45 \\
+\hline
+SegFormer & YOLOv8-OBB & PARSeq & 88.31 & \underline{87.30} & 87.80 & 75.33 & \textbf{80.25} & \textbf{77.72} & 88.21 & \textbf{87.44} & 87.82 \\
+\hline
+YOLOv11-OBB + Align & YOLOv8-OBB & PARSeq & 89.78 & 86.79 & \underline{88.26} & 73.48 & 67.41 & 70.32 & 89.25 & 85.33 & 87.25 \\
+\hline
+SegFormer + Align & YOLOv8-OBB & PARSeq & \underline{90.64} & 85.52 & 88.00 & \underline{75.44} & 71.18 & 73.25 & \underline{89.55} & 86.32 & \underline{87.90} \\
+\hline
+\end{tabular}
+}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Hiệu suất nhận dạng văn bản của pipeline trên ba tập con VietSignboard, English và Vin của tập dữ liệu SignboardText. Chỉ số tốt nhất được đánh dấu đậm, chỉ số tốt thứ hai được gạch dưới.}
+\label{tab:eval_pipeline_rec}
+\newcommand{\twocols}[1]{\multicolumn{2}{c|}{#1}}
+\newcommand{\case}{Exact-match & Norm-match}
+\resizebox{\linewidth}{!}{
+\begin{tabular}{|c|c|c|*{6}{c|}}
+\hline
+\multicolumn{3}{|c|}{Model} & \multicolumn{6}{c|}{Hmean$_{\mathrm{e2e}}$ (\%)} \\
+\cline{1-9}
+\multirow{2}{*}{Signboard Det} & \multirow{2}{*}{Text Det} & \multirow{2}{*}{Text Rec} & \twocols{Vietsignboard} & \twocols{English} & \twocols{Vin}\\
+\cline{4-9}
+ & & & \case & \case & \case \\
+\hline 
+RTDETRv2 & YOLOv8-OBB & PARSeq & \textbf{71.36} & \textbf{72.32} & \underline{48.68} & \underline{49.70} & \textbf{70.35} & \textbf{72.23} \\
+\hline
+YOLOv11-OBB & YOLOv8-OBB & PARSeq & 70.23 & 71.19 & 41.65 & 42.66 & 69.00 & 70.69 \\
+\hline
+SegFormer & YOLOv8-OBB & PARSeq & 69.94 & 70.94 & \textbf{48.92} & \textbf{49.67} & 69.30 & 70.91 \\
+\hline
+YOLOv11-OBB + Align & YOLOv8-OBB & PARSeq & 70.46 & 71.43 & 41.69 & 42.70 & 68.32 & 70.02 \\
+\hline
+SegFormer + Align & YOLOv8-OBB & PARSeq & \underline{70.25} & \underline{71.19} & 44.80 & 46.02 & \underline{70.12} & \underline{71.65} \\
+\hline
+\end{tabular}
+}
+\end{table}
+
+
+\paragraph{Kết luận và Lựa chọn Pipeline Tối ưu} Tổng hợp kết quả đánh giá phát hiện và nhận dạng văn bản trong pipeline, có thể thấy rằng pipeline kết hợp RTDETRv2 cho phát hiện biển hiệu, YOLOv8-OBB cho phát hiện văn bản và PARSeq cho nhận dạng văn bản là lựa chọn cân bằng giữa độ chính xác và tính ổn định trên các tập dữ liệu thử nghiệm. Pipeline này đặc biệt phù hợp với bối cảnh biển hiệu đường phố Việt Nam, nơi chất lượng phát hiện đóng vai trò quan trọng trong việc bảo đảm hiệu quả của giai đoạn nhận dạng. Do đó, pipeline trên được lựa chọn cho hệ thống đề xuất trong khóa luận. Bên cạnh đó, trong các trường hợp biển hiệu có góc nghiêng lớn hoặc hình dạng không chuẩn, pipeline sử dụng SegFormer cho giai đoạn phát hiện biển hiệu kết hợp với bước căn chỉnh biển hiệu cũng cho thấy tiềm năng cải thiện hiệu suất nhận dạng, và có thể được xem là một hướng tiếp cận phù hợp trong những bối cảnh thách thức.
