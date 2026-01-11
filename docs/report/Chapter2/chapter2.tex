@@ -13,7 +13,6 @@ Trong môi trường giao thông đô thị tại Việt Nam, biển hiệu ch�
 \begin{itemize}
     \item \textbf{Hệ thống dẫn đường thông minh:} Bổ sung thông tin các địa điểm thực tế (tên cửa hàng, địa điểm) từ biển hiệu vào hệ thống dẫn đường, giúp cải thiện độ chính xác của định vị và điều hướng.
     \item \textbf{Phân tích thông tin đô thị:} Tự động thống kê và phân loại các loại hình kinh doanh theo tuyến đường hoặc khu vực, phục vụ quy hoạch và nghiên cứu thị trường.
-    \item \textbf{Cập nhật và làm giàu bản đồ số:} Tích hợp thông tin từ biển hiệu để tự động cập nhật cơ sở dữ liệu địa lý (GIS).
 \end{itemize}
 Trong bối cảnh này, để hiện thực hóa các ứng dụng trên, bài toán đặt ra nhiều thách thức kỹ thuật. Ngoài những khó khăn chung của nhận dạng văn bản trong cảnh (như đa dạng phông chữ, điều kiện ánh sáng), việc xử lý trong bối cảnh video hành trình tại Việt Nam còn phải đối mặt với: chất lượng hình ảnh thay đổi liên tục, góc quay và khoảng cách khác nhau, cùng sự xuất hiện của các biển hiệu với thiết kế đa dạng và ngôn ngữ phức tạp (kết hợp tiếng Việt và tiếng Anh). Những thách thức này nhấn mạnh tầm quan trọng và tính thực tiễn của việc nghiên cứu một giải pháp hiệu quả, phù hợp với đặc thù của bài toán.
 
@@ -32,7 +31,7 @@ thước, tư thế, góc nhìn, điều kiện ánh sáng và mức độ chồ
     \centering
     % TODO: cập nhật đường dẫn theo project của bạn
     \includegraphics[width=1\linewidth]{assets/chapter2/object_detection_process.png}
-    \caption{Hình ảnh minh họa tổng quan quy trình phát hiện đối tượng. Ảnh đầu vào được xử lý qua mạng nơ-ron để trích xuất đặc trưng và dự đoán vị trí (hộp giới hạn) cùng phân loại các đối tượng (nhãn lớp) xuất hiện trong khung hình.}
+    \caption{Hình ảnh minh họa tổng quan quy trình phát hiện đối tượng. Ảnh đầu vào được xử lý qua mạng nơ-ron để trích xuất đặc trưng và dự đoán vị trí (hộp giới hạn) cùng phân loại các đối tượng (nhãn lớp) xuất hiện trong khung hình, tham khảo từ Analytics Vidhya~\cite{analyticsvidhya_yolo}.}
     \label{fig:chapter2_object_detection}
 \end{figure}
 
@@ -136,7 +135,7 @@ Cách tiếp cận này cho phép mô hình học được mối quan hệ chặ
     \centering
     % TODO: cập nhật đường dẫn theo project của bạn
     \includegraphics[width=1\linewidth]{assets/chapter2/end_to_end_text_spotting.png}
-    \caption{Hình ảnh minh họa quá trình nhận dạng văn bản ngoại cảnh đầu-cuối (End-to-End Scene Text Recognition)}
+    \caption{Hình ảnh minh họa quá trình nhận dạng văn bản ngoại cảnh đầu-cuối (End-to-End Scene Text Recognition), tham khảo từ \cite{liu2018scene}.}
     \label{fig:chapter2_end_to_end_STR}
 \end{figure}
 

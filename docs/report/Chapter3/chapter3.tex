@@ -1,4 +1,4 @@
-\chapter{PHƯƠNG PHÁP TIẾP CẬN}
+\chapter{THIẾT KẾ QUY TRÌNH XỬ LÝ ĐẦU-CUỐI (PIPELINE END-TO-END)}
 \ifpdf
     \graphicspath{{Chapter3/Chapter3Figs/PNG/}{Chapter3/Chapter3Figs/PDF/}{Chapter3/Chapter3Figs/}}
 \else
@@ -6,14 +6,14 @@
 \fi
 
 
-\section{Tổng quan về phương pháp}
-Trong những năm gần đây, việc khai thác thông tin từ văn bản trên biển hiệu có ý nghĩa quan trọng trong việc xây dựng hệ sinh thái dữ liệu cho các ứng dụng dựa trên vị trí và quản lý đô thị. Xuất phát từ mục tiêu đó, khóa luận đề xuất một pipeline xử lý được thiết kế theo ba giai đoạn chính: (i) \textbf{Phát hiện biển hiệu}, (ii) \textbf{Phát hiện văn bản trong vùng biển hiệu}, và (iii) \textbf{Nhận dạng nội dung văn bản}. Theo đó, pipeline được minh họa trong Hình~\ref{fig:chapter3_pipeline_overview}, trong đó quá trình xử lý bắt đầu bằng việc phát hiện và trích xuất vùng biển hiệu từ ảnh đầu vào. Từ các vùng biển hiệu đã được cắt, hệ thống tiến hành phát hiện các vùng văn bản tương ứng, trước khi thực hiện nhận dạng nội dung văn bản từ các vùng đã được xác định. Dựa trên pipeline đề xuất, khóa luận tập trung phân tích và lựa chọn một số phương pháp tiên tiến hiện nay cho từng giai đoạn xử lý. Việc lựa chọn này được thực hiện dựa trên các nghiên cứu khảo sát gần đây trong lĩnh vực. Nội dung chi tiết cho từng giai đoạn sẽ được trình bày lần lượt trong các mục sau.
+\section{Tổng quan quy trình xử lý}
+Trong những năm gần đây, việc khai thác thông tin từ văn bản trên biển hiệu có ý nghĩa quan trọng trong việc xây dựng hệ sinh thái dữ liệu cho các ứng dụng dựa trên vị trí và quản lý đô thị. Xuất phát từ mục tiêu đó, khóa luận đề xuất một quy trình xử lý (pipeline) được thiết kế theo ba giai đoạn chính: (i) \textbf{Phát hiện biển hiệu}, (ii) \textbf{Phát hiện văn bản trong vùng biển hiệu}, và (iii) \textbf{Nhận dạng nội dung văn bản}. Theo đó, quy trình xử lý (pipeline) được minh họa trong Hình~\ref{fig:chapter3_pipeline_overview}, trong đó quá trình xử lý bắt đầu bằng việc phát hiện và trích xuất vùng biển hiệu từ ảnh đầu vào. Từ các vùng biển hiệu đã được cắt, hệ thống tiến hành phát hiện các vùng văn bản tương ứng, trước khi thực hiện nhận dạng nội dung văn bản từ các vùng đã được xác định. Dựa trên quy trình xử lý (pipeline) đề xuất, khóa luận tập trung phân tích và lựa chọn một số phương pháp tiên tiến hiện nay cho từng giai đoạn xử lý. Việc lựa chọn này được thực hiện dựa trên các nghiên cứu khảo sát gần đây trong lĩnh vực. Nội dung chi tiết cho từng giai đoạn sẽ được trình bày lần lượt trong các mục sau.
 
 \begin{figure}[t]
     \centering
     % TODO: cập nhật đường dẫn theo project của bạn
     \includegraphics[width=1\linewidth]{assets/chapter3/pipeline_text_det_rec_on_signboard.png}
-    \caption{Kiến trúc tổng quan của hệ thống phát hiện và nhận dạng văn bản trên biển hiệu}
+    \caption{Tổng quan quy trình xử lý đầu-cuối (pipeline end-to-end) cho bài toán phát hiện và nhận dạng văn bản trên biển hiệu.}
     \label{fig:chapter3_pipeline_overview}
 \end{figure}
 
