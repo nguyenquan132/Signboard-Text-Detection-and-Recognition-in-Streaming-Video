@@ -1,4 +1,4 @@
-\chapter{THIẾT KẾ QUY TRÌNH XỬ LÝ ĐẦU-CUỐI (PIPELINE END-TO-END)}
+\chapter{XÂY DỰNG QUY TRÌNH XỬ LÝ ĐẦU-CUỐI CHO PHÁT HIỆN VÀ NHẬN DẠNG VĂN BẢN TRÊN BIỂN HIỆU}
 \ifpdf
     \graphicspath{{Chapter3/Chapter3Figs/PNG/}{Chapter3/Chapter3Figs/PDF/}{Chapter3/Chapter3Figs/}}
 \else
@@ -6,8 +6,8 @@
 \fi
 
 
-\section{Tổng quan quy trình xử lý}
-Trong những năm gần đây, việc khai thác thông tin từ văn bản trên biển hiệu có ý nghĩa quan trọng trong việc xây dựng hệ sinh thái dữ liệu cho các ứng dụng dựa trên vị trí và quản lý đô thị. Xuất phát từ mục tiêu đó, khóa luận đề xuất một quy trình xử lý (pipeline) được thiết kế theo ba giai đoạn chính: (i) \textbf{Phát hiện biển hiệu}, (ii) \textbf{Phát hiện văn bản trong vùng biển hiệu}, và (iii) \textbf{Nhận dạng nội dung văn bản}. Theo đó, quy trình xử lý (pipeline) được minh họa trong Hình~\ref{fig:chapter3_pipeline_overview}, trong đó quá trình xử lý bắt đầu bằng việc phát hiện và trích xuất vùng biển hiệu từ ảnh đầu vào. Từ các vùng biển hiệu đã được cắt, hệ thống tiến hành phát hiện các vùng văn bản tương ứng, trước khi thực hiện nhận dạng nội dung văn bản từ các vùng đã được xác định. Dựa trên quy trình xử lý (pipeline) đề xuất, khóa luận tập trung phân tích và lựa chọn một số phương pháp tiên tiến hiện nay cho từng giai đoạn xử lý. Việc lựa chọn này được thực hiện dựa trên các nghiên cứu khảo sát gần đây trong lĩnh vực. Nội dung chi tiết cho từng giai đoạn sẽ được trình bày lần lượt trong các mục sau.
+\section{Tổng quan quy trình xử lý đầu-cuối}
+Trong những năm gần đây, việc khai thác thông tin từ văn bản trên biển hiệu có ý nghĩa quan trọng trong việc xây dựng hệ sinh thái dữ liệu cho các ứng dụng dựa trên vị trí và quản lý đô thị. Xuất phát từ mục tiêu đó, khóa luận đề xuất một quy trình xử lý đầu-cuối (pipeline end-to-end) được thiết kế theo ba giai đoạn chính: (i) \textbf{Phát hiện biển hiệu}, (ii) \textbf{Phát hiện văn bản trong vùng biển hiệu}, và (iii) \textbf{Nhận dạng nội dung văn bản}. Theo đó, quy trình xử lý (pipeline) được minh họa trong Hình~\ref{fig:chapter3_pipeline_overview}, trong đó quá trình xử lý bắt đầu bằng việc phát hiện và trích xuất vùng biển hiệu từ ảnh đầu vào. Từ các vùng biển hiệu đã được cắt, hệ thống tiến hành phát hiện các vùng văn bản tương ứng, trước khi thực hiện nhận dạng nội dung văn bản từ các vùng đã được xác định. Dựa trên quy trình xử lý (pipeline) đề xuất, khóa luận tập trung phân tích và lựa chọn một số phương pháp tiên tiến hiện nay cho từng giai đoạn xử lý. Việc lựa chọn này được thực hiện dựa trên các nghiên cứu khảo sát gần đây trong lĩnh vực. Nội dung chi tiết cho từng giai đoạn sẽ được trình bày lần lượt trong các mục sau.
 
 \begin{figure}[t]
     \centering
@@ -18,7 +18,7 @@ Trong những năm gần đây, việc khai thác thông tin từ văn bản tr�
 \end{figure}
 
 \section{Phát hiện biển hiệu}
-\subsection{Phát hiện đối tượng}
+% \subsection{Phát hiện đối tượng}
 \label{sec:object_detection}
 Trong giai đoạn phát hiện biển hiệu, khóa luận lựa chọn một số phương pháp tiêu biểu được đề cập trong các nghiên cứu gần đây \cite{zou2023object} để tiến hành đánh giá thực nghiệm.
 
@@ -59,18 +59,17 @@ Trong bối cảnh phát hiện biển hiệu, DETR được lựa chọn như m
 
 Trên cơ sở đó, RTDETRv2 được lựa chọn như một phương pháp đại diện cho hướng tiếp cận Transformer tối ưu hóa cho thời gian thực, đặc biệt phù hợp với các trường hợp yêu cầu tốc độ xử lý cao như phân tích video giao thông hoặc cảnh đường phố.
 
-\subsection{Phân đoạn ngữ nghĩa}
+\noindent
+% \subsection{Phân đoạn ngữ nghĩa}
 Bên cạnh các phương pháp phát hiện trực tiếp dựa trên bounding box, nhằm mở rộng
 góc nhìn đánh giá, khóa luận xem xét thêm một hướng tiếp cận gián tiếp thông qua
 bài toán phân đoạn ngữ nghĩa (semantic segmentation). Theo hướng tiếp cận này,
 đối tượng được phân đoạn ở mức điểm ảnh, từ đó suy ra các vùng bao hình học phục vụ
-cho bài toán phát hiện.
+cho bài toán phát hiện biển hiệu.
 
 Trong bối cảnh đó, theo nghiên cứu khảo sát gần đây \cite{thisanke2023semantic}, các kiến
 trúc dựa trên Transformer đã trở thành một hướng tiếp cận quan trọng và được quan
-tâm rộng rãi trong bài toán phân đoạn ảnh, đặc biệt là phân đoạn ngữ nghĩa. Nhờ khả
-năng mô hình hóa ngữ cảnh toàn cục thông qua cơ chế tự chú ý (self-attention), các mô hình này
-cho thấy hiệu quả nổi bật trong việc xử lý các trường hợp phức tạp với sự đa dạng lớn
+tâm rộng rãi trong bài toán phân đoạn ảnh, đặc biệt là phân đoạn ngữ nghĩa (semantic segmentation). Nhờ khả năng mô hình hóa ngữ cảnh toàn cục thông qua cơ chế tự chú ý (self-attention), các mô hình này cho thấy hiệu quả nổi bật trong việc xử lý các trường hợp phức tạp với sự đa dạng lớn
 về hình dạng và bố cục của đối tượng.
 
 \paragraph{SegFormer} SegFormer \cite{xie2021segformer}, được giới thiệu bởi Xie và cộng sự, là một kiến trúc phân đoạn ngữ nghĩa hiệu quả, kết hợp encoder Transformer phân cấp (hierarchical) và decoder MLP nhẹ, được minh họa trong Hình \ref{fig:chapter3_segformer_architecture}. Thiết kế này cho phép mô hình khai thác ngữ cảnh toàn cục ở nhiều tỷ lệ, đồng thời duy trì hiệu suất tính toán cao nhờ decoder đơn giản. Chính sự cân bằng giữa độ chính xác và tốc độ này khiến SegFormer trở thành một lựa chọn phù hợp để đánh giá hiệu quả của phân đoạn ngữ nghĩa trong việc phát hiện các biển hiệu, đặc biệt đối với các biển hiệu xuất hiện ở nhiều góc nghiêng khác nhau.
@@ -92,18 +91,19 @@ về hình dạng và bố cục của đối tượng.
     \label{fig:chapter3_mask2former_architecture}
 \end{figure}
 
-\section{Phát hiện và nhận dạng văn bản trên biển hiệu theo hướng tiếp cận hai giai đoạn (Two-Stage)}
-\subsection{Phát hiện văn bản trên biển hiệu}
+% \section{Phát hiện và nhận dạng văn bản trên biển hiệu theo hướng tiếp cận hai giai đoạn (Two-Stage)}
+\section{Phát hiện và nhận dạng văn bản trên biển hiệu}
+\subsection{Phát hiện văn bản}
 \label{sec:text_detection}
 Trên cơ sở các vùng biển hiệu đã được xác định, hệ thống tiếp tục với nhiệm vụ phát hiện văn bản trên biển hiệu, được xem xét dưới góc độ của bài toán Scene Text Detection (STD). Để đánh giá hiệu quả, các phương pháp tiên tiến hiện nay được lựa chọn dựa trên các nghiên cứu khảo sát gần đây \cite{kang2022overview, pal2024comprehensive, naiemi2022scene}. 
 
-\paragraph{PANet} PANet \cite{liu2018panet}, được đề xuất bởi Liu và cộng sự, là một kiến trúc phát hiện văn bản hiệu quả dựa trên nguyên tắc phân đoạn. Mô hình bao gồm hai thành phần chính: Feature Pyramid Enhancement Module (FPEM) để tạo bản đồ đặc trưng đa tỷ lệ, và Feature Fusion Module (FFM) để tổng hợp các đặc trưng này. Kiến trúc của PANet được minh họa trong Hình~\ref{fig:chapter3_panet_architecture}. Nhờ khả năng tập hợp các pixel văn bản thành các thể hiện tương ứng trên bản đồ đặc trưng cuối cùng, PANet có thể phát hiện văn bản chính xác mà vẫn duy trì hiệu suất tính toán cao, phù hợp với bài toán phát hiện văn bản trên biển hiệu với nhiều kích thước và hướng khác nhau.
+\paragraph{PANet} PANet \cite{wang2019efficient}, được đề xuất bởi Liu và cộng sự, là một kiến trúc phát hiện văn bản hiệu quả dựa trên nguyên tắc phân đoạn. Mô hình bao gồm hai thành phần chính: Feature Pyramid Enhancement Module (FPEM) để tạo bản đồ đặc trưng đa tỷ lệ, và Feature Fusion Module (FFM) để tổng hợp các đặc trưng này. Kiến trúc của PANet được minh họa trong Hình~\ref{fig:chapter3_panet_architecture}. Nhờ khả năng tập hợp các pixel văn bản thành các thể hiện tương ứng trên bản đồ đặc trưng cuối cùng, PANet có thể phát hiện văn bản chính xác mà vẫn duy trì hiệu suất tính toán cao, phù hợp với bài toán phát hiện văn bản trên biển hiệu với nhiều kích thước và hướng khác nhau.
 
 \begin{figure}[t]
     \centering
     % TODO: cập nhật đường dẫn theo project của bạn
     \includegraphics[width=1\linewidth]{assets/chapter3/panet_architecture.png}
-    \caption{Kiến trúc tổng quan của PANet \cite{liu2018panet}}
+    \caption{Kiến trúc tổng quan của PANet \cite{wang2019efficient}}
     \label{fig:chapter3_panet_architecture}
 \end{figure}
 
@@ -154,7 +154,7 @@ rõ ràng các văn bản liền kề. Kiến trúc của KPN được minh họ
 
 \paragraph{YOLO (OBB)} Bên cạnh các phương pháp tiên tiến cho phát hiện văn bản (Scene Text Detection - STD) đã được trình bày, khóa luận tiếp tục mở rộng đánh giá bằng cách áp dụng một số mô hình phát hiện đối tượng được giới thiệu ở Mục~\ref{sec:object_detection} (Phát hiện biển hiệu), cụ thể là phiên bản YOLOv8-OBB và YOLOv11-OBB. Do được huấn luyện ban đầu trên dữ liệu đối tượng tổng quát (general object), các mô hình này cần được fine-tune trên tập dữ liệu văn bản chuyên biệt. Việc đánh giá này nhằm xác định tính khả thi và hiệu quả của các kiến trúc phát hiện đối tượng khi chuyển giao (transfer) sang bài toán phát hiện văn bản, đặc biệt trong việc xử lý các dòng chữ nghiêng và có kích thước nhỏ trên biển hiệu.
 
-\subsection{Nhận dạng nội dung văn bản}
+\subsection{Nhận dạng văn bản}
 \label{subsec:sota_rec}
 Sau khi xác định các vùng chứa văn bản trên biển hiệu, hệ thống tiếp tục với giai đoạn nhận dạng nội dung văn bản. Giai đoạn này được tiếp cận như một bài toán Nhận dạng văn bản trong ảnh ngoại cảnh (Scene Text Recognition - STR), với mục tiêu chuyển đổi các vùng văn bản đã được phát hiện thành chuỗi ký tự tương ứng. Trên cùng cơ sở tiếp cận như giai đoạn phát hiện văn bản, khóa luận lựa chọn một số phương pháp STR tiên tiến hiện nay để tiến hành thực nghiệm và đánh giá, dựa trên các phân loại và hướng tiếp cận được tổng hợp từ các nghiên cứu khảo sát gần đây \cite{kang2022overview, pal2024comprehensive, naiemi2022scene}.
 
@@ -225,7 +225,8 @@ chứa nhiều từ hoặc các dòng chữ kéo dài.
 Dựa trên sự kết hợp giữa hiệu quả suy luận của CTC và khả năng mô hình hóa các văn bản có hình dạng bất thường, cũng như khai thác ngữ cảnh ngôn ngữ, SVTRv2 đạt được sự cân bằng tốt giữa tốc độ và độ chính xác trong các trường hợp nhận dạng văn bản đa dạng như văn bản dài và văn bản có hình dạng phức tạp. Do đó, trong giai đoạn nhận dạng văn bản trên biển hiệu, SVTRv2 cho thấy tính phù hợp cao
 nhờ khả năng cân bằng giữa tốc độ suy luận và độ chính xác.
 
-\section{Phát hiện và nhận dạng văn bản trên biển hiệu theo hướng tiếp cận một giai đoạn (One-Stage)}
+% \section{Phát hiện và nhận dạng văn bản trên biển hiệu theo hướng tiếp cận một giai đoạn (One-Stage)}
+\subsection{Phát hiện và nhận dạng văn bản đầu-cuối (end-to-end)}
 \label{sec:one_stage_methods}
 Mặc dù hướng tiếp cận hai giai đoạn (two-stage), trong đó phát hiện và nhận dạng văn bản được thực hiện riêng biệt, đã cho thấy hiệu quả và tính linh hoạt cao trong bài toán nhận dạng văn bản trên biển hiệu, các phương pháp một giai đoạn (one-stage) ngày càng thu hút sự quan tâm nhờ khả năng suy luận trực tiếp từ ảnh đầu vào đến chuỗi ký tự đầu ra trong một mô hình thống nhất. Do đó, bên cạnh việc xây dựng và đánh giá pipeline hai giai đoạn, khóa luận tiến hành thực nghiệm so sánh giữa hai chiến lược tiếp cận: (i) hướng tiếp cận hai giai đoạn (two-stage), với hai mô-đun riêng biệt cho phát hiện và nhận dạng; và (ii) hướng tiếp cận một giai đoạn (one-stage), sử dụng các mô hình tiên tiến như TESTR, DeepSolo, UNITS, và DNTextSpotter.
 

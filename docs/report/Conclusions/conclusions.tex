@@ -1,90 +1,15 @@
 % =========================
 % CHAPTER 6: KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN
 % =========================
-\chapter{ỨNG DỤNG MINH HỌA, KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN}
+\chapter{KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN}
 \ifpdf
     \graphicspath{{Chapter6/Chapter6Figs/PNG/}{Chapter6/Chapter6Figs/PDF/}{Chapter6/Chapter6Figs/}}
 \else
     \graphicspath{{Chapter6/Chapter6Figs/EPS/}{Chapter6/Chapter6Figs/}}
 \fi
 
-\markboth{\MakeUppercase{\thechapter. ỨNG DỤNG MINH HỌA, KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN}}{\thechapter. ỨNG DỤNG MINH HỌA, KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN}
+\markboth{\MakeUppercase{\thechapter. KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN}}{\thechapter. KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN}
 
-
-\section{Ứng dụng minh họa quy trình xử lý đầu-cuối (pipeline end-to-end) để xuất}
-\subsection{Mục tiêu và thiết kế ứng dụng minh họa}
-\label{subsec:objective_demo}
-Nhằm đánh giá khả năng tổng quát hóa của quy trình phát hiện và nhận dạng văn bản trên biển hiệu đầu-cuối (end-to-end) đã được đề xuất trong bối cảnh dữ liệu thực tế, khóa luận xây dựng một ứng dụng minh họa thông qua việc xử lý các video thu thập từ môi trường đường phố Việt Nam. Ứng dụng này được sử dụng như một công cụ trực quan nhằm minh chứng tính khả thi và hiệu quả của quy trình khi áp dụng vào bối cảnh giao thông và cảnh quan đô thị tại Việt Nam.
-
-Ứng dụng minh họa không hướng đến việc xây dựng một hệ thống hoàn chỉnh với giao diện người dùng hoặc các chức năng tương tác phức tạp. Thay vào đó, ứng dụng tập trung vào việc biểu diễn kết quả xử lý của pipeline dưới dạng video đầu ra đã được gán nhãn, nhằm phục vụ mục đích minh họa và đánh giá định tính trong phạm vi khóa luận. Cách tiếp cận này cho phép khóa luận tập trung vào việc xây dựng và đánh giá quy trình xử lý đầu-cuối (pipeline end-to-end) cho bài toán phát hiện và nhận dạng văn bản trên biển hiệu.
-
-Về mặt thiết kế tổng thể, ứng dụng được xây dựng theo quy trình xử lý tuần tự, trong đó dữ liệu video đầu vào được xử lý theo từng khung hình. Trên mỗi khung hình, pipeline lần lượt thực hiện các tác vụ phát hiện biển hiệu, phát hiện vùng văn bản trong biển hiệu và nhận dạng nội dung văn bản. Kết quả xử lý được tổng hợp và trực quan hóa trực tiếp trên các khung hình tương ứng, sau đó được tái cấu trúc thành video đầu ra.
-Hình~\ref{fig:pipeline_demo} minh họa kiến trúc tổng thể của quy trình xử lý trong ứng dụng minh họa.
-
-\begin{figure}[t]
-    \centering
-    % TODO: cập nhật đường dẫn theo project của bạn
-    \includegraphics[width=1\linewidth]{assets/chapter5/pipeline_demo.png}
-    \caption{Sơ đồ quy trình xử lý video đầu-cuối (end-to-end) trong ứng dụng minh họa cho bài toán phát hiện và nhận dạng văn bản trên biển hiệu.}
-    \label{fig:pipeline_demo}
-\end{figure}
-
-Đầu ra của ứng dụng là các video đã được xử lý và gán nhãn, cho phép quan sát trực tiếp kết quả suy luận của hệ thống. Thông qua video đầu ra, người xem có thể đánh giá một cách định tính khả năng phát hiện biển hiệu, mức độ chính xác của các vùng văn bản được xác định, cũng như chất lượng nhận dạng nội dung văn bản trong các điều kiện thực tế khác nhau.
-
-\subsection{Triển khai quy trình xử lý đầu-cuối (pipeline end-to-end) đề xuất trên video}
-Dựa trên kiến trúc tổng thể đã được trình bày ở \ref{subsec:objective_demo}, phần này trình bày chi tiết cách thức triển khai quy trình xử lý đầu-cuối (end-to-end pipeline) trên dữ liệu video thu thập từ môi trường đường phố Việt Nam. Việc triển khai được thực hiện theo hình thức xử lý video ngoại tuyến, trong đó pipeline suy luận được áp dụng tuần tự trên từng khung hình của video đầu vào.
-
-Các video đầu vào được tiếp nhận dưới nhiều định dạng phổ biến và được xử lý theo cơ chế từng khung hình. Ở mỗi bước xử lý, hệ thống lần lượt trích xuất khung hình từ video, đồng thời thu thập các thông tin cần thiết như tốc độ khung hình và độ phân giải để đảm bảo tính nhất quán khi tái tạo video đầu ra. Cách tiếp cận xử lý theo từng khung hình này cho phép pipeline học sâu, vốn được thiết kế chủ yếu cho dữ liệu ảnh tĩnh, có thể được áp dụng trực tiếp lên dữ liệu video mà không cần thay đổi đáng kể về mặt kiến trúc.
-
-Trước khi đưa vào pipeline suy luận, mỗi khung hình được thực hiện một số bước tiền xử lý nhằm đảm bảo tương thích với yêu cầu đầu vào của các mô hình học sâu. Cụ thể, khung hình được chuyển đổi không gian màu phù hợp, chuẩn hóa kích thước và giá trị điểm ảnh, đồng thời được biểu diễn dưới dạng tensor để phục vụ cho quá trình suy luận. Các bước tiền xử lý này giúp giảm sự sai lệch dữ liệu và đảm bảo tính ổn định của kết quả khi áp dụng pipeline trên các video có điều kiện ánh sáng và độ phân giải khác nhau.
-
-Trên mỗi khung hình đã được tiền xử lý, quy trình xử lý đầu-cuối (pipeline end-to-end) thực hiện theo trình tự gồm ba giai đoạn chính. 
-\begin{itemize}
-    \item \textbf{Phát hiện biển hiệu}: Quy trình xử lý (pipeline) xác định các vùng biển hiệu xuất hiện trong khung hình và trích xuất chúng từ hình gốc, đóng vai trò là vùng quan tâm (Region of Interest - ROI) cho các bước tiếp theo.
-    \item \textbf{Phát hiện văn bản}: Trong mỗi ROI, Quy trình xử lý (pipeline) xác định vị trí các vùng văn bản nhằm xác định chính xác không gian của văn bản.
-    \item \textbf{Nhận dạng văn bản}: Các vùng văn bản được trích xuất, chuẩn hóa hình dạng và đưa vào mô-đun nhận dạng để suy luận nội dung.
-\end{itemize}
-
-Bên cạnh đó, nhằm đảm bảo tính nhất quán của thông tin trên chuỗi khung hình liên tiếp, hệ thống tích hợp cơ chế theo dõi biển hiệu. Việc theo dõi cho phép gán định danh cho các biển hiệu xuất hiện xuyên suốt video, qua đó hạn chế việc nhận dạng lặp lại cùng một đối tượng và hỗ trợ tổng hợp thông tin từ nhiều khung hình khác nhau, song, trong phạm vi của khóa luận, cơ chế theo dõi chỉ đóng vai trò hỗ trợ và không phải là trọng tâm chính của pipeline đề xuất.
-
-Sau quá trình suy luận, các thông tin về vị trí biển hiệu, vùng văn bản và nội dung nhận dạng được kết hợp với khung hình gốc và trực quan hóa lên từng khung hình. Đối với văn bản tiếng Việt, hệ thống sử dụng phông chữ hỗ trợ Unicode nhằm đảm bảo biểu diễn đầy đủ các ký tự có dấu. Các khung hình đã gán nhãn được tổng hợp lại theo đúng thứ tự thời gian ban đầu để tạo thành video đầu ra hoàn chỉnh, cho phép quan sát trực tiếp kết quả suy luận của hệ thống.
-
-Các bước xử lý và trực quan hóa video đầu ra được thực hiện trên nền tảng Python, kết hợp giữa các thư viện xử lý ảnh/video truyền thống như OpenCV, Matplotlib, và các khung làm việc (framework) học sâu hiện đại như PyTorch, cùng các thư viện hỗ trợ tương ứng.
-
-\subsection{Kết quả minh họa và đánh giá định tính}
-Để đánh giá định tính khả năng suy luận của quy trình xử lý đầu-cuối (pipeline end-to-end) trên dữ liệu video, khóa luận tiến hành áp dụng quy trình xử lý (pipeline) đề xuất lên các video thực tế được thu thập trong bối cảnh đường phố Việt Nam. Các video được ghi nhận tại một số khu vực đô thị tiêu biểu ở Thành phố Hồ Chí Minh (ví dụ: khu vực đường Lê Văn Việt, Võ Văn Ngân), phản ánh đa dạng điều kiện quan sát trong môi trường thực tế. Từ kết quả suy luận, khóa luận lựa chọn một số khung hình tiêu biểu các thời điểm khác nhau trong video nhằm minh họa và phân tích định tính khả năng phát hiện biển hiệu, xác định vùng văn bản và nhận dạng nội dung văn bản của quy trình xử lý (pipeline). 
-
-\begin{figure}[t]
-    \centering
-    % TODO: cập nhật đường dẫn theo project của bạn
-    \includegraphics[width=1\linewidth]{assets/chapter5/frame30.jpg}
-    \caption{Kết quả suy luận của quy trình xử lý đầu-cuối (pipeline end-to-end) trong điều kiện quan sát bất lợi, với các biển hiệu ở xa và sử dụng kiểu chữ nghệ thuật.}
-    \label{fig:demo_frame30}
-\end{figure}
-
-Hình~\ref{fig:demo_frame30} minh họa kết quả suy luận của quy trình xử lý đầu-cuối (pipeline end-to-end). Kết quả cho thấy pipeline có khả năng phát hiện tốt đối với các biển hiệu nằm ở vị trí gần và có kích thước đủ lớn. Tuy nhiên, đối với các biển hiệu ở xa hoặc có kích thước nhỏ, khả năng phát hiện còn hạn chế. Hơn nữa, việc nhận dạng văn bản cũng gặp khó khăn khi biển hiệu sử dụng kiểu chữ nghệ thuật hoặc được cách điệu. Điều này cho thấy hiệu suất của pipeline vẫn chịu ảnh hưởng đáng kể bởi các yếu tố như khoảng cách quan sát, kích thước đối tượng, và kiểu trình bày văn bản trong môi trường thực tế.
-
-\begin{figure}[t]
-    \centering
-    % TODO: cập nhật đường dẫn theo project của bạn
-    \includegraphics[width=1\linewidth]{assets/chapter5/frame154.jpg}
-    \caption{Kết quả suy luận của pipeline trong điều kiện quan sát thuận lợi, khi camera tiến gần hơn tới khu vực các biển hiệu.}
-    \label{fig:demo_frame154}
-\end{figure}
-
-Trong điều kiện quan sát thuận lợi hơn, Hình~\ref{fig:demo_frame154} thể hiện kết quả suy luận tại thời điểm camera tiến gần hơn tới khu vực các biển hiệu. Trong trường hợp này, pipeline hoạt động tương đối hiệu quả khi phát hiện được đa số các biển hiệu xuất hiện trong khung hình, đồng thời xác định chính xác các vùng văn bản bên trong. Kết quả nhận dạng cho thấy hệ thống có khả năng suy luận tốt đối với cả văn bản tiếng Việt có dấu và một số văn bản tiếng Anh trên biển hiệu. Kết quả này phản ánh khả năng tổng quát hóa tương đối tốt của pipeline trong bối cảnh đường phố Việt Nam khi điều kiện quan sát thuận lợi hơn.
-
-\begin{figure}[t]
-    \centering
-    % TODO: cập nhật đường dẫn theo project của bạn
-    \includegraphics[width=1\linewidth]{assets/chapter5/frame2982.jpg}
-    \caption{Kết quả suy luận của pipeline trong trường hợp biển hiệu có sự xuất hiện của các thành phần phi văn bản (biểu tượng, logo) xen kẽ với nội dung văn bản.}
-    \label{fig:demo_frame2982}
-\end{figure}
-
-Bên cạnh các trường hợp trên, Hình~\ref{fig:demo_frame2982} minh họa một trường hợp biển hiệu có sự xuất hiện của các thành phần đồ họa như biểu tượng hoặc logo xen kẽ với văn bản. Mặc dù các thành phần này không mang thông tin ngôn ngữ, pipeline vẫn tập trung chủ yếu vào các vùng chứa văn bản và phát hiện đúng phần lớn các dòng chữ chính. Điều này cho thấy hệ thống có khả năng nhận diện các vùng chứa thông tin văn bản ngay cả khi tồn tại các thành phần phi văn bản trong cùng một biển hiệu.
-
-Nhìn chung, các kết quả minh họa cho thấy quy trình xử lý đầu-cuối (pipeline end-to-end) đề xuất hoạt động hiệu quả trong việc phát hiện và nhận dạng văn bản trên biển hiệu dưới nhiều điều kiện quan sát khác nhau trong môi trường đường phố Việt Nam. Tuy nhiên, bên cạnh những trường hợp quy trình xử lý (pipeline) cho kết quả khả quan, một số thách thức vẫn tồn tại khi biển hiệu ở xa, sử dụng kiểu chữ nghệ thuật hoặc chứa văn bản có kích thước lớn, ảnh hưởng đến hiệu quả phát hiện và nhận dạng văn bản. Những quan sát định tính này cung cấp cơ sở cho các hướng cải thiện trong tương lai của khóa luận.
 % -------------------------------------------------
 \section{Kết luận}
 % Trước nhu cầu gia tăng về việc tự động trích xuất thông tin từ ảnh và video trong môi trường đường phố,
@@ -97,15 +22,15 @@ Trước nhu cầu ngày càng tăng trong việc khai thác thông tin từ c�
 Xuất phát từ mục tiêu trên, ba đóng góp chính của khóa luận bao gồm:
 \begin{itemize}
     \item \textbf{Mở rộng bộ dữ liệu:} Bổ sung nhãn đối tượng biển hiệu (signboard bounding box) cho tập dữ liệu ảnh tĩnh SignboardText, đồng thời thu thập một tập dữ liệu video hành trình thực tế, phục vụ minh họa và kiểm tra tính tổng quát của quy trình xử lý (pipeline).
-    \item \textbf{Thực nghiệm và phân tích:} Cung cấp các thực nghiệm và phân tích chi tiết, làm cơ sở cho các nghiên cứu và ứng dụng trong tương lai.
-    \item \textbf{Phát triển pipeline đầu-cuối (end-to-end):} Xây dựng quy trình xử lý đầu-cuối (pipeline end-to-end) hoàn chỉnh cho bài toán phát hiện và nhận dạng văn bản trên biển hiệu trong video hành trình tại Việt Nam.
+    \item \textbf{Thực nghiệm và đánh giá:} Tiến hành cài đặt, thực nghiệm và phân tích kết quả cho các tác vụ phát hiện biển hiệu, phát hiện văn bản và nhận dạng văn bản, qua đó làm rõ ưu và nhược điểm của các phương pháp trong bối cảnh dữ liệu đường phố Việt Nam, đồng thời cung cấp cơ sở tham khảo cho các nghiên cứu và ứng dụng trong tương lai.
+    \item \textbf{Xây dựng quy trình xử lý đầu-cuối (pipeline end-to-end):} Xây dựng quy trình xử lý đầu-cuối hoàn chỉnh cho bài toán phát hiện và nhận dạng văn bản trên biển hiệu trong video hành trình tại Việt Nam.
 \end{itemize}
 
-Hiệu quả của quy trình xử lý đầu-cuối (pipeline end-to-end) đề xuất đã được đánh giá trên tập SignboardText, với khả năng xử lý tốt các biển hiệu chứa phần lớn ngôn ngữ Tiếng Việt. Nhờ đó, pipeline không chỉ hỗ trợ các ứng dụng trích xuất thông tin trong thực tế mà còn cung cấp công cụ hữu ích cho việc thu thập và quản lý dữ liệu trong lĩnh vực thị giác máy tính. Tuy nhiên, trong quá trình thực nghiệm và đánh giá, khóa luận nhận thấy một số hạn chế đáng lưu ý:
+Hiệu quả của quy trình xử lý đầu-cuối (pipeline end-to-end) đề xuất đã được đánh giá trên tập SignboardText, với khả năng xử lý tốt các biển hiệu chứa phần lớn ngôn ngữ Tiếng Việt. Nhờ đó, quy trình xử lý (pipeline) không chỉ hỗ trợ các ứng dụng trích xuất thông tin trong thực tế mà còn cung cấp công cụ hữu ích cho việc thu thập và quản lý dữ liệu trong lĩnh vực thị giác máy tính. Tuy nhiên, trong quá trình thực nghiệm và đánh giá, khóa luận nhận thấy một số hạn chế đáng lưu ý:
 
 \begin{itemize}
     \item \textbf{Điều kiện môi trường:} Thực nghiệm chủ yếu được thực hiện trong các điều kiện thuận lợi, do đó hiệu quả của quy trình xử lý đầu-cuối (pipeline end-to-end) trong các môi trường bất lợi như mưa, sương mù hoặc ánh sáng yếu vẫn chưa được kiểm chứng đầy đủ.
-    \item \textbf{Dữ liệu đánh giá:} Mặc dù bước tiền xử lý căn chỉnh biển hiệu giúp cải thiện hiệu quả quy trình xử lý đầu-cuối (pipeline end-to-end) với mô hình phát hiện biển hiệu SegFormer, tập dữ liệu SignboardText vẫn còn hạn chế về số lượng biển hiệu với các góc nghiêng khác nhau, làm hạn chế khả năng đánh giá toàn diện hiệu quả quy trình xử lý đầu-cuối (pipeline end-to-end).
+    \item \textbf{Dữ liệu đánh giá:} Mặc dù bước tiền xử lý căn chỉnh biển hiệu giúp cải thiện hiệu quả của quy trình xử lý (pipeline), tập dữ liệu SignboardText vẫn còn hạn chế về số lượng biển hiệu có các góc nghiêng đa dạng. Bên cạnh đó, do chưa có tập dữ liệu video đường phố Việt Nam được gán nhãn đầy đủ (xuất phát từ hạn chế về tài nguyên gán nhãn), khóa luận hiện chưa thể thực hiện đánh giá định lượng toàn diện quy trình xử lý đầu-cuối (pipeline end-to-end) trên dữ liệu video. Điều này làm hạn chế khả năng kiểm chứng đầy đủ tính tổng quát hóa của quy trình xử lý (pipeline) trong bối cảnh video đường phố thực tế.
 \end{itemize}
 
 
@@ -141,7 +66,7 @@ Hiệu quả của quy trình xử lý đầu-cuối (pipeline end-to-end) đề
 Nhằm khắc phục những hạn chế đã nêu và nâng cao hiệu quả của quy trình xử lý đầu-cuối (pipeline end-to-end) trong các điều kiện thực tế đa dạng, khóa luận đề xuất một số hướng phát triển trong tương lai như sau: 
 
 \begin{itemize}
-\item \textbf{Cải thiện dữ liệu:} Xây dựng bộ dữ liệu chuyên biệt chứa các biển hiệu nghiêng ở nhiều góc độ khác nhau, nhằm hỗ trợ việc đánh giá và cải thiện bước căn chỉnh biển hiệu, từ đó góp phần nâng cao hiệu quả quy trình xử lý đầu-cuối (pipeline end-to-end).
+\item \textbf{Cải thiện dữ liệu:} Xây dựng bộ dữ liệu chuyên biệt chứa các biển hiệu nghiêng ở nhiều góc độ khác nhau, đồng thời mở rộng việc thu thập và gán nhãn dữ liệu video đường phố Việt Nam. Việc bổ sung dữ liệu video được gán nhãn đầy đủ sẽ tạo điều kiện cho việc đánh giá định lượng toàn diện hơn hiệu quả của quy trình xử lý đầu-cuối (pipeline end-to-end), qua đó góp phần cải thiện và kiểm chứng khả năng tổng quát hóa của quy trình xử lý (pipeline) trong các bối cảnh thực tế.
 \item \textbf{Mở rộng điều kiện:} Thực nghiệm quy trình xử lý đầu-cuối (pipeline end-to-end) trong các môi trường bất lợi, bao gồm mưa, ánh sáng yếu và sương mù, để kiểm chứng tính ổn định và khả năng triển khai thực tế.
 \item \textbf{Ứng dụng thực tế:} Phát triển giao diện người dùng cho ứng dụng phát hiện và nhận dạng văn bản trên biển hiệu, hỗ trợ phân tích biển hiệu, tra cứu địa điểm và thông tin cửa hàng tại Việt Nam.
 \end{itemize}
