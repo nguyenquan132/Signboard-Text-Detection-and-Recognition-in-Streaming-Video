@@ -17,20 +17,20 @@
 % bản đồ số theo ngữ nghĩa và hỗ trợ truy xuất thông tin theo địa điểm. Xuất phát từ bối cảnh đó, khóa luận đã tập trung
 % nghiên cứu và phát triển một hệ thống ``đọc chữ trên biển hiệu'' theo hướng end-to-end, phù hợp với dữ liệu street-view và video hành trình.
 
-Trước nhu cầu ngày càng tăng trong việc khai thác thông tin từ cảnh quan đô thị, biển hiệu trở thành nguồn dữ liệu văn bản giàu ngữ nghĩa, cung cấp thông tin quan trọng cho các hệ thống thị giác máy tính. Chính vì vậy, việc tự động phát hiện và trích xuất nội dung từ các biển hiệu đóng vai trò quan trọng trong việc chuyển đổi dữ liệu thô thành tri thức có thể khai thác, từ đó hỗ trợ các nhiệm vụ trích xuất thông tin một cách hiệu quả. Trên cơ sở đó, khóa luận tập trung phát triển một pipeline đầu-cuối (end-to-end), cung cấp đồng thời thông tin về vị trí và nội dung văn bản trên biển hiệu.
+Trước nhu cầu ngày càng tăng trong việc khai thác thông tin từ cảnh quan đô thị, biển hiệu trở thành nguồn dữ liệu văn bản giàu ngữ nghĩa, cung cấp thông tin quan trọng cho các hệ thống thị giác máy tính. Chính vì vậy, việc tự động phát hiện và trích xuất nội dung từ các biển hiệu đóng vai trò quan trọng trong việc chuyển đổi dữ liệu thô thành tri thức có thể khai thác, từ đó hỗ trợ các nhiệm vụ trích xuất thông tin một cách hiệu quả. Trên cơ sở đó, khóa luận tập trung xây dựng một quy trình xử lý đầu-cuối (pipeline end-to-end), cung cấp đồng thời thông tin về vị trí và nội dung văn bản trên biển hiệu.
 
 Xuất phát từ mục tiêu trên, ba đóng góp chính của khóa luận bao gồm:
 \begin{itemize}
-    \item \textbf{Mở rộng bộ dữ liệu:} Bổ sung nhãn đối tượng biển hiệu (signboard bounding box) cho tập dữ liệu ảnh tĩnh SignboardText, đồng thời thu thập một tập dữ liệu video hành trình thực tế, phục vụ minh họa và kiểm tra tính tổng quát của pipeline.
-    \item \textbf{Thực nghiệm và phân tích:} Cung cấp các thực nghiệm và phân tích chi tiết, làm cơ sở cho các nghiên cứu và ứng dụng trong tương lai.
-    \item \textbf{Phát triển pipeline đầu-cuối (end-to-end):} Xây dựng pipeline hoàn chỉnh cho bài toán phát hiện và nhận dạng văn bản trên biển hiệu trong video hành trình tại Việt Nam.
+    \item \textbf{Mở rộng bộ dữ liệu:} Bổ sung nhãn đối tượng biển hiệu (signboard bounding box) cho tập dữ liệu ảnh tĩnh SignboardText, đồng thời thu thập một tập dữ liệu video hành trình thực tế, phục vụ minh họa và kiểm tra tính tổng quát của quy trình xử lý (pipeline).
+    \item \textbf{Thực nghiệm và đánh giá:} Tiến hành cài đặt, thực nghiệm và phân tích kết quả cho các tác vụ phát hiện biển hiệu, phát hiện văn bản và nhận dạng văn bản, qua đó làm rõ ưu và nhược điểm của các phương pháp trong bối cảnh dữ liệu đường phố Việt Nam, đồng thời cung cấp cơ sở tham khảo cho các nghiên cứu và ứng dụng trong tương lai.
+    \item \textbf{Xây dựng quy trình xử lý đầu-cuối (pipeline end-to-end):} Xây dựng quy trình xử lý đầu-cuối hoàn chỉnh cho bài toán phát hiện và nhận dạng văn bản trên biển hiệu trong video hành trình tại Việt Nam.
 \end{itemize}
 
-Hiệu quả của pipeline đề xuất đã được đánh giá trên tập SignboardText, với khả năng xử lý tốt các biển hiệu chứa phần lớn ngôn ngữ Tiếng Việt. Nhờ đó, pipeline không chỉ hỗ trợ các ứng dụng trích xuất thông tin trong thực tế mà còn cung cấp công cụ hữu ích cho việc thu thập và quản lý dữ liệu trong lĩnh vực thị giác máy tính. Tuy nhiên, trong quá trình thực nghiệm và đánh giá, khóa luận nhận thấy một số hạn chế đáng lưu ý:
+Hiệu quả của quy trình xử lý đầu-cuối (pipeline end-to-end) đề xuất đã được đánh giá trên tập SignboardText, với khả năng xử lý tốt các biển hiệu chứa phần lớn ngôn ngữ Tiếng Việt. Nhờ đó, quy trình xử lý (pipeline) không chỉ hỗ trợ các ứng dụng trích xuất thông tin trong thực tế mà còn cung cấp công cụ hữu ích cho việc thu thập và quản lý dữ liệu trong lĩnh vực thị giác máy tính. Tuy nhiên, trong quá trình thực nghiệm và đánh giá, khóa luận nhận thấy một số hạn chế đáng lưu ý:
 
 \begin{itemize}
-    \item \textbf{Điều kiện môi trường:} Thực nghiệm chủ yếu được thực hiện trong các điều kiện thuận lợi, do đó hiệu quả của pipeline trong các môi trường bất lợi như mưa, sương mù hoặc ánh sáng yếu vẫn chưa được kiểm chứng đầy đủ.
-    \item \textbf{Dữ liệu đánh giá:} Mặc dù bước tiền xử lý căn chỉnh biển hiệu giúp cải thiện hiệu quả pipeline với mô hình phát hiện biển hiệu SegFormer, tập dữ liệu SignboardText vẫn còn hạn chế về số lượng biển hiệu với các góc nghiêng khác nhau, làm hạn chế khả năng đánh giá toàn diện hiệu quả pipeline.
+    \item \textbf{Điều kiện môi trường:} Thực nghiệm chủ yếu được thực hiện trong các điều kiện thuận lợi, do đó hiệu quả của quy trình xử lý đầu-cuối (pipeline end-to-end) trong các môi trường bất lợi như mưa, sương mù hoặc ánh sáng yếu vẫn chưa được kiểm chứng đầy đủ.
+    \item \textbf{Dữ liệu đánh giá:} Mặc dù bước tiền xử lý căn chỉnh biển hiệu giúp cải thiện hiệu quả của quy trình xử lý (pipeline), tập dữ liệu SignboardText vẫn còn hạn chế về số lượng biển hiệu có các góc nghiêng đa dạng. Bên cạnh đó, do chưa có tập dữ liệu video đường phố Việt Nam được gán nhãn đầy đủ (xuất phát từ hạn chế về tài nguyên gán nhãn), khóa luận hiện chưa thể thực hiện đánh giá định lượng toàn diện quy trình xử lý đầu-cuối (pipeline end-to-end) trên dữ liệu video. Điều này làm hạn chế khả năng kiểm chứng đầy đủ tính tổng quát hóa của quy trình xử lý (pipeline) trong bối cảnh video đường phố thực tế.
 \end{itemize}
 
 
@@ -63,11 +63,11 @@ Hiệu quả của pipeline đề xuất đã được đánh giá trên tập S
 
 % -------------------------------------------------
 \section{Hướng phát triển}
-Nhằm khắc phục những hạn chế đã nêu và nâng cao hiệu quả của pipeline trong các điều kiện thực tế đa dạng, khóa luận đề xuất một số hướng phát triển trong tương lai như sau: 
+Nhằm khắc phục những hạn chế đã nêu và nâng cao hiệu quả của quy trình xử lý đầu-cuối (pipeline end-to-end) trong các điều kiện thực tế đa dạng, khóa luận đề xuất một số hướng phát triển trong tương lai như sau: 
 
 \begin{itemize}
-\item \textbf{Cải thiện dữ liệu:} Xây dựng bộ dữ liệu chuyên biệt chứa các biển hiệu nghiêng ở nhiều góc độ khác nhau, nhằm hỗ trợ việc đánh giá và cải thiện bước căn chỉnh biển hiệu, từ đó góp phần nâng cao hiệu quả pipeline.
-\item \textbf{Mở rộng điều kiện:} Thực nghiệm pipeline trong các môi trường bất lợi, bao gồm mưa, ánh sáng yếu và sương mù, để kiểm chứng tính ổn định và khả năng triển khai thực tế.
+\item \textbf{Cải thiện dữ liệu:} Xây dựng bộ dữ liệu chuyên biệt chứa các biển hiệu nghiêng ở nhiều góc độ khác nhau, đồng thời mở rộng việc thu thập và gán nhãn dữ liệu video đường phố Việt Nam. Việc bổ sung dữ liệu video được gán nhãn đầy đủ sẽ tạo điều kiện cho việc đánh giá định lượng toàn diện hơn hiệu quả của quy trình xử lý đầu-cuối (pipeline end-to-end), qua đó góp phần cải thiện và kiểm chứng khả năng tổng quát hóa của quy trình xử lý (pipeline) trong các bối cảnh thực tế.
+\item \textbf{Mở rộng điều kiện:} Thực nghiệm quy trình xử lý đầu-cuối (pipeline end-to-end) trong các môi trường bất lợi, bao gồm mưa, ánh sáng yếu và sương mù, để kiểm chứng tính ổn định và khả năng triển khai thực tế.
 \item \textbf{Ứng dụng thực tế:} Phát triển giao diện người dùng cho ứng dụng phát hiện và nhận dạng văn bản trên biển hiệu, hỗ trợ phân tích biển hiệu, tra cứu địa điểm và thông tin cửa hàng tại Việt Nam.
 \end{itemize}
 
