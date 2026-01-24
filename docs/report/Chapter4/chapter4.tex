@@ -9,52 +9,63 @@
 
 % =================================================
 \section{Tập dữ liệu}
-Để xây dựng và đánh giá hiệu quả cho bài toán phát hiện và nhận dạng văn bản trên biển hiệu trong video đường phố Việt Nam, khóa luận sử dụng bộ dữ liệu \textbf{SignboardText} được giới thiệu bởi \textbf{\cite{do2024signboardtext}}. Bộ dữ liệu này cung cấp một tập dữ liệu chuyên biệt cho văn bản trên biển hiệu, với các thách thức đặc thù như văn bản đa ngôn ngữ (tiếng Anh và tiếng Việt), kiểu chữ nghệ thuật, đặc biệt sự xuất hiện của các dấu thanh (tone marks) trong tiếng Việt, một yếu tố có thể ảnh hưởng đáng kể đến độ chính xác của các phương pháp hiện tại vốn thường được huấn luyện trên các ngôn ngữ không dấu phổ biến như Tiếng Anh.
+Để xây dựng và đánh giá hiệu quả cho bài toán phát hiện và nhận dạng văn bản trên biển hiệu trong video đường phố Việt Nam, khóa luận sử dụng bộ dữ liệu SignboardText được giới thiệu bởi \cite{do2024signboardtext}. Bộ dữ liệu này cung cấp một tập dữ liệu chuyên biệt cho văn bản trên biển hiệu, với các thách thức đặc thù như văn bản đa ngôn ngữ (tiếng Anh và tiếng Việt), kiểu chữ nghệ thuật, đặc biệt sự xuất hiện của các dấu thanh (tone marks) trong tiếng Việt, một yếu tố có thể ảnh hưởng đáng kể đến độ chính xác của các phương pháp hiện tại vốn thường được huấn luyện trên các ngôn ngữ không dấu phổ biến như Tiếng Anh.
 
-Dựa trên nghiên cứu nền tảng \cite{do2024signboardtext}, khóa luận tiến hành phân tích và thống kê cấu trúc của bộ dữ liệu SignboardText, bao gồm ba tập con chính: Vietsignboard, English và Vin. Trong đó, tập Vietsignboard đóng vai trò là tập dữ liệu chính, với 1,327 ảnh được \cite{do2024signboardtext} thu thập thủ công trên đường phố Việt Nam, trong khi các tập English và Vin được bổ sung với 413 và 516 ảnh, chọn lọc từ các bộ dữ liệu benchmark Total-Text, ICDAR2015 và VinText, nhằm tăng cường tính đa dạng cho bộ dữ liệu. Sự phân bố số lượng ảnh của ba tập con được minh họa trong Hình \ref{fig:chapter4_image_distribution}.
+% Dựa trên nghiên cứu nền tảng \cite{do2024signboardtext}, khóa luận tiến hành phân tích và thống kê cấu trúc của bộ dữ liệu SignboardText, bao gồm ba tập con chính: Vietsignboard, English và Vin. Trong đó, tập Vietsignboard đóng vai trò là tập dữ liệu chính, với 1,327 ảnh được \cite{do2024signboardtext} thu thập thủ công trên đường phố Việt Nam, trong khi các tập English và Vin được bổ sung với 413 và 516 ảnh, chọn lọc từ các bộ dữ liệu chuẩn (benchmark) Total-Text, ICDAR2015 và VinText, nhằm tăng cường tính đa dạng cho bộ dữ liệu. Sự phân bố số lượng ảnh của ba tập con được minh họa trong Hình \ref{fig:chapter4_image_distribution}.
+
+% Dựa trên nghiên cứu nền tảng \cite{do2024signboardtext}, khóa luận tiến hành phân tích và thống kê cấu trúc của bộ dữ liệu SignboardText. Trong đó, tập VietSignboard đóng vai trò là tập dữ liệu chính, bao gồm 1.194 ảnh được thu thập thủ công trên đường phố Việt Nam. Bên cạnh đó, để tăng cường tính đa dạng về ngôn ngữ, kiểu chữ và bối cảnh xuất hiện văn bản, bộ dữ liệu còn được bổ sung thêm các mẫu ảnh được chọn lọc từ các bộ dữ liệu chuẩn (benchmark) quốc tế và trong nước, bao gồm ICDAR2015 và Total-Text (được gộp thành một tập con), cùng với tập VinText, với tổng cộng 929 ảnh. Các mẫu ảnh này chủ yếu chứa văn bản tiếng Anh và tiếng Việt, góp phần hỗ trợ đánh giá khả năng tổng quát hóa của các mô hình trong môi trường biển hiệu đa ngôn ngữ. Sự phân bố số lượng ảnh theo từng tập con trong bộ dữ liệu SignboardText được minh họa trong Hình~\ref{fig:chapter4_image_distribution}.
+
+Dựa trên nghiên cứu nền tảng \cite{do2024signboardtext}, khóa luận tiến hành phân tích cấu trúc của bộ dữ liệu SignboardText. Trong đó, tập VietSignboard đóng vai trò là tập dữ liệu chính, bao gồm 1,194 ảnh được thu thập thủ công trong bối cảnh đường phố Việt Nam. Bên cạnh đó, nhằm tăng cường tính đa dạng về ngôn ngữ, kiểu chữ và bối cảnh xuất hiện văn bản, bộ dữ liệu còn được bổ sung thêm các mẫu ảnh được chọn lọc từ các bộ dữ liệu chuẩn (benchmark) quốc tế và trong nước, bao gồm ICDAR2015, Total-Text và VinText. Trong đó, các mẫu ảnh được chọn lọc từ ICDAR2015 và Total-Text được gộp lại thành một tập con và được ký hiệu là IC15-TT trong phần còn lại của khóa luận, trong khi các mẫu ảnh còn lại tạo thành tập con VinText. Tổng số ảnh của hai tập con IC15-TT và VinText là 929 ảnh. Các mẫu ảnh này chủ yếu chứa văn bản tiếng Anh và tiếng Việt, góp phần hỗ trợ đánh giá khả năng tổng quát hóa của các mô hình trong bối cảnh biển hiệu đa ngôn ngữ. Phân bố số lượng ảnh theo từng tập con của bộ dữ liệu SignboardText được minh họa trong Hình~\ref{fig:chapter4_image_distribution}.
 
 \begin{figure}[t]
     \centering
     % TODO: cập nhật đường dẫn theo project của bạn
     \includegraphics[width=1\linewidth]{assets/chapter4/image_distribution_viet.jpg}
-    \caption{Phân bố số lượng hình ảnh trong ba tập con của SignboardText \cite{do2024signboardtext}}
+    \caption{Phân bố số lượng hình ảnh trong ba tập con của SignboardText \cite{do2024signboardtext} (IC15-TT: tập con được gộp từ ICDAR2015 và Total-Text).}
     \label{fig:chapter4_image_distribution}
 \end{figure}
 
-Về định dạng gán nhãn (annotation), Vietsignboard cung cấp nhãn ở cả hai cấp độ: cấp độ từ (word-level) với 48.638 thể hiện (instances) và cấp độ dòng (line-level) với 10.950 thể hiện (instances). Trong khi đó, các tập English và Vin chỉ được gán nhãn ở cấp độ từ (word-level) với lần lượt 3,646 và 16,615 thể hiện (instances). Phân bố chi tiết của các loại annotation này được trình bày trong Hình \ref{fig:chapter4_annotation_distribution}. Như vậy, trong bộ dữ liệu SignboardText, phần lớn văn bản được gán nhãn ở cấp độ từ (word). Đồng thời, việc kết hợp gán nhãn ở cả cấp độ từ (word) và dòng (line) trong tập Vietsignboard tạo điều kiện thuận lợi cho việc đánh giá linh hoạt hai nhiệm vụ phát hiện và nhận dạng văn bản.
+% Về định dạng gán nhãn (annotation), Vietsignboard cung cấp nhãn ở cả hai cấp độ: cấp độ từ (word-level) với 48.638 thể hiện (instances) và cấp độ dòng (line-level) với 10.950 thể hiện (instances). Trong khi đó, các tập English và Vin chỉ được gán nhãn ở cấp độ từ (word-level) với lần lượt 3,646 và 16,615 thể hiện (instances). Phân bố chi tiết của các loại annotation này được trình bày trong Hình \ref{fig:chapter4_annotation_distribution}. Như vậy, trong bộ dữ liệu SignboardText, phần lớn văn bản được gán nhãn ở cấp độ từ (word). Đồng thời, việc kết hợp gán nhãn ở cả cấp độ từ (word) và dòng (line) trong tập Vietsignboard tạo điều kiện thuận lợi cho việc đánh giá linh hoạt hai nhiệm vụ phát hiện và nhận dạng văn bản.
+
+% Về định dạng gán nhãn (annotation), tập VietSignboard cung cấp nhãn ở cả hai cấp độ: cấp độ từ (word-level) với 48.638 thể hiện và cấp độ dòng (line-level) với 10.950 thể hiện. Trong khi đó, các mẫu ảnh thuộc tập con được hình thành từ ICDAR2015 và Total-Text, cùng với tập con VinText, chỉ cung cấp nhãn ở cấp độ từ (word-level), với tổng cộng 20.261 thể hiện. Phân bố chi tiết các loại nhãn theo từng cấp độ được trình bày trong Hình~\ref{fig:chapter4_annotation_distribution}. Như vậy, trong bộ dữ liệu SignboardText, phần lớn văn bản được gán nhãn ở cấp độ từ. Đồng thời, việc kết hợp gán nhãn ở cả cấp độ từ và dòng trong tập VietSignboard tạo điều kiện thuận lợi cho việc đánh giá linh hoạt các nhiệm vụ phát hiện và nhận dạng văn bản trong bối cảnh biển hiệu thực tế.
+
+Về định dạng gán nhãn (annotation), tập VietSignboard cung cấp nhãn ở cả hai cấp độ: cấp độ từ (word-level) với 48,638 thể hiện và cấp độ dòng (line-level) với 10,950 thể hiện. Trong khi đó, các mẫu ảnh thuộc tập con IC15-TT và tập con VinText chỉ cung cấp nhãn ở cấp độ từ (word-level), với tổng cộng 20,261 thể hiện. Phân bố chi tiết số lượng thể hiện văn bản theo từng cấp độ nhãn được trình bày trong Hình~\ref{fig:chapter4_annotation_distribution}. Như vậy, trong bộ dữ liệu SignboardText, phần lớn văn bản được gán nhãn ở cấp độ từ. Đồng thời, việc kết hợp gán nhãn ở cả cấp độ từ và dòng trong tập VietSignboard tạo điều kiện thuận lợi cho việc đánh giá linh hoạt các nhiệm vụ phát hiện và nhận dạng văn bản trong bối cảnh biển hiệu thực tế.
 
 \begin{figure}[t]
     \centering
     % TODO: cập nhật đường dẫn theo project của bạn
     \includegraphics[width=1\linewidth]{assets/chapter4/annotation_distribution_viet.jpg}
-    \caption{Phân bố số lượng thể hiện văn bản (text instances) theo cấp độ nhãn (word-level và line-level) trong các tập con của SignboardText \cite{do2024signboardtext}}
+    \caption{Phân bố số lượng thể hiện văn bản (text instances) theo cấp độ nhãn (word-level và line-level) trong các tập con của SignboardText \cite{do2024signboardtext} (IC15-TT: tập con được gộp từ ICDAR2015 và Total-Text).}
     \label{fig:chapter4_annotation_distribution}
 \end{figure}
 
 Theo phân tích của \cite{do2024signboardtext}, văn bản trong bộ dữ liệu SignboardText có hình dạng đa dạng, bao gồm các trường hợp văn bản nằm ngang (horizontal), văn bản có biên dạng tứ giác bất kỳ (arbitrary quadrilateral), cũng như văn bản đa hướng (multi-oriented). Đặc điểm này phản ánh sát với bối cảnh thực tế của biển hiệu ngoài trời, nơi các dòng chữ có thể được bố trí nghiêng, cong hoặc không song song với trục ảnh, qua đó đặt ra thách thức đáng kể cho các phương pháp phát hiện và nhận dạng văn bản tiên tiến hiện nay.
 
 
-Mặc dù bộ dữ liệu SignboardText cung cấp hệ thống nhãn chi tiết cho văn bản ở nhiều cấp độ và hình dạng khác nhau, các nhãn (annotation) này vẫn chỉ tập trung vào các vùng văn bản, chưa bao quát toàn bộ đối tượng biển hiệu chứa văn bản. Trong khi đó, theo quy trình xử lý (pipeline) được đề xuất trong khóa luận, phát hiện biển hiệu đóng vai trò là bước tiền đề cho các giai đoạn phát hiện và nhận dạng văn bản phía sau. Do đó, nhằm hỗ trợ đánh giá giai đoạn phát hiện biển hiệu, khóa luận tiến hành mở rộng tập dữ liệu SignboardText bằng cách bổ sung lớp nhãn cho đối tượng biển hiệu. Cụ thể, toàn bộ 2.123 ảnh thuộc ba tập con Vietsignboard, English và Vin đã được gán nhãn thủ công, với sự hỗ trợ của công cụ PPOCRLabel \cite{ppocrlabel}, để xác định các vùng chứa của biển hiệu trong ảnh. Trong đó, số lượng đối tượng biển hiệu được gán nhãn trong các tập Vietsignboard, English và Vin lần lượt là 1.327, 488 và 552. Phân bố số lượng các đối tượng này theo từng tập con được minh họa trong Hình~\ref{fig:chapter4_annotation_signboard_distribution}.
+Mặc dù bộ dữ liệu SignboardText cung cấp hệ thống nhãn chi tiết cho văn bản ở nhiều cấp độ và hình dạng khác nhau, các nhãn (annotation) này vẫn chỉ tập trung vào các vùng văn bản, chưa bao quát toàn bộ đối tượng biển hiệu chứa văn bản. Trong khi đó, theo quy trình xử lý (pipeline) được đề xuất trong khóa luận, phát hiện biển hiệu đóng vai trò là bước tiền đề cho các giai đoạn phát hiện và nhận dạng văn bản phía sau. Do đó, nhằm hỗ trợ đánh giá giai đoạn phát hiện biển hiệu, khóa luận tiến hành mở rộng tập dữ liệu SignboardText bằng cách bổ sung lớp nhãn cho đối tượng biển hiệu. Cụ thể, toàn bộ 2,123 ảnh thuộc ba tập con VietSignboard, IC15-TT và VinText đã được gán nhãn thủ công với sự hỗ trợ của công cụ PPOCRLabel \cite{ppocrlabel}, nhằm xác định các vùng chứa biển hiệu trong ảnh. Trong đó, số lượng đối tượng biển hiệu được gán nhãn tương ứng trên từng tập con theo thứ tự nêu trên lần lượt là 1,327; 488; và 552. Phân bố số lượng các đối tượng biển hiệu theo từng tập con được minh họa trong Hình~\ref{fig:chapter4_annotation_signboard_distribution}.
+
+
+% Cụ thể, toàn bộ 2.123 ảnh thuộc ba tập con Vietsignboard, English và Vin đã được gán nhãn thủ công, với sự hỗ trợ của công cụ PPOCRLabel \cite{ppocrlabel}, để xác định các vùng chứa của biển hiệu trong ảnh. Trong đó, số lượng đối tượng biển hiệu được gán nhãn trong các tập Vietsignboard, English và Vin lần lượt là 1.327, 488 và 552. Phân bố số lượng các đối tượng này theo từng tập con được minh họa trong Hình~\ref{fig:chapter4_annotation_signboard_distribution}.
 
 \begin{figure}[t]
     \centering
     % TODO: cập nhật đường dẫn theo project của bạn
     \includegraphics[width=1\linewidth]{assets/chapter4/annotation_signboard_distribution_viet.jpg}
-    \caption{Phân bố số lượng đối tượng biển hiệu theo từng tập con của SignboardText \cite{do2024signboardtext}}
+    \caption{Phân bố số lượng đối tượng biển hiệu theo từng tập con của SignboardText \cite{do2024signboardtext} (IC15-TT: tập con được gộp từ ICDAR2015 và Total-Text).}
     \label{fig:chapter4_annotation_signboard_distribution}
 \end{figure}
 
-Nhằm đánh giá mối quan hệ giữa các vùng văn bản và vùng biển hiệu trong tập dữ liệu SignboardText, khóa luận tiến hành thống kê số lượng và tỷ lệ phần trăm văn bản nằm trong vùng biển hiệu so với toàn bộ văn bản xuất hiện trong ảnh trên từng tập con của bộ dữ liệu. Dựa trên kết quả thống kê được trình bày trong Bảng~\ref{tab:text_in_signboard_ratio}, có thể nhận thấy rằng phần lớn văn bản trong tập dữ liệu SignboardText nằm bên trong các vùng biển hiệu đã được gán nhãn. Cụ thể, trên toàn bộ tập dữ liệu, SignboardText bao gồm 68\,899 văn bản ở cấp độ từ (word-level) và 10\,950 văn bản ở cấp độ dòng (line-level). Trong số đó, 43\,297 từ và 6\,303 dòng văn bản nằm trong các vùng biển hiệu, tương ứng với tỷ lệ 62,84\% ở mức từ và 57,56\% ở mức dòng. Kết quả này cho thấy tập dữ liệu SignboardText phù hợp để đánh giá quy trình xử lý đầu-cuối (pipeline end-to-end) phát hiện và nhận dạng văn bản trên biển hiệu được đề xuất trong khóa luận.
+Nhằm đánh giá mối quan hệ giữa các vùng văn bản và vùng biển hiệu trong tập dữ liệu SignboardText, khóa luận tiến hành thống kê số lượng và tỷ lệ phần trăm văn bản nằm trong vùng biển hiệu so với toàn bộ văn bản xuất hiện trong ảnh trên từng tập con của bộ dữ liệu. Dựa trên kết quả thống kê được trình bày trong Bảng~\ref{tab:text_in_signboard_ratio}, có thể nhận thấy rằng phần lớn văn bản trong tập dữ liệu SignboardText nằm bên trong các vùng biển hiệu đã được gán nhãn. Cụ thể, trên toàn bộ tập dữ liệu, SignboardText bao gồm 68,899 văn bản ở cấp độ từ (word-level) và 10,950 văn bản ở cấp độ dòng (line-level). Trong số đó, 43,297 từ và 6,303 dòng văn bản nằm trong các vùng biển hiệu, tương ứng với tỷ lệ 62.84\% ở mức từ và 57.56\% ở mức dòng. Kết quả này cho thấy tập dữ liệu SignboardText phù hợp để đánh giá quy trình xử lý đầu-cuối (pipeline end-to-end) phát hiện và nhận dạng văn bản trên biển hiệu được đề xuất trong khóa luận.
 
 \begin{table}[t]
 \centering
-\caption{Thống kê số lượng và tỷ lệ văn bản nằm trong vùng biển hiệu so với toàn bộ văn bản trong ảnh trên các tập con của SignboardText}
+\caption{Thống kê số lượng và tỷ lệ văn bản nằm trong vùng biển hiệu so với toàn bộ văn bản trong ảnh trên các tập con của SignboardText (IC15-TT: tập con được gộp từ ICDAR2015 và Total-Text).}
 \label{tab:text_in_signboard_ratio}
 \begin{tabularx}{\linewidth}{|X|*{8}{c|}}
 \hline
 &  \multicolumn{2}{c|}{\textbf{Vietsignboard}} &
-   \multicolumn{2}{c|}{\textbf{English}} &
-   \multicolumn{2}{c|}{\textbf{Vin}} &
+   \multicolumn{2}{c|}{\textbf{IC15-TT}} &
+   \multicolumn{2}{c|}{\textbf{VinText}} &
    \multicolumn{2}{c|}{\textbf{Tổng}} \\
 \cline{2-9}
 & \textbf{word} & \textbf{line} &
@@ -62,9 +73,9 @@ Nhằm đánh giá mối quan hệ giữa các vùng văn bản và vùng biển
 \textbf{word} & \textbf{line} &
 \textbf{word} & \textbf{line} \\
 \hline
-Số lượng văn bản trong ảnh & 48638 & 10950 & 3646 & - & 16615 & - & 68899 & 10950 \\
+Số lượng văn bản trong ảnh & 48,638 & 10,950 & 3,646 & - & 16,615 & - & 68,899 & 10,950 \\
 \hline
-Số lượng văn bản trên biển hiệu & 31374 & 6303 & 2613 & - & 9310 & - & 43297 & 6303 \\ 
+Số lượng văn bản trên biển hiệu & 31,374 & 6,303 & 2,613 & - & 9,310 & - & 43,297 & 6,303 \\ 
 \hline
 Tỷ lệ (\%) & 64.50 & 57.56 & 71.68 & - & 56.03 & - & 62.84 & 57.56 \\
 \hline
@@ -118,21 +129,21 @@ Bên cạnh các mô hình chuyên biệt cho phát hiện văn bản trong ản
 Sau khi xác định mô hình tiền huấn luyện (pretrained model) tối ưu cho nhiệm vụ phát hiện và nhận dạng văn bản trong hướng tiếp cận hai giai đoạn, hai mô hình này được tích hợp để hình thành quy trình xử lý đầu-cuối (pipeline end-to-end), nhằm so sánh với các mô hình tiền huấn luyện (pretrained model) một giai đoạn (one-stage) được trình bày tại Mục~\ref{sec:one_stage_methods}. Việc đánh giá này cho phép xác định hiệu quả của pipeline đầu-cuối (end-to-end) so với các mô hình một giai đoạn (one-stage), đồng thời cung cấp cơ sở để lựa chọn hướng tiếp cận phù hợp cho quá trình tinh chỉnh (fine-tune) trên tập SignboardText. Kết quả so sánh cũng đem lại cái nhìn tổng quan về sự khác biệt hiệu năng giữa chiến lược two-stage và one-stage, cũng như tối ưu hóa chi phí huấn luyện.
 
 \subsection{Phân chia bộ dữ liệu cho tập thực nghiệm}
-Nhằm đánh giá hiệu năng của các mô hình tiền huấn luyện cho các bài toán phát hiện văn bản, nhận dạng văn bản và phát hiện-nhận dạng văn bản đầu-cuối (end-to-end), toàn bộ dữ liệu của ba tập con Vietsignboard, English và Vin thuộc tập dữ liệu SignboardText mở rộng được sử dụng cho quá trình thực nghiệm. Việc sử dụng đầy đủ dữ liệu nhằm đảm bảo tính tin cậy và khả năng tổng quát hóa của các mô hình tiền huấn luyện trên dữ liệu biển hiệu đa ngôn ngữ.
+Nhằm đánh giá hiệu năng của các mô hình tiền huấn luyện cho các bài toán phát hiện văn bản, nhận dạng văn bản và phát hiện-nhận dạng văn bản đầu-cuối (end-to-end), toàn bộ dữ liệu của ba tập con Vietsignboard, IC15-TT và VinText thuộc tập dữ liệu SignboardText mở rộng được sử dụng cho quá trình thực nghiệm. Việc sử dụng đầy đủ dữ liệu nhằm đảm bảo tính tin cậy và khả năng tổng quát hóa của các mô hình tiền huấn luyện trên dữ liệu biển hiệu đa ngôn ngữ.
 
-Đối với giai đoạn tinh chỉnh mô hình, mỗi tập con Vietsignboard, English và Vin của tập dữ liệu SignboardText mở rộng được phân chia độc lập thành ba tập phục vụ cho huấn luyện, kiểm định và kiểm tra. Cụ thể, mỗi tập con được chia theo cùng một tỷ lệ gồm 65\% cho tập huấn luyện, 15\% cho tập kiểm định và 20\% cho tập kiểm tra. 
+Đối với giai đoạn tinh chỉnh mô hình, mỗi tập con Vietsignboard, IC15-TT và VinText của tập dữ liệu SignboardText mở rộng được phân chia độc lập thành ba tập phục vụ cho huấn luyện, kiểm định và kiểm tra. Cụ thể, mỗi tập con được chia theo cùng một tỷ lệ gồm 65\% cho tập huấn luyện, 15\% cho tập kiểm định và 20\% cho tập kiểm tra. 
 
 Sau khi hoàn tất việc phân chia dữ liệu hình ảnh cho các bài toán phát hiện biển hiệu và phát hiện văn bản, các vùng văn bản tương ứng tiếp tục được cắt từ các tập huấn luyện, kiểm định và kiểm tra để phục vụ cho bài toán nhận dạng văn bản. Số lượng cụ thể của từng tập được trình bày như sau:
 
 \begin{itemize}
-    \item \textbf{Tập huấn luyện (Train set):} Chiếm 65\% dữ liệu của mỗi tập con, với tổng cộng 1357 hình ảnh, trong đó Vietsignboard, English và Vin lần lượt gồm 764, 263 và 329 hình ảnh. Từ các hình ảnh này, các vùng văn bản được cắt ra với số lượng tương ứng là 31480, 2265 và 10493. Tập huấn luyện được sử dụng cho quá trình học tham số của mô hình và yêu cầu đảm bảo đủ số lượng dữ liệu để mô hình hội tụ ổn định.
+    \item \textbf{Tập huấn luyện (Train set):} Chiếm 65\% dữ liệu của mỗi tập con, với tổng cộng 1,357 hình ảnh, trong đó Vietsignboard, IC15-TT và VinText lần lượt gồm 764, 263 và 329 hình ảnh. Từ các hình ảnh này, các vùng văn bản được cắt ra với số lượng tương ứng là 31,480; 2,265; và 10,493. Tập huấn luyện được sử dụng cho quá trình học tham số của mô hình và yêu cầu đảm bảo đủ số lượng dữ liệu để mô hình hội tụ ổn định.
     
-    \item \textbf{Tập kiểm định (Validation set):} Chiếm 15\% dữ liệu của mỗi tập con, bao gồm tổng cộng 340 hình ảnh, trong đó Vietsignboard, English và Vin lần lượt có 191, 66 và 83 hình ảnh. Số lượng vùng văn bản được trích xuất tương ứng là 7427, 610 và 2624. Tập này được sử dụng để tinh chỉnh siêu tham số và theo dõi hiệu năng mô hình trong quá trình huấn luyện.
+    \item \textbf{Tập kiểm định (Validation set):} Chiếm 15\% dữ liệu của mỗi tập con, bao gồm tổng cộng 340 hình ảnh, trong đó Vietsignboard, IC15-TT và VinText lần lượt có 191, 66 và 83 hình ảnh. Số lượng vùng văn bản được trích xuất tương ứng là 7,427; 610; và 2,624. Tập này được sử dụng để tinh chỉnh siêu tham số và theo dõi hiệu năng mô hình trong quá trình huấn luyện.
     
-    \item \textbf{Tập kiểm tra (Test set):} Chiếm 20\% dữ liệu của mỗi tập con, với tổng cộng 340 hình ảnh, trong đó Vietsignboard, English và Vin lần lượt gồm 239, 82 và 104 hình ảnh. Từ các hình ảnh này, các vùng văn bản được cắt ra với số lượng tương ứng là 9730, 767 và 3491. Tập kiểm tra được sử dụng để đánh giá hiệu năng của mô hình sau khi hoàn tất quá trình tinh chỉnh.
+    \item \textbf{Tập kiểm tra (Test set):} Chiếm 20\% dữ liệu của mỗi tập con, với tổng cộng 340 hình ảnh, trong đó Vietsignboard, IC15-TT và VinText lần lượt gồm 239, 82 và 104 hình ảnh. Từ các hình ảnh này, các vùng văn bản được cắt ra với số lượng tương ứng là 9,730; 767; và 3,491. Tập kiểm tra được sử dụng để đánh giá hiệu năng của mô hình sau khi hoàn tất quá trình tinh chỉnh.
 \end{itemize}
 
-Việc phân chia dữ liệu theo từng tập con Vietsignboard, English và Vin một cách độc lập
+Việc phân chia dữ liệu theo từng tập con Vietsignboard, IC15-TT và VinText một cách độc lập
 nhằm đảm bảo mỗi tập con đều được phân bố nhất quán vào các tập huấn luyện, kiểm định
 và kiểm tra, qua đó tránh hiện tượng phân bố lệch dữ liệu giữa các tập thực nghiệm.
 Nhờ vậy, hiệu năng mô hình có thể được đánh giá một cách tin cậy và rõ ràng trên dữ
@@ -196,7 +207,7 @@ Trong đó, \(\text{Precision}_{\text{e2e}}\) và \(\text{Recall}_{\text{e2e}}\)
 \section{Kết quả thực nghiệm}
 Trong phần này, khóa luận trình bày chi tiết kết quả thực nghiệm dựa trên các thiết lập được mô tả tại Mục \ref{sec:setup_experiment}. Trước tiên, các kết quả được đánh giá độc lập theo từng giai đoạn. Với giai đoạn phát hiện biển hiệu, mô hình tốt nhất trong mỗi nhóm đầu ra được lựa chọn, sau đó các mô hình tối ưu cho từng giai đoạn khác cũng được xác định. Các mô hình này được tích hợp vào pipeline và đánh giá tổng thể hiệu quả hệ thống phát hiện và nhận dạng văn bản trên biển hiệu. 
 
-\subsection{Kết quả mô hình phát hiện biển hiệu đã tinh chỉnh (fine-tuning)}
+\subsection{Kết quả mô hình phát hiện biển hiệu đã tinh chỉnh (fine-tuned)}
 \label{subsec:results_signboard_det}
 Như đã đề cập tại Mục~\ref{subsec:signboard_detection}, tất cả các mô hình khảo sát trong giai đoạn phát hiện biển hiệu được tinh chỉnh (fine-tune) trên tập dữ liệu SignboardText đã được mở rộng, và các mô hình được phân loại thành ba nhóm dựa trên dạng biểu diễn đầu ra. Việc phân nhóm này cho phép đánh giá một cách hệ thống các đặc điểm và ưu điểm của từng hướng tiếp cận, đồng thời so sánh hiệu năng giữa các mô hình trong cùng nhóm mà không gây nhầm lẫn giữa các dạng đầu ra khác nhau.
 
@@ -244,7 +255,7 @@ Bảng \ref{tab:results_obb} trình bày kết quả các mô hình dự đoán 
 
 \begin{table}[t]
 \centering
-\caption{Hiệu suất phát hiện vùng biển hiệu của các mô hình phân đoạn ngữ nghĩa. Chỉ số tốt nhất được đánh dấu đậm.}
+\caption{Hiệu suất phát hiện vùng biển hiệu của các mô hình với đầu ra dưới dạng đa giác (polygon). Chỉ số tốt nhất được đánh dấu đậm.}
 \label{tab:results_segmentation}
 \resizebox{\textwidth}{!}{
 \begin{tabular}{|c|c|*{5}{c|}}
@@ -263,28 +274,28 @@ Bên cạnh các mô hình phát hiện dựa trên bounding box, khóa luận t
  
 \subsection{Kết quả mô hình tiền huấn luyện đối với bài toán phát hiện văn bản}
 \label{subsec:results_pretrained_det}
-Nhằm tối ưu chi phí huấn luyện và tài nguyên tính toán, thay vì tinh chỉnh toàn bộ các mô hình phát hiện văn bản tiên tiến hiện nay, khóa luận tiến hành đánh giá hiệu quả của các mô hình tiền huấn luyện trên tập dữ liệu SignboardText đã được mở rộng. Cụ thể, các mô hình được kiểm tra trên ba tập con VietSignboard, English và Vin, với hai cấp độ đánh giá là cấp độ từ (word-level) và cấp độ dòng (line-level). Theo thiết lập đã trình bày tại Mục~\ref{subsec:text_spotting}, khóa luận thực nghiệm trên toàn bộ các vùng văn bản xuất hiện trong ảnh, thay vì chỉ giới hạn trong phạm vi biển hiệu. Trên cơ sở đó, mô hình tiền huấn luyện có hiệu suất tốt nhất sẽ được lựa chọn để tiếp tục tinh chỉnh (fine-tuning) cho bài toán phát hiện văn bản.
+Nhằm tối ưu chi phí huấn luyện và tài nguyên tính toán, thay vì tinh chỉnh toàn bộ các mô hình phát hiện văn bản tiên tiến hiện nay, khóa luận tiến hành đánh giá hiệu quả của các mô hình tiền huấn luyện trên tập dữ liệu SignboardText đã được mở rộng. Cụ thể, các mô hình được kiểm tra trên ba tập con VietSignboard, IC15-TT và VinText, với hai cấp độ đánh giá là cấp độ từ (word-level) và cấp độ dòng (line-level). Theo thiết lập đã trình bày tại Mục~\ref{subsec:text_spotting}, khóa luận thực nghiệm trên toàn bộ các vùng văn bản xuất hiện trong ảnh, thay vì chỉ giới hạn trong phạm vi biển hiệu. Trên cơ sở đó, mô hình tiền huấn luyện có hiệu suất tốt nhất sẽ được lựa chọn để tiếp tục tinh chỉnh (fine-tuning) cho bài toán phát hiện văn bản.
 
 \paragraph{Đánh giá ở cấp độ từ (word-level)}
-Kết quả đánh giá các mô hình tiền huấn luyện ở cấp độ từ được trình bày trong Bảng~\ref{tab:pretrained_text_det_word}. Nhìn chung, hầu hết các mô hình đều cho kết quả khả quan trên cả ba tập con. Đáng chú ý, các mô hình vẫn cho kết quả tốt trên hai tập VietSignboard và Vin, mặc dù không được huấn luyện trực tiếp trên dữ liệu tiếng Việt, cho thấy khả năng tổng quát hóa tương đối tốt.
+Kết quả đánh giá các mô hình tiền huấn luyện ở cấp độ từ được trình bày trong Bảng~\ref{tab:pretrained_text_det_word}. Nhìn chung, hầu hết các mô hình đều cho kết quả khả quan trên cả ba tập con. Đáng chú ý, các mô hình vẫn cho kết quả tốt trên hai tập VietSignboard và VinText, mặc dù không được huấn luyện trực tiếp trên dữ liệu tiếng Việt, cho thấy khả năng tổng quát hóa tương đối tốt.
 
-Trong số các mô hình được khảo sát, TextPMs thể hiện hiệu suất vượt trội trên cả ba tập con VietSignboard, English và Vin, với chỉ số Hmean lần lượt đạt \textbf{87.48\%}, \textbf{78.20\%} và \textbf{86.95\%}. Đặc biệt, xét theo chỉ số Precision, TextPMs đạt giá trị cao trên hai tập VietSignboard và Vin, lần lượt là \textbf{90.27\%} và \textbf{93.41\%}, cho thấy phần lớn các vùng mô hình phát hiện đều là văn bản thật, phản ánh khả năng lọc nhiễu và giảm thiểu dự đoán sai. Bên cạnh độ chính xác, TextPMs cũng đạt tốc độ xử lý cao nhất trong số các mô hình được khảo sát, với chỉ số FPS \textbf{20.75}, thể hiện sự cân bằng hợp lý giữa hiệu quả phát hiện và hiệu năng thực thi. Ngoài ra, FAST và KPN cũng cho thấy kết quả đáng chú ý, khi lần lượt đạt Recall cao nhất trên hai tập con VietSignboard với \textbf{86.32\%} và English với \textbf{85.90\%}, tuy nhiên hiệu suất tổng thể và tốc độ xử lý vẫn kém hơn so với TextPMs.
+Trong số các mô hình được khảo sát, TextPMs thể hiện hiệu suất vượt trội trên cả ba tập con VietSignboard, IC15-TT và VinText, với chỉ số Hmean lần lượt đạt \textbf{87.48\%}, \textbf{78.20\%} và \textbf{86.95\%}. Đặc biệt, xét theo chỉ số Precision, TextPMs đạt giá trị cao trên hai tập VietSignboard và VinText, lần lượt là \textbf{90.27\%} và \textbf{93.41\%}, cho thấy phần lớn các vùng mô hình phát hiện đều là văn bản thật, phản ánh khả năng lọc nhiễu và giảm thiểu dự đoán sai. Bên cạnh độ chính xác, TextPMs cũng đạt tốc độ xử lý cao nhất trong số các mô hình được khảo sát, với chỉ số FPS \textbf{20.75}, thể hiện sự cân bằng hợp lý giữa hiệu quả phát hiện và hiệu năng thực thi. Ngoài ra, FAST và KPN cũng cho thấy kết quả đáng chú ý, khi lần lượt đạt Recall cao nhất trên hai tập con VietSignboard với \textbf{86.32\%} và IC15-TT với \textbf{85.90\%}, tuy nhiên hiệu suất tổng thể và tốc độ xử lý vẫn kém hơn so với TextPMs.
 
 \paragraph{Đánh giá ở cấp độ dòng (line-level)}
 Bên cạnh đánh giá ở cấp độ từ (word-level), khóa luận tiếp tục khảo sát hiệu quả của các mô hình tiền huấn luyện ở cấp độ dòng (line-level) trên tập con VietSignboard, với kết quả được trình bày trong Bảng~\ref{tab:pretrained_text_det_line}. Kết quả cho thấy hiệu suất của hầu hết các mô hình đều giảm đáng kể so với đánh giá ở cấp độ từ, thể hiện qua chỉ số Hmean thấp. Từ đó có thể nhận thấy rằng phần lớn các mô hình tiền huấn luyện này được tối ưu chủ yếu cho bài toán phát hiện văn bản ở cấp độ từ, và chưa phù hợp khi áp dụng trực tiếp cho trường hợp phát hiện ở cấp độ dòng mà không có điều chỉnh hoặc huấn luyện bổ sung.
 
 
-Dựa trên kết quả đánh giá năm mô hình tiền huấn luyện trên ba tập con VietSignboard, English và Vin, có thể thấy TextPMs là mô hình đạt hiệu suất tổng thể tốt nhất, xét trên cả độ chính xác và tốc độ xử lý, ngay cả trong bối cảnh dữ liệu tiếng Việt chưa xuất hiện trong quá trình huấn luyện ban đầu. Bên cạnh đó, sự khác biệt rõ rệt giữa kết quả ở cấp độ từ và cấp độ dòng, cung cấp cơ sở thực nghiệm quan trọng để khóa luận lựa chọn chiến lược tinh chỉnh các mô hình theo hướng cấp đồ từ (word-level) cho bài toán phát hiện văn bản trong quy trình xử lý đầu-cuối (pipeline end-to-end) đề xuất.
+Dựa trên kết quả đánh giá năm mô hình tiền huấn luyện trên ba tập con VietSignboard, IC15-TT và VinText, có thể thấy TextPMs là mô hình đạt hiệu suất tổng thể tốt nhất, xét trên cả độ chính xác và tốc độ xử lý, ngay cả trong bối cảnh dữ liệu tiếng Việt chưa xuất hiện trong quá trình huấn luyện ban đầu. Bên cạnh đó, sự khác biệt rõ rệt giữa kết quả ở cấp độ từ và cấp độ dòng, cung cấp cơ sở thực nghiệm quan trọng để khóa luận lựa chọn chiến lược tinh chỉnh các mô hình theo hướng cấp đồ từ (word-level) cho bài toán phát hiện văn bản trong quy trình xử lý đầu-cuối (pipeline end-to-end) đề xuất.
 
 
 \begin{table}[t]
 \centering
-\caption{Hiệu suất mô hình tiền huấn luyện trong bài toán phát hiện văn bản ở cấp độ từ (word-level) trên ba tập con VietSignboard, English và Vin của tập dữ liệu SignboardText mở rộng. Chỉ số tốt nhất được đánh dấu đậm, chỉ số tốt thứ hai được gạch dưới.}
+\caption{Hiệu suất mô hình tiền huấn luyện trong bài toán phát hiện văn bản ở cấp độ từ (word-level), được đánh giá trên toàn bộ dữ liệu của ba tập con VietSignboard, IC15-TT và VinText thuộc tập dữ liệu SignboardText đã được mở rộng (IC15-TT: tập con được gộp từ ICDAR2015 và Total-Text). Chỉ số tốt nhất được đánh dấu đậm, chỉ số tốt thứ hai được gạch dưới.}
 \label{tab:pretrained_text_det_word}
 \resizebox{\textwidth}{!}{
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
 \hline
-\multirow{2}{*}{Model} & \multirow{2}{*}{Year} & \multirow{2}{*}{Params(M)} & \multicolumn{3}{c|}{Vietsignboard} & \multicolumn{3}{c|}{English} & \multicolumn{3}{c|}{Vin} & \multirow{2}{*}{FPS}\\
+\multirow{2}{*}{Model} & \multirow{2}{*}{Year} & \multirow{2}{*}{Params(M)} & \multicolumn{3}{c|}{Vietsignboard} & \multicolumn{3}{c|}{IC15-TT} & \multicolumn{3}{c|}{VinText} & \multirow{2}{*}{FPS}\\
 \cline{4-12}
  & & & P & R & H & P & R & H & P & R & H & \\
 \hline
@@ -305,7 +316,7 @@ KPN & 2023 & 58.24 & 81.19 & 81.85 & 81.52 & 63.49 & \textbf{85.90} & \underline
 
 \begin{table}[t]
 \centering
-\caption{Hiệu suất mô hình tiền huấn luyện trong bài toán phát hiện văn bản ở cấp độ dòng (line-level) trên tập con VietSignboard của tập dữ liệu SignboardText mở rộng. Chỉ số tốt nhất được đánh dấu đậm, chỉ số tốt thứ hai được gạch dưới.}
+\caption{Hiệu suất mô hình tiền huấn luyện trong bài toán phát hiện văn bản ở cấp độ dòng (line-level), được đánh giá trên toàn bộ dữ liệu của tập con VietSignboard thuộc tập dữ liệu SignboardText đã được mở rộng. Chỉ số tốt nhất được đánh dấu đậm, chỉ số tốt thứ hai được gạch dưới.}
 \label{tab:pretrained_text_det_line}
 \begin{tabular}{|c|c|c|c|}
 \hline
@@ -328,17 +339,17 @@ KPN & \textbf{25.23} & \textbf{78.48} & \textbf{38.18} \\
 
 \subsection{Kết quả mô hình tiền huấn luyện đối với bài toán nhận dạng văn bản}
 \label{subsec:results_pretrained_rec}
-Kế thừa chiến lược đánh giá trong bài toán phát hiện văn bản, khóa luận tiếp tục khảo sát hiệu suất của các mô hình tiền huấn luyện trong bài toán nhận dạng văn bản. Cụ thể, năm mô hình ViTSTR, PARSeq, CDistNet, SMTR và SVTRv2 được thực nghiệm trên các vùng văn bản đã được cắt ra từ ba tập con VietSignboard, English và Vin. Việc đánh giá được thực hiện ở hai cấp độ: cấp độ từ (word-level) và cấp độ dòng (line-level). Tuy nhiên, như đã trình bày trong thiết lập thực nghiệm tại Mục~\ref{subsec:text_spotting}, do các mô hình nhận dạng được huấn luyện chủ yếu trên dữ liệu tiếng Anh, khóa luận tiến hành bước tiền xử lý nhằm phù hợp với văn bản tiếng Việt. Cụ thể, dấu tiếng Việt và các ký tự đặc biệt được loại bỏ trong cả dữ liệu nhãn và kết quả dự đoán của mô hình, nhằm đảm bảo tính nhất quán trong quá trình đánh giá.
+Kế thừa chiến lược đánh giá trong bài toán phát hiện văn bản, khóa luận tiếp tục khảo sát hiệu suất của các mô hình tiền huấn luyện trong bài toán nhận dạng văn bản. Cụ thể, năm mô hình ViTSTR, PARSeq, CDistNet, SMTR và SVTRv2 được thực nghiệm trên các vùng văn bản đã được cắt ra từ ba tập con VietSignboard, IC15-TT và VinText. Việc đánh giá được thực hiện ở hai cấp độ: cấp độ từ (word-level) và cấp độ dòng (line-level). Tuy nhiên, như đã trình bày trong thiết lập thực nghiệm tại Mục~\ref{subsec:text_spotting}, do các mô hình nhận dạng được huấn luyện chủ yếu trên dữ liệu tiếng Anh, khóa luận tiến hành bước tiền xử lý nhằm phù hợp với văn bản tiếng Việt. Cụ thể, dấu tiếng Việt và các ký tự đặc biệt được loại bỏ trong cả dữ liệu nhãn và kết quả dự đoán của mô hình, nhằm đảm bảo tính nhất quán trong quá trình đánh giá.
 
 Trên cơ sở đó, Bảng~\ref{tab:pretrained_text_rec} trình bày kết quả hiệu suất của các mô hình tiền huấn luyện trên ba tập con ở cả hai cấp độ đánh giá. Nhìn chung, PARSeq, SMTR và SVTRv2 thể hiện hiệu suất vượt trội so với ViTSTR và CDistNet trên cả ba tập dữ liệu, cho thấy khả năng tổng quát hóa tốt hơn trong bối cảnh văn bản đa ngôn ngữ.
 
-Đặc biệt ở cấp độ từ (word-level) SVTRv2 đạt độ chính xác cao nhất trên hai tập VietSignboard và English, lần lượt là \textbf{80.82\%} và \textbf{78.33\%}, trong khi PARSeq cho kết quả tốt hơn trên tập Vin với độ chính xác \textbf{72.96\%}. Điều này cho thấy hai mô hình đều thể hiện khả năng nhận dạng từ đơn lẻ hiệu quả. Trong khi ở cấp độ dòng (line-level), SVTRv2 và SMTR tiếp tục duy trì hiệu suất cao trên tập VietSignboard, lần lượt đạt \textbf{65.64\%} và \textbf{64.54\%} so với các mô hình còn lại. Kết quả này phản ánh hiệu quả của chiến lược điều chỉnh đầu vào đa kích thước (multi-size resizing) được áp dụng trong hai mô hình, như đã trình bày tại Mục~\ref{subsec:sota_rec}. Bên cạnh độ chính xác, tốc độ suy luận cũng là một yếu tố quan trọng trong bối cảnh triển khai thực tế. Đáng chú ý, mặc dù ViTSTR có số lượng tham số lớn nhất, mô hình này đạt tốc độ suy luận nhanh nhất trong số các phương pháp được so sánh, phản ánh thiết kế kiến trúc tương đối đơn giản và hiệu quả. 
+Đặc biệt ở cấp độ từ (word-level) SVTRv2 đạt độ chính xác cao nhất trên hai tập VietSignboard và IC15-TT, lần lượt là \textbf{80.82\%} và \textbf{78.33\%}, trong khi PARSeq cho kết quả tốt hơn trên tập VinText với độ chính xác \textbf{72.96\%}. Điều này cho thấy hai mô hình đều thể hiện khả năng nhận dạng từ đơn lẻ hiệu quả. Trong khi ở cấp độ dòng (line-level), SVTRv2 và SMTR tiếp tục duy trì hiệu suất cao trên tập VietSignboard, lần lượt đạt \textbf{65.64\%} và \textbf{64.54\%} so với các mô hình còn lại. Kết quả này phản ánh hiệu quả của chiến lược điều chỉnh đầu vào đa kích thước (multi-size resizing) được áp dụng trong hai mô hình, như đã trình bày tại Mục~\ref{subsec:sota_rec}. Bên cạnh độ chính xác, tốc độ suy luận cũng là một yếu tố quan trọng trong bối cảnh triển khai thực tế. Đáng chú ý, mặc dù ViTSTR có số lượng tham số lớn nhất, mô hình này đạt tốc độ suy luận nhanh nhất trong số các phương pháp được so sánh, phản ánh thiết kế kiến trúc tương đối đơn giản và hiệu quả. 
 
 Dựa trên thiết kế thực nghiệm đã trình bày, khóa luận lựa chọn ba mô hình PARSeq, SMTR và SVTRv2 để tiến hành tinh chỉnh trên tập dữ liệu SignboardText đã được mở rộng. Đồng thời, do các mô hình thể hiện sự hiệu quả rõ rệt ở cấp độ từ, quá trình tinh chỉnh trong bài toán nhận dạng văn bản được thực hiện theo chiến lược word-level.
 
 \begin{table}[t]
 \centering
-\caption{Hiệu suất các mô hình tiền huấn luyện trong bài toán nhận dạng văn bản trên ba tập con VietSignboard, English và Vin của tập dữ liệu SignboardText đã được mở rộng, với hai cấp độ đánh giá từ (word-level) và dòng (line-level). Chỉ số tốt nhất được đánh dấu đậm, chỉ số tốt thứ hai được gạch dưới.}
+\caption{Hiệu suất các mô hình tiền huấn luyện trong bài toán nhận dạng văn bản, được đánh giá trên toàn bộ dữ liệu của ba tập con VietSignboard, IC15-TT và VinText thuộc tập dữ liệu SignboardText đã được mở rộng, với hai cấp độ đánh giá từ (word-level) và dòng (line-level) (IC15-TT: tập con được gộp từ ICDAR2015 và Total-Text). Chỉ số tốt nhất được đánh dấu đậm, chỉ số tốt thứ hai được gạch dưới.}
 \label{tab:pretrained_text_rec}
 \newcommand{\twocols}[1]{\multicolumn{2}{c|}{#1}}
 \newcommand{\wordline}{Word & Line}
@@ -347,7 +358,7 @@ Dựa trên thiết kế thực nghiệm đã trình bày, khóa luận lựa ch
 \hline
 \multirow{3}{*}{Model} & \multirow{3}{*}{Year} & \multirow{3}{*}{Params(M)} & \multicolumn{6}{c|}{Accuracy(\%)} & \multirow{3}{*}{Speed(ms)}\\
 \cline{4-9}
- & & & \twocols{Vietsignboard} & \twocols{English} & \twocols{Vin} &\\
+ & & & \twocols{Vietsignboard} & \twocols{IC15-TT} & \twocols{VinText} &\\
 \cline{4-9}
  & & & \wordline & \wordline & \wordline &\\
 \hline
@@ -369,17 +380,17 @@ SVTRv2 & 2025 & 21.02 & \textbf{80.82} & \textbf{65.64} & \textbf{78.33} & - & \
 
 Sau khi đánh giá riêng biệt các mô hình tiền huấn luyện cho hai nhiệm vụ phát hiện và nhận dạng văn bản trong hướng tiếp cận hai giai đoạn (two-stage), khóa luận tiến hành kết hợp hai mô hình có hiệu năng tốt nhất là TextPMs cho giai đoạn phát hiện và SVTRv2 cho giai đoạn nhận dạng nhằm xây dựng pipeline đầu-cuối (end-to-end). Pipeline này được sử dụng để so sánh với các mô hình tiền huấn luyện một giai đoạn (one-stage) tiêu biểu, bao gồm TESTR, DeepSolo, UNITS và DNTextSpotter. Mục tiêu của phép so sánh này là đánh giá hiệu quả tương đối giữa hai chiến lược tiếp cận, từ đó lựa chọn hướng tiếp cận phù hợp cho quá trình tinh chỉnh (fine-tune) trên tập dữ liệu SignboardText đã được mở rộng. Thiết lập thực nghiệm với hướng tiếp cận one-stage được trình bày tại Mục~\ref{subsubsec:text_spotting_one_stage}.
 
-Bảng~\ref{tab:pretrained_two_and_one_stage} trình bày kết quả so sánh giữa pipeline hai giai đoạn và các mô hình tiền huấn luyện một giai đoạn trên ba tập con VietSignboard, English và Vin, theo hai cấp độ đánh giá từ (word-level) và dòng (line-level).
+Bảng~\ref{tab:pretrained_two_and_one_stage} trình bày kết quả so sánh giữa pipeline hai giai đoạn và các mô hình tiền huấn luyện một giai đoạn trên ba tập con VietSignboard, IC15-TT và VinText, theo hai cấp độ đánh giá từ (word-level) và dòng (line-level).
 
-Xét ở cấp độ từ, pipeline kết hợp TextPMs và SVTRv2 thể hiện ưu thế rõ rệt trên hai tập VietSignboard và Vin, với chỉ số Hmean lần lượt đạt \textbf{66.48\%} và \textbf{68.50\%}. Kết quả này cho thấy pipeline hai giai đoạn có khả năng tổng quát hóa tốt hơn trên văn bản tiếng Việt so với các mô hình one-stage còn lại. Trong khi đó, trên tập English, các mô hình one-stage đạt kết quả cao hơn pipeline hai giai đoạn. Trong đó, UNITS cho hiệu suất nổi bật trên cả ba tập con. Tuy nhiên, mô hình này có số lượng tham số lớn với 101M và tốc độ xử lý thấp với 1.28 FPS, dẫn đến hạn chế đáng kể về khả năng triển khai trong các trường hợp ứng dụng yêu cầu hiệu năng thời gian hoặc tài nguyên tính toán hạn chế. Các mô hình one-stage còn lại như TESTR, DeepSolo và DNTextSpotter có tốc độ xử lý cao hơn pipeline hai giai đoạn, tuy nhiên hiệu suất tổng thể (Hmean) trên các tập dữ liệu tiếng Việt thấp hơn đáng kể.
+Xét ở cấp độ từ, pipeline kết hợp TextPMs và SVTRv2 thể hiện ưu thế rõ rệt trên hai tập VietSignboard và VinText, với chỉ số Hmean lần lượt đạt \textbf{66.48\%} và \textbf{68.50\%}. Kết quả này cho thấy pipeline hai giai đoạn có khả năng tổng quát hóa tốt hơn trên văn bản tiếng Việt so với các mô hình one-stage còn lại. Trong khi đó, trên tập IC15-TT, các mô hình one-stage đạt kết quả cao hơn pipeline hai giai đoạn. Trong đó, UNITS cho hiệu suất nổi bật trên cả ba tập con. Tuy nhiên, mô hình này có số lượng tham số lớn với 101M và tốc độ xử lý thấp với 1.28 FPS, dẫn đến hạn chế đáng kể về khả năng triển khai trong các trường hợp ứng dụng yêu cầu hiệu năng thời gian hoặc tài nguyên tính toán hạn chế. Các mô hình one-stage còn lại như TESTR, DeepSolo và DNTextSpotter có tốc độ xử lý cao hơn pipeline hai giai đoạn, tuy nhiên hiệu suất tổng thể (Hmean) trên các tập dữ liệu tiếng Việt thấp hơn đáng kể.
 
 Tương tự xu hướng đã quan sát trong các thí nghiệm trước đó (Mục~\ref{subsec:results_pretrained_det} và Mục~\ref{subsec:results_pretrained_rec}), các mô hình one-stage nhìn chung không đạt hiệu quả cao khi đánh giá ở cấp độ dòng (line-level). Thậm chí, dù SVTRv2 cho kết quả tương đối tốt ở cấp độ dòng trên tập VietSignboard, pipeline hai giai đoạn vẫn chịu hạn chế cố hữu khi độ chính xác của giai đoạn nhận dạng phụ thuộc chặt chẽ vào chất lượng phát hiện văn bản ở giai đoạn trước.
 
-Dựa trên kết quả phân tích và thực nghiệm, khóa luận lựa chọn hướng tiếp cận hai giai đoạn làm chiến lược chính cho pipeline phát hiện và nhận dạng văn bản trên biển hiệu. Mặc dù các mô hình one-stage đạt kết quả tốt hơn trên tập English, bài toán nghiên cứu hướng tới bối cảnh ứng dụng thực tế tại Việt Nam. Do đó, hiệu suất trên hai tập VietSignboard và Vin được ưu tiên trong quá trình lựa chọn hướng tiếp cận.
+Dựa trên kết quả phân tích và thực nghiệm, khóa luận lựa chọn hướng tiếp cận hai giai đoạn làm chiến lược chính cho pipeline phát hiện và nhận dạng văn bản trên biển hiệu. Mặc dù các mô hình one-stage đạt kết quả tốt hơn trên tập IC15-TT, bài toán nghiên cứu hướng tới bối cảnh ứng dụng thực tế tại Việt Nam. Do đó, hiệu suất trên hai tập VietSignboard và VinText được ưu tiên trong quá trình lựa chọn hướng tiếp cận.
 
 \begin{table}[t]
 \centering
-\caption{So sánh hiệu suất mô hình tiền huấn luyện theo hai hướng tiếp cận hai giai đoạn (two-stage) và một giai đoạn (one-stage) trong bài toán phát hiện và nhận dạng văn bản trên ba tập con VietSignboard, English và Vin của tập dữ liệu SignboardText, với hai cấp độ đánh giá từ (word-level) và dòng (line-level). Chỉ số tốt nhất được đánh dấu đậm, chỉ số tốt thứ hai được gạch dưới}
+\caption{So sánh hiệu suất mô hình tiền huấn luyện theo hai hướng tiếp cận hai giai đoạn (two-stage) và một giai đoạn (one-stage) trong bài toán phát hiện và nhận dạng văn bản, được đánh giá trên toàn bộ dữ liệu của ba tập con VietSignboard, IC15-TT và VinText thuộc tập dữ liệu SignboardText đã được mở rộng, với hai cấp độ đánh giá từ (word-level) và dòng (line-level) (IC15-TT: tập con được gộp từ ICDAR2015 và Total-Text). Chỉ số tốt nhất được đánh dấu đậm, chỉ số tốt thứ hai được gạch dưới}
 \label{tab:pretrained_two_and_one_stage}
 \newcommand{\twocols}[1]{\multicolumn{2}{c|}{#1}}
 \newcommand{\wordline}{Word & Line}
@@ -388,7 +399,7 @@ Dựa trên kết quả phân tích và thực nghiệm, khóa luận lựa ch�
 \hline
 \multirow{3}{*}{Model} & \multirow{3}{*}{Year} & \multirow{3}{*}{Params(M)} & \multicolumn{6}{c|}{Hmean$_{\mathrm{e2e}}$ (\%)} & \multirow{3}{*}{FPS}\\
 \cline{4-9}
- & & & \twocols{Vietsignboard} & \twocols{English} & \twocols{Vin} &\\
+ & & & \twocols{Vietsignboard} & \twocols{IC15-TT} & \twocols{VinText} &\\
 \cline{4-9}
  & & & \wordline & \wordline & \wordline & \\
 \hline
@@ -410,20 +421,20 @@ TextPMs + SVTRv2 & - & 57.45 & \underline{66.48} & \textbf{9.79} & 68.59 & - & \
 \label{subsec:results_finetuned_text_det}
 Trên cơ sở kết quả đánh giá các mô hình tiền huấn luyện cho bài toán phát hiện văn bản được trình bày tại Mục~\ref{subsec:results_pretrained_det}, khóa luận tiến hành tinh chỉnh (fine-tune) ba mô hình TextPMs, YOLOv8-OBB và YOLOv11-OBB, được lựa chọn dựa trên sự cân bằng giữa độ chính xác, tốc độ xử lý và khả năng thích ứng với đặc thù văn bản trên biển hiệu, nhằm tối ưu hóa hiệu suất phát hiện văn bản trên tập dữ liệu SignboardText. 
 
-Bảng~\ref{tab:finetuned_det} trình bày hiệu suất của ba mô hình sau khi được tinh chỉnh trên các tập hình ảnh thuộc ba tập con VietSignboard, English và Vin của tập dữ liệu SignboardText mở rộng theo cấp độ từ (word-level). Kết quả cho thấy TextPMs tiếp tục khẳng định ưu thế, đạt chỉ số Hmean cao nhất trên cả ba tập dữ liệu lần lượt là \textbf{87.75\%}, \textbf{83.09\%} và \textbf{88.51\%}. Đặc biệt, TextPMs cải thiện đáng kể chỉ số Recall sau khi tinh chỉnh, cho thấy khả năng phát hiện được nhiều vùng văn bản thực sự hơn.
+Bảng~\ref{tab:finetuned_det} trình bày hiệu suất của ba mô hình sau khi được tinh chỉnh trên các tập hình ảnh thuộc ba tập con VietSignboard, IC15-TT và VinText của tập dữ liệu SignboardText mở rộng theo cấp độ từ (word-level). Kết quả cho thấy TextPMs tiếp tục khẳng định ưu thế, đạt chỉ số Hmean cao nhất trên cả ba tập dữ liệu lần lượt là \textbf{87.75\%}, \textbf{83.09\%} và \textbf{88.51\%}. Đặc biệt, TextPMs cải thiện đáng kể chỉ số Recall sau khi tinh chỉnh, cho thấy khả năng phát hiện được nhiều vùng văn bản thực sự hơn.
 
 Đáng chú ý, mặc dù YOLOv8 và YOLOv11 không phải là các kiến trúc chuyên biệt cho bài toán phát hiện văn bản trong ảnh ngoại cảnh, cả hai đều cho kết quả rất ấn tượng sau khi tinh chỉnh. YOLOv8-OBB thể hiện hiệu suất cạnh tranh trực tiếp với TextPMs, với Hmean đạt \textbf{87.39\%}, \textbf{82.58\%}, và \textbf{84.73\%} trên ba tập, đồng thời vượt trội về chỉ số Precision trên tập Vietsignboard với \textbf{91.14\%}. Kết quả này không chỉ phản ánh tính đa năng của kiến trúc YOLO mà còn cho thấy tiềm năng ứng dụng của chúng vào bài toán phát hiện văn bản khi được huấn luyện trên dữ liệu phù hợp.
 
-Dựa trên kết quả tổng hợp, TextPMs tiếp tục là mô hình đạt hiệu suất cao nhất xét theo chỉ số Hmean, cho thấy tính hiệu quả và độ ổn định trên cả ba tập dữ liệu VietSignboard, English và Vin. Tuy nhiên, trong bối cảnh tích hợp vào một pipeline ứng dụng thực tế, việc lựa chọn mô hình không chỉ phụ thuộc vào độ chính xác mà còn cần xem xét đến tốc độ xử lý. Theo đó, YOLOv8-OBB nổi lên như một lựa chọn phù hợp khi vừa duy trì hiệu suất phát hiện tương đương với TextPMs (với chênh lệch Hmean không đáng kể trên các tập VietSignboard và English), vừa thể hiện ưu thế vượt trội về tốc độ xử lý. Cụ thể, kết quả đánh giá ở Bảng~\ref{tab:results_obb} cho thấy YOLOv8-OBB đạt tốc độ lên tới 133.01 FPS, cao hơn đáng kể so với TextPMs. Bên cạnh đó, sau khi tinh chỉnh, YOLOv8-OBB cũng cho kết quả tốt hơn YOLOv11-OBB trên cả ba tập dữ liệu. Do đó, YOLOv8-OBB là lựa chọn phù hợp để tích hợp vào quy trình xử lý đầu-cuối (pipeline end-to-end) đề xuất, khi đáp ứng được sự cân bằng tối ưu giữa độ chính xác cao và tốc độ xử lý nhanh.
+Dựa trên kết quả tổng hợp, TextPMs tiếp tục là mô hình đạt hiệu suất cao nhất xét theo chỉ số Hmean, cho thấy tính hiệu quả và độ ổn định trên cả ba tập dữ liệu VietSignboard, IC15-TT và VinText. Tuy nhiên, trong bối cảnh tích hợp vào một pipeline ứng dụng thực tế, việc lựa chọn mô hình không chỉ phụ thuộc vào độ chính xác mà còn cần xem xét đến tốc độ xử lý. Theo đó, YOLOv8-OBB nổi lên như một lựa chọn phù hợp khi vừa duy trì hiệu suất phát hiện tương đương với TextPMs (với chênh lệch Hmean không đáng kể trên các tập VietSignboard và IC15-TT), vừa thể hiện ưu thế vượt trội về tốc độ xử lý. Cụ thể, kết quả đánh giá ở Bảng~\ref{tab:results_obb} cho thấy YOLOv8-OBB đạt tốc độ lên tới 133.01 FPS, cao hơn đáng kể so với TextPMs. Bên cạnh đó, sau khi tinh chỉnh, YOLOv8-OBB cũng cho kết quả tốt hơn YOLOv11-OBB trên cả ba tập dữ liệu. Do đó, YOLOv8-OBB là lựa chọn phù hợp để tích hợp vào quy trình xử lý đầu-cuối (pipeline end-to-end) đề xuất, khi đáp ứng được sự cân bằng tối ưu giữa độ chính xác cao và tốc độ xử lý nhanh.
 
 \begin{table}[t]
 \centering
-\caption{Hiệu suất mô hình phát hiện văn bản đã tinh chỉnh. Chỉ số tốt nhất được đánh dấu đậm, chỉ số tốt thứ hai được gạch dưới.}
+\caption{Hiệu suất các mô hình phát hiện văn bản đã tinh chỉnh trên tập kiểm tra (test set) của ba tập con VietSignboard, IC15-TT và VinText thuộc bộ dữ liệu SignboardText đã được mở rộng (IC15-TT: tập con được gộp từ ICDAR2015 và Total-Text). Chỉ số tốt nhất được đánh dấu đậm, chỉ số tốt thứ hai được gạch dưới.}
 \label{tab:finetuned_det}
 \resizebox{\textwidth}{!}{
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
 \hline
-\multirow{2}{*}{Model} & \multicolumn{3}{c|}{Vietsignboard} & \multicolumn{3}{c|}{English} & \multicolumn{3}{c|}{Vin}\\
+\multirow{2}{*}{Model} & \multicolumn{3}{c|}{Vietsignboard} & \multicolumn{3}{c|}{IC15-TT} & \multicolumn{3}{c|}{VinText}\\
 \cline{2-10}
  & P & R & H & P & R & H & P & R & H \\
 \hline
@@ -441,15 +452,15 @@ YOLOv11-OBB & \textbf{91.49} & 82.97 & 87.02 & \underline{84.16} & 78.70 & 81.34
 \label{subsec:results_finetuned_text_rec}
 Kế thừa kết quả thực nghiệm đánh giá các mô hình tiền huấn luyện trong bài toán nhận dạng văn bản được trình bày tại Mục~\ref{subsec:results_pretrained_rec}, khóa luận tiến hành tinh chỉnh ba mô hình PARSeq, SMTR và SVTRv2 trên các vùng văn bản được cắt ra từ tập dữ liệu SignboardText đã được mở rộng, nhằm nâng cao khả năng thích nghi với văn bản tiếng Việt trong bối cảnh biển hiệu đường phố Việt Nam và lựa chọn mô hình tối ưu cho giai đoạn nhận dạng văn bản trong pipeline đề xuất. Kết quả đánh giá hiệu suất của ba mô hình PARSeq, SMTR và SVTRv2 đã tinh chỉnh được trình bày trong Bảng \ref{tab:finetuned_rec}, với hai tiêu chí đánh giá là Exact-match và Normalized-match. Exact-match đánh giá độ chính xác khi chuỗi dự đoán trùng khớp hoàn toàn với nhãn gốc. Trong khi đó, Normalized-match áp dụng cùng tiêu chí so sánh, nhưng thực hiện chuẩn hóa chữ hoa-chữ thường (lowercase) trước khi đánh giá, nhằm giảm ảnh hưởng của sự không nhất quán về chữ hoa-chữ thường, vốn thường xuất hiện trong văn bản trên biển hiệu thực tế.
 
-Nhìn chung, cả ba mô hình PARSeq, SMTR và SVTRv2 đều đạt hiệu suất tương đối tốt trên ba tập con VietSignboard, English và Vin. Đặc biệt, kết quả trên hai tập VietSignboard và Vin cho thấy các mô hình có khả năng thích nghi và tổng quát hóa hiệu quả đối với văn bản tiếng Việt trong bối cảnh biển hiệu đường phố. Trong số đó, PARSeq thể hiện hiệu suất vượt trội khi đạt độ chính xác cao nhất ở cả hai tiêu chí Exact-match và Normalized-match, lần lượt là \textbf{79.19\%} và \textbf{80.26\%} trên tập VietSignboard, cũng như \textbf{76.95\%} và \textbf{78.67\%} trên tập Vin. Kết quả này phản ánh khả năng nhận dạng từ đơn lẻ hiệu quả và ổn định của PARSeq sau quá trình tinh chỉnh trên dữ liệu tiếng Việt. 
+Nhìn chung, cả ba mô hình PARSeq, SMTR và SVTRv2 đều đạt hiệu suất tương đối tốt trên ba tập con VietSignboard, IC15-TT và VinText. Đặc biệt, kết quả trên hai tập VietSignboard và VinText cho thấy các mô hình có khả năng thích nghi và tổng quát hóa hiệu quả đối với văn bản tiếng Việt trong bối cảnh biển hiệu đường phố. Trong số đó, PARSeq thể hiện hiệu suất vượt trội khi đạt độ chính xác cao nhất ở cả hai tiêu chí Exact-match và Normalized-match, lần lượt là \textbf{79.19\%} và \textbf{80.26\%} trên tập VietSignboard, cũng như \textbf{76.95\%} và \textbf{78.67\%} trên tập VinText. Kết quả này phản ánh khả năng nhận dạng từ đơn lẻ hiệu quả và ổn định của PARSeq sau quá trình tinh chỉnh trên dữ liệu tiếng Việt. 
 
-Đáng chú ý, mặc dù SVTRv2 đạt hiệu suất cao ở giai đoạn tiền huấn luyện, mức độ cải thiện của mô hình sau khi tinh chỉnh lại thấp hơn so với PARSeq và SMTR. Điều này cho thấy khả năng thích nghi của SVTRv2 với miền dữ liệu biển hiệu tiếng Việt chưa thực sự vượt trội so với hai mô hình còn lại. Bên cạnh đó, kết quả trên tập English cho thấy hiệu suất của cả ba mô hình có xu hướng giảm nhẹ so với các tập tiếng Việt. Nguyên nhân có thể xuất phát từ việc các mô hình được tinh chỉnh chuyên sâu trên dữ liệu tiếng Việt với số lượng ký tự và biến thể phong phú hơn, dẫn đến khó khăn nhất định khi áp dụng cho dữ liệu tiếng Anh không dấu.
+Đáng chú ý, mặc dù SVTRv2 đạt hiệu suất cao ở giai đoạn tiền huấn luyện, mức độ cải thiện của mô hình sau khi tinh chỉnh lại thấp hơn so với PARSeq và SMTR. Điều này cho thấy khả năng thích nghi của SVTRv2 với miền dữ liệu biển hiệu tiếng Việt chưa thực sự vượt trội so với hai mô hình còn lại. Bên cạnh đó, kết quả trên tập IC15-TT cho thấy hiệu suất của cả ba mô hình có xu hướng giảm nhẹ so với các tập tiếng Việt. Nguyên nhân có thể xuất phát từ việc các mô hình được tinh chỉnh chuyên sâu trên dữ liệu tiếng Việt với số lượng ký tự và biến thể phong phú hơn, dẫn đến khó khăn nhất định khi áp dụng cho dữ liệu tiếng Anh không dấu.
 
-Dựa trên kết quả thực nghiệm, PARSeq là mô hình đạt hiệu suất cao nhất trên cả ba tập dữ liệu VietSignboard, English và Vin, đồng thời thể hiện sự vượt trội ổn định ở cả hai tiêu chí Exact-match và Normalized-match. Do đó, PARSeq được lựa chọn làm mô hình nhận dạng văn bản chính để tích hợp vào quy trình xử lý đầu-cuối (pipeline end-to-end) được đề xuất cho giai đoạn nhận dạng văn bản trên các vùng văn bản đã được xác định.
+Dựa trên kết quả thực nghiệm, PARSeq là mô hình đạt hiệu suất cao nhất trên cả ba tập dữ liệu VietSignboard, IC15-TT và VinText, đồng thời thể hiện sự vượt trội ổn định ở cả hai tiêu chí Exact-match và Normalized-match. Do đó, PARSeq được lựa chọn làm mô hình nhận dạng văn bản chính để tích hợp vào quy trình xử lý đầu-cuối (pipeline end-to-end) được đề xuất cho giai đoạn nhận dạng văn bản trên các vùng văn bản đã được xác định.
 
 \begin{table}[t]
 \centering
-\caption{Hiệu suất mô hình nhận dạng văn bản đã tinh chỉnh. Chỉ số tốt nhất được đánh dấu đậm, chỉ số tốt thứ hai được gạch dưới.}
+\caption{Hiệu suất mô hình nhận dạng văn bản đã tinh chỉnh trên tập kiểm tra (test set) của ba tập con VietSignboard, IC15-TT và VinText thuộc bộ dữ liệu SignboardText đã được mở rộng (IC15-TT: tập con được gộp từ ICDAR2015 và Total-Text). Chỉ số tốt nhất được đánh dấu đậm, chỉ số tốt thứ hai được gạch dưới.}
 \label{tab:finetuned_rec}
 \newcommand{\twocols}[1]{\multicolumn{2}{c|}{#1}}
 \newcommand{\case}{Exact-match & Norm-match}
@@ -458,7 +469,7 @@ Dựa trên kết quả thực nghiệm, PARSeq là mô hình đạt hiệu su�
 \hline
 \multirow{3}{*}{Model} & \multicolumn{6}{c|}{Accuracy(\%)} \\
 \cline{2-7}
-& \twocols{Vietsignboard} & \twocols{English} & \twocols{Vin}\\
+& \twocols{Vietsignboard} & \twocols{IC15-TT} & \twocols{VinText}\\
 \cline{2-7}
 & \case & \case & \case \\
 \hline 
@@ -475,13 +486,13 @@ SVTRv2 & 76.39 & 77.96 & 57.55 & 58.59 & \underline{76.46} & \underline{78.10} \
 \subsection{Kết quả đánh giá quy trình xử lý đầu-cuối (pipeline end-to-end) đề xuất phát hiện và nhận dạng văn bản trên biển hiệu}
 Sau khi tiến hành đánh giá độc lập và lựa chọn các mô hình tối ưu cho từng giai đoạn trong quy trình xử lý (pipeline), phần này trình bày kết quả đánh giá tổng thể hệ thống phát hiện và nhận dạng văn bản trên biển hiệu được đề xuất. Cụ thể, các mô hình được tích hợp vào quy trình xử lý (pipeline) dựa trên kết quả thực nghiệm của các giai đoạn đã trình bày tại Mục~\ref{subsec:results_signboard_det}, \ref{subsec:results_finetuned_text_det} và \ref{subsec:results_finetuned_text_rec}, trong đó mô hình có hiệu suất tốt nhất được lựa chọn cho mỗi thành phần tương ứng. Đối với giai đoạn phát hiện biển hiệu, việc lựa chọn mô hình được thực hiện trong từng nhóm phương pháp dựa trên dạng biểu diễn đầu ra, bao gồm vùng bao chữ nhật, vùng bao định hướng và phân đoạn đa giác, nhằm đảm bảo tính công bằng và nhất quán trong so sánh. Ngoài ra, quy trình xử lý (pipeline) cũng xem xét việc có và không áp dụng bước căn chỉnh biển hiệu đối với các mô hình có đầu ra định hướng hoặc đa giác, nhằm đánh giá ảnh hưởng của bước tiền xử lý này đến hiệu quả tổng thể của hệ thống. Trên cơ sở đó, quy trình xử lý (pipeline) hoàn chỉnh được xây dựng và đánh giá theo cách tiếp cận đầu cuối (end-to-end), nhằm phản ánh hiệu quả hoạt động của hệ thống trong bối cảnh thực tế của biển hiệu đường phố Việt Nam.
 
-\paragraph{Đánh giá kết quả phát hiện văn bản trong quy trình xử lý đầu-cuối (pipeline end-to-end)} Bảng~\ref{tab:eval_pipeline_det} trình bày kết quả đánh giá hiệu suất phát hiện văn bản của quy trình xử lý đầu-cuối (pipeline end-to-end) trên ba tập con VietSignboard, English và Vin của tập dữ liệu SignboardText. Nhìn chung, các quy trình xử lý đầu-cuối (pipeline end-to-end) đề xuất đều đạt kết quả ổn định trên cả ba tập con, trong đó hiệu suất trên hai tập VietSignboard và Vin nổi bật hơn, phản ánh tính phù hợp và hiệu quả của hệ thống trong bối cảnh đường phố tại Việt Nam.
+\paragraph{Đánh giá kết quả phát hiện văn bản trong quy trình xử lý đầu-cuối (pipeline end-to-end)} Bảng~\ref{tab:eval_pipeline_det} trình bày kết quả đánh giá hiệu suất phát hiện văn bản của quy trình xử lý đầu-cuối (pipeline end-to-end) trên ba tập con VietSignboard, IC15-TT và VinText của tập dữ liệu SignboardText. Nhìn chung, các quy trình xử lý đầu-cuối (pipeline end-to-end) đề xuất đều đạt kết quả ổn định trên cả ba tập con, trong đó hiệu suất trên hai tập VietSignboard và VinText nổi bật hơn, phản ánh tính phù hợp và hiệu quả của hệ thống trong bối cảnh đường phố tại Việt Nam.
 
-Đáng chú ý, quy trình xử lý đầu-cuối (pipeline end-to-end) kết hợp ba mô hình RTDETRv2, YOLOv8-OBB và PARSeq, tương ứng với các giai đoạn phát hiện biển hiệu, phát hiện văn bản và nhận dạng văn bản, đạt hiệu suất vượt trội so với các cấu hình quy trình xử lý đầu-cuối (pipeline end-to-end) còn lại. Cụ thể, quy trình xử lý đầu-cuối (pipeline end-to-end) này đạt chỉ số Precision lần lượt là \textbf{91.79}, \textbf{80.13} và \textbf{92.41} trên ba tập VietSignboard, English và Vin, cho thấy khả năng phát hiện chính xác phần lớn các vùng văn bản trong ảnh. Đồng thời, chỉ số Hmean của quy trình xử lý đầu-cuối (pipeline end-to-end) này đạt \textbf{89.64} trên VietSignboard và \textbf{89.79} trên Vin, khẳng định hiệu quả tổng thể của quy trình xử lý đầu-cuối (pipeline end-to-end) trong các trường hợp biển hiệu thực tế.
+Đáng chú ý, quy trình xử lý đầu-cuối (pipeline end-to-end) kết hợp ba mô hình RTDETRv2, YOLOv8-OBB và PARSeq, tương ứng với các giai đoạn phát hiện biển hiệu, phát hiện văn bản và nhận dạng văn bản, đạt hiệu suất vượt trội so với các cấu hình quy trình xử lý đầu-cuối (pipeline end-to-end) còn lại. Cụ thể, quy trình xử lý đầu-cuối (pipeline end-to-end) này đạt chỉ số Precision lần lượt là \textbf{91.79}, \textbf{80.13} và \textbf{92.41} trên ba tập VietSignboard, IC15-TT và VinText, cho thấy khả năng phát hiện chính xác phần lớn các vùng văn bản trong ảnh. Đồng thời, chỉ số Hmean của quy trình xử lý đầu-cuối (pipeline end-to-end) này đạt \textbf{89.64} trên VietSignboard và \textbf{89.79} trên VinText, khẳng định hiệu quả tổng thể của quy trình xử lý đầu-cuối (pipeline end-to-end) trong các trường hợp biển hiệu thực tế.
 
-Trong khi đó, quy trình xử lý đầu-cuối (pipeline end-to-end) sử dụng mô hình SegFormer cho giai đoạn phát hiện biển hiệu kết hợp với YOLOv8-OBB và PARSeq thể hiện ưu thế rõ rệt về chỉ số Recall. Pipeline này đạt Recall cao nhất hai tập English và Vin với các giá trị lần lượt là \textbf{80.25} và \textbf{87.44}. Đặc biệt, trên tập English, quy trình xử lý đầu-cuối (pipeline end-to-end) với SegFormer còn vượt trội quy trình xử lý đầu-cuối (pipeline end-to-end) sử dụng RTDETRv2 về chỉ số Hmean, đạt \textbf{77.72}, cho thấy khả năng phát hiện các vùng văn bản trong bối cảnh biển hiệu có bố cục phức tạp hoặc góc nhìn không thuận lợi.
+Trong khi đó, quy trình xử lý đầu-cuối (pipeline end-to-end) sử dụng mô hình SegFormer cho giai đoạn phát hiện biển hiệu kết hợp với YOLOv8-OBB và PARSeq thể hiện ưu thế rõ rệt về chỉ số Recall. Pipeline này đạt Recall cao nhất hai tập IC15-TT và VinText với các giá trị lần lượt là \textbf{80.25} và \textbf{87.44}. Đặc biệt, trên tập IC15-TT, quy trình xử lý đầu-cuối (pipeline end-to-end) với SegFormer còn vượt trội quy trình xử lý đầu-cuối (pipeline end-to-end) sử dụng RTDETRv2 về chỉ số Hmean, đạt \textbf{77.72}, cho thấy khả năng phát hiện các vùng văn bản trong bối cảnh biển hiệu có bố cục phức tạp hoặc góc nhìn không thuận lợi.
 
-Bên cạnh đó, khóa luận tiến hành đánh giá ảnh hưởng của bước căn chỉnh biển hiệu (signboard alignment) đối với các mô hình có đầu ra định hướng hoặc đa giác. Kết quả cho thấy, việc áp dụng căn chỉnh biển hiệu giúp cải thiện nhẹ các chỉ số Precision và Hmean trên hai tập VietSignboard và Vin, tuy nhiên mức cải thiện chưa thực sự đáng kể. Ngược lại, trên tập English, bước căn chỉnh có xu hướng làm giảm hiệu suất, đặc biệt ở các chỉ số Recall và Hmean, cho thấy cơ chế căn chỉnh không phải lúc nào cũng mang lại lợi ích trong các trường hợp biển hiệu có đặc điểm hình học đa dạng. Điều này phản ánh tính ổn định của mô hình YOLOv8-OBB trong cả hai thiết lập có và không áp dụng căn chỉnh biển hiệu. Hình \ref{fig:align_vis} minh họa kết quả phát hiện văn bản trên biển hiệu trong hai trường hợp: không áp dụng và có áp dụng điều chỉnh biển hiệu với cơ chế perspective transformation (được trình bày tại Mục~\ref{subsec:signboard_detection}). Có thể thấy rằng việc căn chỉnh giúp chuẩn hóa hình dạng vùng biển hiệu, từ đó cải thiện chất lượng dữ liệu đầu vào cho các bước xử lý phía sau.
+Bên cạnh đó, khóa luận tiến hành đánh giá ảnh hưởng của bước căn chỉnh biển hiệu (signboard alignment) đối với các mô hình có đầu ra định hướng hoặc đa giác. Kết quả cho thấy, việc áp dụng căn chỉnh biển hiệu giúp cải thiện nhẹ các chỉ số Precision và Hmean trên hai tập VietSignboard và VinText, tuy nhiên mức cải thiện chưa thực sự đáng kể. Ngược lại, trên tập IC15-TT, bước căn chỉnh có xu hướng làm giảm hiệu suất, đặc biệt ở các chỉ số Recall và Hmean, cho thấy cơ chế căn chỉnh không phải lúc nào cũng mang lại lợi ích trong các trường hợp biển hiệu có đặc điểm hình học đa dạng. Điều này phản ánh tính ổn định của mô hình YOLOv8-OBB trong cả hai thiết lập có và không áp dụng căn chỉnh biển hiệu. Hình \ref{fig:align_vis} minh họa kết quả phát hiện văn bản trên biển hiệu trong hai trường hợp: không áp dụng và có áp dụng điều chỉnh biển hiệu với cơ chế perspective transformation (được trình bày tại Mục~\ref{subsec:signboard_detection}). Có thể thấy rằng việc căn chỉnh giúp chuẩn hóa hình dạng vùng biển hiệu, từ đó cải thiện chất lượng dữ liệu đầu vào cho các bước xử lý phía sau.
 
 Dựa trên phân tích kết quả có thể thấy rằng quy trình xử lý đầu-cuối (pipeline end-to-end) kết hợp RTDETRv2, YOLOv8-OBB và PARSeq là lựa chọn phù hợp khi triển khai trong bối cảnh đường phố Việt Nam, nhờ đạt độ chính xác cao và tính ổn định trên nhiều tập dữ liệu. Tuy nhiên, trong các tình huống thực tế mà biển hiệu thường bị nghiêng hoặc biến dạng mạnh theo góc nhìn camera, việc sử dụng SegFormer kết hợp với bước căn chỉnh biển hiệu cũng là một hướng tiếp cận tiềm năng. Ngoài ra, kết quả trong Bảng~\ref{tab:eval_pipeline_det} cho thấy khi giới hạn phạm vi phát hiện văn bản trong vùng biển hiệu, mô hình YOLOv8-OBB đạt độ chính xác cao hơn so với việc phát hiện trực tiếp trên toàn ảnh ngoại cảnh. Điều này cho thấy hiệu quả của bài toán khi tập trung phát hiện văn bản trong phạm vi biển hiệu, qua đó giảm ảnh hưởng của một số văn bản nhiễu hoặc khó đọc, đồng thời vẫn bảo đảm thông tin quan trọng phục vụ cho các ứng dụng trích xuất thông tin và phân tích nội dung biển hiệu.
 
@@ -493,23 +504,23 @@ Dựa trên phân tích kết quả có thể thấy rằng quy trình xử lý 
     \label{fig:align_vis}
 \end{figure}
 
-\paragraph{Đánh giá kết quả nhận dạng văn bản trong quy trình xử lý đầu-cuối (pipeline end-to-end)} Bảng~\ref{tab:eval_pipeline_rec} trình bày kết quả đánh giá hiệu suất nhận dạng văn bản theo cách tiếp cận đầu cuối (end-to-end) của các quy trình xử lý đầu-cuối (pipeline end-to-end) đề xuất trên ba tập con VietSignboard, English và Vin. Chỉ số Hmean$_{\mathrm{e2e}}$ được tính theo hai tiêu chí Exact-match và Normalized-match, qua đó phản ánh không chỉ hiệu quả của giai đoạn nhận dạng văn bản mà còn mức độ ảnh hưởng từ các bước phát hiện biển hiệu và phát hiện văn bản trước đó.
+\paragraph{Đánh giá kết quả nhận dạng văn bản trong quy trình xử lý đầu-cuối (pipeline end-to-end)} Bảng~\ref{tab:eval_pipeline_rec} trình bày kết quả đánh giá hiệu suất nhận dạng văn bản theo cách tiếp cận đầu cuối (end-to-end) của các quy trình xử lý đầu-cuối (pipeline end-to-end) đề xuất trên ba tập con VietSignboard, IC15-TT và VinText. Chỉ số Hmean$_{\mathrm{e2e}}$ được tính theo hai tiêu chí Exact-match và Normalized-match, qua đó phản ánh không chỉ hiệu quả của giai đoạn nhận dạng văn bản mà còn mức độ ảnh hưởng từ các bước phát hiện biển hiệu và phát hiện văn bản trước đó.
 
 % Kết quả thực nghiệm cho thấy các pipeline đạt hiệu suất nhận dạng tốt hơn trên hai tập VietSignboard và Vin so với tập English. Điều này cho thấy pipeline đạt hiệu quả trên dữ liệu biển hiệu tiếng Việt vẫn duy trì khả năng thích nghi tương đối tốt trong bối cảnh đa ngôn ngữ. Đồng thời, sự chênh lệch giữa Exact-match và Normalized-match trên cả ba tập là không lớn, cho thấy lỗi do không nhất quán chữ hoa--chữ thường chỉ chiếm tỷ lệ nhỏ trong tổng lỗi nhận dạng.
 
-Dựa trên kết quả thực nghiệm, quy trình xử lý đầu-cuối (pipeline end-to-end) kết hợp RTDETRv2, YOLOv8-OBB và PARSeq đạt hiệu suất cao nhất trên hai tập VietSignboard và Vin, với với Hmean$_{\mathrm{e2e}}$ lần lượt đạt \textbf{71.36\%} (Exact-match) và \textbf{72.32\%} (Normalized-match) trên tập VietSignboard, và \textbf{70.35\%} (Exact-match) và \textbf{72.23\%} (Normalized-match) trên tập Vin. Hiệu quả của các giai đoạn phát hiện đóng vai trò quan trọng trong việc giúp mô hình PARSeq khai thác tốt các vùng văn bản đầu vào, qua đó nâng cao độ chính xác của kết quả nhận dạng theo cách tiếp cận đầu-cuối (end-to-end).
+Dựa trên kết quả thực nghiệm, quy trình xử lý đầu-cuối (pipeline end-to-end) kết hợp RTDETRv2, YOLOv8-OBB và PARSeq đạt hiệu suất cao nhất trên hai tập VietSignboard và VinText, với với Hmean$_{\mathrm{e2e}}$ lần lượt đạt \textbf{71.36\%} (Exact-match) và \textbf{72.32\%} (Normalized-match) trên tập VietSignboard, và \textbf{70.35\%} (Exact-match) và \textbf{72.23\%} (Normalized-match) trên tập VinText. Hiệu quả của các giai đoạn phát hiện đóng vai trò quan trọng trong việc giúp mô hình PARSeq khai thác tốt các vùng văn bản đầu vào, qua đó nâng cao độ chính xác của kết quả nhận dạng theo cách tiếp cận đầu-cuối (end-to-end).
 
-Trong khi đó, trên tập English, quy trình xử lý đầu-cuối (pipeline end-to-end) sử dụng SegFormer cho giai đoạn phát hiện biển hiệu đạt hiệu suất tốt nhất, với Hmean$_{\mathrm{e2e}}$ đạt \textbf{48.92\%} (Exact-match) và \textbf{49.67\%} (Normalized-match), cho thấy SegFormer có khả năng thích ứng tốt hơn trong bối cảnh dữ liệu tiếng Anh. Bên cạnh đó, việc kết hợp bước căn chỉnh biển hiệu mang lại cải thiện nhẹ trên hai tập VietSignboard và Vin, đặc biệt trong các trường hợp biển hiệu có góc nghiêng lớn hoặc hình dạng không chuẩn.
+Trong khi đó, trên tập IC15-TT, quy trình xử lý đầu-cuối (pipeline end-to-end) sử dụng SegFormer cho giai đoạn phát hiện biển hiệu đạt hiệu suất tốt nhất, với Hmean$_{\mathrm{e2e}}$ đạt \textbf{48.92\%} (Exact-match) và \textbf{49.67\%} (Normalized-match), cho thấy SegFormer có khả năng thích ứng tốt hơn trong bối cảnh dữ liệu tiếng Anh. Bên cạnh đó, việc kết hợp bước căn chỉnh biển hiệu mang lại cải thiện nhẹ trên hai tập VietSignboard và VinText, đặc biệt trong các trường hợp biển hiệu có góc nghiêng lớn hoặc hình dạng không chuẩn.
 
 
 \begin{table}[t]
 \centering
-\caption{Hiệu suất phát hiện văn bản của quy trình xử lý đầu-cuối (pipeline end-to-end) trên ba tập con VietSignboard, English và Vin của tập dữ liệu SignboardText. Chỉ số tốt nhất được đánh dấu đậm, chỉ số tốt thứ hai được gạch dưới.}
+\caption{Hiệu suất phát hiện văn bản của quy trình xử lý đầu-cuối (pipeline end-to-end) trên tập kiểm tra (test set) của ba tập con VietSignboard, IC15-TT và VinText thuộc bộ dữ liệu SignboardText đã được mở rộng (IC15-TT: tập con được gộp từ ICDAR2015 và Total-Text). Chỉ số tốt nhất được đánh dấu đậm, chỉ số tốt thứ hai được gạch dưới.}
 \label{tab:eval_pipeline_det}
 \resizebox{\linewidth}{!}{
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
 \hline
-\multicolumn{3}{|c|}{Model} & \multicolumn{3}{c|}{Vietsignboard} & \multicolumn{3}{c|}{English} & \multicolumn{3}{c|}{Vin}\\
+\multicolumn{3}{|c|}{Model} & \multicolumn{3}{c|}{Vietsignboard} & \multicolumn{3}{c|}{IC15-TT} & \multicolumn{3}{c|}{VinText}\\
 \cline{1-12}
 Signboard Det & Text Det & Text Rec & P & R & H & P & R & H & P & R & H \\
 \hline
@@ -529,7 +540,7 @@ SegFormer + Align & YOLOv8-OBB & PARSeq & \underline{90.64} & 85.52 & 88.00 & \u
 
 \begin{table}[t]
 \centering
-\caption{Hiệu suất nhận dạng văn bản của quy trình xử lý đầu-cuối (pipeline end-to-end) trên ba tập con VietSignboard, English và Vin của tập dữ liệu SignboardText. Chỉ số tốt nhất được đánh dấu đậm, chỉ số tốt thứ hai được gạch dưới.}
+\caption{Hiệu suất nhận dạng văn bản của quy trình xử lý đầu-cuối (pipeline end-to-end) trên tập kiểm tra (test set) của ba tập con VietSignboard, IC15-TT và VinText thuộc bộ dữ liệu SignboardText đã được mở rộng (IC15-TT: tập con được gộp từ ICDAR2015 và Total-Text). Chỉ số tốt nhất được đánh dấu đậm, chỉ số tốt thứ hai được gạch dưới.}
 \label{tab:eval_pipeline_rec}
 \newcommand{\twocols}[1]{\multicolumn{2}{c|}{#1}}
 \newcommand{\case}{Exact-match & Norm-match}
@@ -538,7 +549,7 @@ SegFormer + Align & YOLOv8-OBB & PARSeq & \underline{90.64} & 85.52 & 88.00 & \u
 \hline
 \multicolumn{3}{|c|}{Model} & \multicolumn{6}{c|}{Hmean$_{\mathrm{e2e}}$ (\%)} \\
 \cline{1-9}
-\multirow{2}{*}{Signboard Det} & \multirow{2}{*}{Text Det} & \multirow{2}{*}{Text Rec} & \twocols{Vietsignboard} & \twocols{English} & \twocols{Vin}\\
+\multirow{2}{*}{Signboard Det} & \multirow{2}{*}{Text Det} & \multirow{2}{*}{Text Rec} & \twocols{Vietsignboard} & \twocols{IC15-TT} & \twocols{VinText}\\
 \cline{4-9}
  & & & \case & \case & \case \\
 \hline 
@@ -557,7 +568,7 @@ SegFormer + Align & YOLOv8-OBB & PARSeq & \underline{70.25} & \underline{71.19} 
 \end{table}
 
 
-\paragraph{Kết luận và Lựa chọn quy trình xử lý đầu-cuối (pipeline end-to-end) Tối ưu} Tổng hợp kết quả đánh giá phát hiện và nhận dạng văn bản trong quy trình xử lý đầu-cuối (pipeline end-to-end), có thể thấy rằng quy trình xử lý đầu-cuối (pipeline end-to-end) kết hợp RTDETRv2 cho phát hiện biển hiệu, YOLOv8-OBB cho phát hiện văn bản và PARSeq cho nhận dạng văn bản là lựa chọn cân bằng giữa độ chính xác và tính ổn định trên các tập dữ liệu thử nghiệm. Pipeline này đặc biệt phù hợp với bối cảnh biển hiệu đường phố Việt Nam, nơi chất lượng phát hiện đóng vai trò quan trọng trong việc bảo đảm hiệu quả của giai đoạn nhận dạng. Do đó, quy trình xử lý đầu-cuối (pipeline end-to-end) trên được lựa chọn cho hệ thống đề xuất trong khóa luận. Bên cạnh đó, trong các trường hợp biển hiệu có góc nghiêng lớn hoặc hình dạng không chuẩn, quy trình xử lý đầu-cuối (pipeline end-to-end) sử dụng SegFormer cho giai đoạn phát hiện biển hiệu kết hợp với bước căn chỉnh biển hiệu cũng cho thấy tiềm năng cải thiện hiệu suất nhận dạng, và có thể được xem là một hướng tiếp cận phù hợp trong những bối cảnh thách thức.
+\paragraph{Kết luận và Lựa chọn quy trình xử lý đầu-cuối (pipeline end-to-end) tối ưu} Tổng hợp kết quả đánh giá phát hiện và nhận dạng văn bản trong quy trình xử lý đầu-cuối (pipeline end-to-end), có thể thấy rằng quy trình xử lý đầu-cuối (pipeline end-to-end) kết hợp RTDETRv2 cho phát hiện biển hiệu, YOLOv8-OBB cho phát hiện văn bản và PARSeq cho nhận dạng văn bản là lựa chọn cân bằng giữa độ chính xác và tính ổn định trên các tập dữ liệu thử nghiệm. Pipeline này đặc biệt phù hợp với bối cảnh biển hiệu đường phố Việt Nam, nơi chất lượng phát hiện đóng vai trò quan trọng trong việc bảo đảm hiệu quả của giai đoạn nhận dạng. Do đó, quy trình xử lý đầu-cuối (pipeline end-to-end) trên được lựa chọn cho hệ thống đề xuất trong khóa luận. Bên cạnh đó, trong các trường hợp biển hiệu có góc nghiêng lớn hoặc hình dạng không chuẩn, quy trình xử lý đầu-cuối (pipeline end-to-end) sử dụng SegFormer cho giai đoạn phát hiện biển hiệu kết hợp với bước căn chỉnh biển hiệu cũng cho thấy tiềm năng cải thiện hiệu suất nhận dạng, và có thể được xem là một hướng tiếp cận phù hợp trong những bối cảnh thách thức.
 
 \section{Ứng dụng minh họa quy trình xử lý đầu-cuối (pipeline end-to-end) đề xuất}
 \subsection{Mục tiêu và thiết kế ứng dụng minh họa}

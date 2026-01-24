@@ -68,7 +68,7 @@ Từ những thách thức nêu trên, bài toán phát hiện và nhận dạng
     \label{fig:chapter1_input_output}
 \end{figure}
 
-Trước những thách thức thực tế và dựa trên các kết quả nghiên cứu trước đây cho thấy rằng hướng nghiên cứu kết hợp (phát hiện biển hiệu và nhận dạng văn bản) vẫn còn ít được khai thác, khóa luận này đặt ra mục tiêu xây dựng một quy trình xử lý đầu-cuối (pipeline end-to-end) cho bài toán phát hiện và nhận dạng văn bản trên biển hiệu trong video được quay bởi camera hành trình trên đường phố. Quy trình xử lý (pipeline) hướng tới việc:
+Trước những thách thức thực tế trong việc phát hiện và nhận dạng văn bản trên biển hiệu trong dữ liệu video, cùng với nhu cầu ngày càng gia tăng của các hệ thống tìm kiếm và phân tích loại hình kinh doanh dựa trên việc khai thác thông tin ngữ nghĩa từ ảnh và video đường phố, khóa luận này đặt ra mục tiêu xây dựng một quy trình xử lý đầu-cuối (end-to-end pipeline) cho bài toán phát hiện và nhận dạng văn bản trên biển hiệu trong video được ghi lại bởi camera hành trình trên đường phố. Quy trình xử lý (pipeline) hướng tới việc:
 
 \begin{itemize}
     \item Xác định vùng chứa biển hiệu (signboard detection) và vùng chứa văn bản bên trong mỗi biển hiệu (text detection) trong từng khung hình video.
@@ -111,7 +111,7 @@ Phạm vi của khóa luận được giới hạn nhằm đảm bảo tính t�
         \item \textbf{Nhận dạng văn bản (Text Recognition):} ViTSTR \cite{atienza2021vision}, PARSeq \cite{bautista2022scene}, CDistNet \cite{zheng2024cdistnet}, SMTR \cite{du2025out}, SVTRv2 \cite{du2025svtrv2}
         \item \textbf{Phát hiện và nhận dạng văn bản đầu-cuối (End-to-End Text Spotting):} TESTR \cite{zhang2022text}, DeepSolo \cite{ye2023deepsolo}, UNITS \cite{kil2023towards}, DNTextSpotter \cite{qiao2024dntextspotter}
     \end{itemize}
-    \item  Quy trình xử lý đầu-cuối (pipeline end-to-end) tập trung vào bài toán phát hiện và nhận dạng văn bản trên biển hiệu và hướng tới việc cung cấp thông tin đầu ra vị trí và nội dung văn bản, làm cơ sở cho các tác vụ truy xuất thông tin trong tương lai.
+    \item  Quy trình xử lý đầu-cuối (pipeline end-to-end) tập trung vào bài toán phát hiện và nhận dạng văn bản trên biển hiệu và hướng tới việc cung cấp thông tin đầu ra vị trí và nội dung văn bản, làm cơ sở cho các hệ thống tìm kiếm và phân tích loại hình kinh doanh trong tương lai.
     \item Ứng dụng minh họa không hướng đến việc xây dựng một hệ thống hoàn chỉnh với giao diện người dùng hoặc các chức năng tương tác phức tạp. Thay vào đó, ứng dụng tập trung vào việc biểu diễn kết quả xử lý của quy trình xử lý đầu-cuối (pipeline end-to-end) dưới dạng video đầu ra đã được gán nhãn, nhằm phục vụ mục đích minh họa và đánh giá định tính trong phạm vi khóa luận.
 \end{itemize}
 
@@ -129,7 +129,7 @@ Các đóng góp chính của khóa luận bao gồm:
         \item \textbf{Phát hiện và nhận dạng văn bản đầu-cuối (End-to-End Text Spotting):} TESTR \cite{zhang2022text}, DeepSolo \cite{ye2023deepsolo}, UNITS \cite{kil2023towards}, DNTextSpotter \cite{qiao2024dntextspotter}
     \end{itemize}
     Kết quả đánh giá đi kèm phân tích ưu và nhược điểm của các phương pháp trong bối cảnh dữ liệu tiếng Việt và cảnh quan đường phố.
-    \item \textbf{Xây dựng quy trình xử lý đầu-cuối (pipeline end-to-end):} Trên cơ sở kết quả thực nghiệm, xây dựng một quy trình xử lý đầu-cuối (pipeline end-to-end) cho bài toán phát hiện và nhận dạng văn bản trên biển hiệu trong video hành trình trên đường phố Việt Nam. Quy trình xử lý (pipeline) hướng tới việc cung cấp đầu ra vị trí và nội dung văn bản, làm cơ sở cho các tác vụ truy xuất thông tin trong tương lai.
+    \item \textbf{Xây dựng quy trình xử lý đầu-cuối (pipeline end-to-end):} Trên cơ sở kết quả thực nghiệm, xây dựng một quy trình xử lý đầu-cuối (pipeline end-to-end) cho bài toán phát hiện và nhận dạng văn bản trên biển hiệu trong video hành trình trên đường phố Việt Nam. Quy trình xử lý (pipeline) hướng tới việc cung cấp đầu ra vị trí và nội dung văn bản, làm cơ sở cho các hệ thống tìm kiếm và phân tích loại hình kinh doanh trong tương lai.
 \end{itemize}
 
 % -------------------------------------------------
@@ -137,12 +137,12 @@ Các đóng góp chính của khóa luận bao gồm:
 
 Nội dung khóa luận được tổ chức như sau:
 
-\textbf{Chương 1:} Tổng quan bài toán, mục tiêu, phạm vi và đóng góp.
+\textbf{Chương 1:} Trình bày tổng quan về bài toán nghiên cứu, đồng thời nêu rõ động cơ nghiên cứu, mục tiêu, phạm vi thực hiện và các đóng góp chính của khóa luận.
 
-\textbf{Chương 2:} Cơ sở lý thuyết và các nghiên cứu liên quan.
+\textbf{Chương 2:} Giới thiệu cơ sở lý thuyết liên quan và tổng hợp các nghiên cứu trước đây trong lĩnh vực phát hiện đối tượng, phát hiện và nhận dạng văn bản ngoại cảnh, bao gồm các hướng tiếp cận phổ biến, các phương pháp tiên tiến và các bộ dữ liệu chuẩn thường được sử dụng.
 
-\textbf{Chương 3:} Thiết kế quy trình xử lý đầu-cuối (pipeline end-to-end)
+\textbf{Chương 3:} Xây dựng quy trình xử lý đầu-cuối (pipeline end-to-end) cho phát hiện và nhận dạng văn bản trên biển hiệu. Chương này trình bày tổng quan quy trình xử lý đề xuất, đồng thời phân tích chi tiết các phương pháp được lựa chọn cho từng tác vụ thành phần, bao gồm phát hiện biển hiệu, phát hiện văn bản và nhận dạng văn bản, cùng với nguyên lý hoạt động và các cải tiến tiêu biểu của từng phương pháp.
 
-\textbf{Chương 4:} Thực nghiệm và đánh giá.
+\textbf{Chương 4:} Trình bày quá trình thực nghiệm và đánh giá, bao gồm mô tả tập dữ liệu sử dụng, thiết lập thực nghiệm, các bước tiền xử lý, độ đo đánh giá và phân tích kết quả đạt được. Bên cạnh đó, chương này còn trình bày việc xây dựng ứng dụng minh họa cho quy trình xử lý đầu-cuối đề xuất trên dữ liệu video đường phố, nhằm đánh giá khả năng áp dụng trong thực tế.
 
-\textbf{Chương 5:} Ứng dụng minh họa, kết luận và hướng phát triển.
+\textbf{Chương 5:} Rút ra những kết luận chính của khóa luận, đồng thời đề xuất một số hướng phát triển và mở rộng trong tương lai.
